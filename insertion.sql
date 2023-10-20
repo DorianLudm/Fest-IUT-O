@@ -1,4 +1,3 @@
-
 -- Table FESTIVAL
 INSERT INTO FESTIVAL (idFestival, nomFestival, dateDebutFestival, dateFinFestival)
 VALUES
@@ -29,7 +28,8 @@ VALUES
     (2, 'adresse','Scène B', 0, 256),
     (3, 'adresse','Scène XYZ', 1, 800),
     (4, 'adresse','Scène C', 1, 300),
-    (5, 'adresse','Scène D', 1, 900);
+    (5, 'adresse','Scène D', 1, 900),
+    (6, 'adresse','Scène_Test_Trigger', 1, 2);
 
 -- Table LIEUSDUFESTIVAL
 INSERT INTO LIEUSDUFESTIVAL (idLieu, idFestival)
@@ -63,7 +63,8 @@ VALUES
 
 INSERT INTO LIAISONMUSICALE(idStyle1, idStyle2)
 VALUES
-    (2,1);
+    (1,2),
+    (2,1); --Ne doit pas fonctionner
 
 ---Table RESEAUXSOCIAUX
 INSERT INTO RESEAUXSOCIAUX(idReseau, nomReseau)
@@ -134,7 +135,8 @@ VALUES
     (2, 2, 2, 1, 0, '2023-09-15 09:00:00', '01:30:00', 'Groupe en première partie', 0, 0),
     (3, 3, 3, 1, 0, '2023-09-15 11:30:00', '01:45:00', 'Groupe en deuxième partie', 1, 0),
     (4, 4, 4, 2, 0, '2023-09-20 10:30:00', '02:15:00', 'Festival principal', 1, 1),
-    (5, 5, 5, 2, 0, '2023-09-20 11:00:00', '01:30:00', 'Groupe en première partie', 0, 1);
+    (5, 5, 5, 2, 0, '2023-09-20 11:00:00', '01:30:00', 'Groupe en première partie', 0, 1),
+    (6, 6, 4, 2, 0, '2023-09-20 10:30:00', '02:15:00', 'Festival principal', 1, 0);
 
 -- Table ACHETEUR
 INSERT INTO ACHETEUR (mailAcheteur, mdp, nom, prenom)
@@ -173,7 +175,10 @@ VALUES
 INSERT INTO PREINSCRIRE(idCreneau, mailAcheteur)
 VALUES
     (3,'dup@gmail.com'),
-    (4,'mart@gmail.com');
+    (4,'mart@gmail.com'),
+    (6,'dup@gmail.com'),
+    (6,'fort@gmail.com'),
+    (6,'car@gmail.com'); --Ne doit pas fonctionner
 
 INSERT INTO TYPEBILLET (idType, dureeEnJours, prix)
 VALUES
