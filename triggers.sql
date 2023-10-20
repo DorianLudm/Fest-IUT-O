@@ -13,7 +13,18 @@ begin
 end |
 delimiter ;
 
+-- CE TRIGGER NE MARCHE PAS // Utilisez celui-ci comme exemple
 delimiter |
 create or replace TRIGGER verif_capacite_préinscription before insert on PREINSCRIRE for each row
 begin
-    declare 
+    declare cap int;
+    declare nb_inscrit int;
+    declare mes varchar(255);
+    select IFNULL(nbPlacesLieu,0) into cap from PREINSCRIRE NATURAL JOIN CRENEAU NATURAL JOIN LIEU  where idCreneau = new.idCreneau and mailAcheteur = new.mailAcheteur;
+    select IFNULL(count(mailAcheteur),0) into nb_inscrit from PREINSCRIRE NATURAL JOIN CRENEAU NATURAL JOIN LIEU where idCreneau = new.idCreneau; 
+    if(cap <= nb_inscrit) then
+        set mes = "Préinscription impossible, le lieu est complet";
+    end if;
+    signal SQLSTATE '45000' set MESSAGE_TEXT = mes;
+end |
+delimiter ;
