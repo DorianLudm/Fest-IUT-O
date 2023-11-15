@@ -1,0 +1,32 @@
+body {
+    font-family: Montserrat;
+    background: #1f242d;
+    padding: 0;
+    margin: 0;
+}
+
+#element-a-cacher7 a {
+    color: #2c45d3;
+}
+
+/* debut prog */    
+.liste-artiste {
+    display: flex;
+    flex-wrap: wrap;   
+    justify-content: space-around;
+}
+
+.section-artiste {
+    background-color: #1f242d;
+    border-radius: 1em;
+    padding: 1em;
+    margin: 2em;
+}
+
+.section-artiste li {
+    color: #fff;
+}
+
+.footer {
+    margin-top: 30vh;
+}
