@@ -12,13 +12,14 @@
     <div id="login-container">
     <div id="login-box">
         <h2 class="element">Connexion</h2>
-        <form action="/connexion" method="post">
+        <form role="form" method="POST" action ="{{ url_for('compte') }}"> 
+          {{ formConnexion.hidden_tag() }}
           <div class="user-box">
-            <input class="element" type="text" name="username" id="username" required>
+            {{ formConnexion.email(size=50, class_="form-control element", id="username") }}
             <label class="element" for="username">Username</label>
           </div>
           <div class="user-box">
-            <input class="element" type="password" name="password" id="password" required=>
+            {{ formConnexion.password(size=50, class_="form-control element", id="password") }}
             <label class="element" for="password">Password</label>
           </div>
           <div class="valid-container">
@@ -61,7 +62,7 @@
       </form>
     </div>
     </div>
-    <a class="bienvenue-message" href="{{ url_for('deconnexion') }}"><button>Se deconnecter</button></a>
+    <a class="bienvenue-message" href="{{ url_for('logout') }}"><button>Se deconnecter</button></a>
 </body>
     <script src="../static/js/signup-login.js"></script>
     {% endblock %}

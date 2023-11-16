@@ -13,6 +13,9 @@ def get_cnx():
 def get_nom_and_email(cnx, email):
     pass
 
+def get_password_with_email(cnx, email):
+    pass
+
 # marche pas
 def get_groupe_non_favoris(mail):
     try:
