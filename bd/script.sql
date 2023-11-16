@@ -205,6 +205,12 @@ CREATE TABLE PHOTOGROUPE(
     PRIMARY KEY(idGroupe, idImage)
 );
 
+CREATE OR REPLACE TABLE DEBUG(
+    idbug int NOT NULL AUTO_INCREMENT,
+    nb int,
+    PRIMARY KEY(idbug)
+);
+
 delimiter |
 create or replace TRIGGER verif_liaison_musicale before insert on LIAISONMUSICALE for each row
 begin
