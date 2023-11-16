@@ -20,11 +20,11 @@ class LoginForm(FlaskForm):
         print(self.email.data)
         print(self.password.data)
 
-        # user = get_nom_and_email(cnx, self.email.data)
-        # mdp = get_password_with_email(cnx, self.email.data)
-        # passwd = self.password.data
-        # print(user)
-        # return user if passwd == mdp else None
+        user = get_nom_and_email(cnx, self.email.data)
+        mdp = get_password_with_email(cnx, self.email.data)
+        passwd = self.password.data
+        print(user)
+        return user if passwd == mdp else None
 
 
         # mdp = get_password_with_email(cnx, self.email.data)
@@ -115,8 +115,7 @@ def compte():
             #login_user(user)
             session['utilisateur'] = user
             print("login : "+str(session['utilisateur']))
-            next = f.next.data or url_for("base")
-            return redirect(next)
+            return redirect(url_for('index'))
     return render_template(
         "compte.html",
         title="Festiut'O | Compte",
@@ -193,5 +192,6 @@ def ajouter_donnees():
 
 @app.route("/logout/")
 def logout():
+    # print(session['utilisateur'])
     session.pop('utilisateur', None)
-    return redirect(url_for('base'))
+    return redirect(url_for('compte'))
