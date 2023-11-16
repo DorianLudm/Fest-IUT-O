@@ -1,0 +1,38 @@
+import pyotp
+from sqlalchemy import text
+from .connexionPythonSQL import *
+from hashlib import sha256
+from .models import *
+
+
+cnx = ouvrir_connexion()
+
+def get_cnx():
+    return cnx
+
+def get_nom_and_email(cnx, email):
+    pass
+
+# marche pas
+def get_groupe_non_favoris(mail):
+    try:
+        liste = []
+        res = res = cnx.execute(text("SELECT * FROM GROUPE WHERE idGroupe not IN (SELECT idGroupe FROM FAVORIS NATURAL JOIN GROUPE WHERE mailAcheteur = '"+mail+"');"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_groupe")
+        return []
+
+# marche pas
+def get_groupe_favoris(mail):
+    try:
+        liste = []
+        res = res = cnx.execute(text("SELECT * FROM FAVORIS NATURAL JOIN GROUPE WHERE mailAcheteur = '"+mail+"';"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_groupe")
+        return []

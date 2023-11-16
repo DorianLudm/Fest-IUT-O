@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/compte.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <div id="login-container">
+    <div id="login-box">
+        <h2 class="element">Connexion</h2>
+        <form action="/connexion" method="post">
+          <div class="user-box">
+            <input class="element" type="text" name="username" id="username" required>
+            <label class="element" for="username">Username</label>
+          </div>
+          <div class="user-box">
+            <input class="element" type="password" name="password" id="password" required=>
+            <label class="element" for="password">Password</label>
+          </div>
+          <div class="valid-container">
+            <input type="submit" value="Se Connecter" class="element">
+            <a href="#" id="boutonlogin" class="element">S'inscrire</a>
+          </div>
+        </form>
+    </div>
+    <div id="signup-box">
+      <h2 class="element">S'inscrire</h2>
+      <form action="/ajouter_donnees" method="post">
+        <div class="user-box">
+          <input class="element" type="text" name="username" id="username" required>
+          <label class="element" for="username">Username</label>
+        </div>
+        <div class="user-box">
+          <input class="element" type="text" name="nom" id="nom" required>
+          <label class="element" for="nom">Nom</label>
+        </div>
+        <div class="user-box">
+          <input class="element" type="text" name="prenom" id="prenom" required>
+          <label class="element" for="prenom">Prénom</label>
+        </div>
+        <div class="user-box">
+          <input class="element" type="password" name="password" id="password" required=>
+          <label class="element" for="password">Password</label>
+        </div>
+        <div class="user-box">
+          <input class="element" type="email" name="email" id="email" required=>
+          <label class="element" for="email">Email</label>
+        </div>
+        <div class="user-box">
+          <input class="element" type="tel" name="tel" id="tel" required=>
+          <label class="element" for="tel">Numéro de téléphone</label>
+        </div>
+        <div class="valid-container">
+          <input type="submit" value="S'inscrire" class="element">
+          <a href="#" id="boutonsignup" class="element">Se Connecter</a>
+        </div>
+      </form>
+    </div>
+    </div>
+    <a class="bienvenue-message" href="{{ url_for('deconnexion') }}"><button>Se deconnecter</button></a>
+</body>
+    <script src="../static/js/signup-login.js"></script>
+    {% endblock %}
+</html>

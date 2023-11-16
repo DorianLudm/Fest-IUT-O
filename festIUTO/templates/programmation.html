@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/programmation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/musicPlayer.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <div class="artiste-prog">
+        <h2 class="titre-artiste element">Vos artistes favoris</h2>
+        <ul class="liste-artiste">
+            {% for i in artiste_fav%}
+            <section class="section-artiste element">
+                <a href="{{ url_for('profilArtiste', id=i['idArtiste']) }}"><img src="../static/img/groupe.png"></a>
+                <div class="info-artiste-container">
+                    <div class="nom-groupe-container">
+                        <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
+                        <button id="bouton-fav"><img src="../static/img/coeur-plein.png"></button>
+                    </div>
+                    <li id="style-musicale">{{ i['styleMusicale'] }}</li>
+                    <li id="desc-Artiste">{{ i['descArtiste'] }}</li>
+                </div>
+            </section>
+            {% endfor %}
+        </ul>
+        <h2 class="titre-artiste element">Autres artistes</h2>
+        <ul class="liste-artiste">
+            {% for i in artiste%}
+            <section class="section-artiste element">
+                <a href="{{ url_for('profilArtiste', id=i['idArtiste']) }}"><img src="../static/img/groupe.png"></a>
+                <div class="info-artiste-container">
+                    <div class="nom-groupe-container">
+                        <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
+                        <button id="bouton-fav"><img src="../static/img/coeur-vide.png"></button>
+                    </div>
+                    <li id="style-musicale">{{ i['styleMusicale'] }}</li>
+                    <li id="desc-Artiste">{{ i['descArtiste'] }}</li>
+                </div>
+            </section>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endblock %}
+</body>
+</html>
