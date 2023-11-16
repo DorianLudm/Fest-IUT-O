@@ -1,4 +1,4 @@
-# Liste des triggers qu'il faut implémentés  
+# Liste des triggers qu'il faut implémenter  
 ## Trigers ajoutés:
 - Vérification de la double existance de la liaison musicale
 
