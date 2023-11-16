@@ -34,6 +34,21 @@ class LoginForm(FlaskForm):
         # print(str(mdp)+" == "+str(passwd))
         # return user if passwd == mdp else None
 
+class InscriptionForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    email = StringField('email', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    next = HiddenField()
+
+    def get_inscription_user(self):
+        email = self.email.data
+        mdp = self.password.data
+        nom = self.nom.data
+        prenom = self.prenom.data
+        # passwd = self.password.data
+        return (email, mdp, nom, prenom)
+
 
 
 
@@ -77,13 +92,24 @@ def index():
 
 @app.route('/programmation')
 def programmation():
-        mail = 'dup@gmail.com'
+    if 'utilisateur' in session:
+        artiste_fav=get_groupe_favoris(session['utilisateur'][2])
+        yaFavoris=False
+        if len(artiste_fav) > 0:
+            yaFavoris=True
         return render_template(
             "programmation.html", 
             title="Festiut'O | Programmation", 
-            artiste=get_groupe_non_favoris(mail),
-            artiste_fav=get_groupe_favoris(mail)
-        )    
+            artiste=get_groupe_non_favoris(session['utilisateur'][2]),
+            artiste_fav=artiste_fav,
+            yaFavoris=yaFavoris
+        )  
+    else:
+        return render_template(
+            "programmation.html",
+            title="Festiut'O | Programmation",
+            artiste=get_all_groupe(),
+        )  
     
 
 @app.route('/condition-de-service')
@@ -106,10 +132,15 @@ def politiqueDeRemboursement():
 
 @app.route('/compte', methods=("GET","POST",))
 def compte():
-    f = LoginForm ()
-    if not f.is_submitted():
-        f.next.data = request.args.get("next")
-    elif f.validate_on_submit():
+    f = LoginForm()
+    f2 = InscriptionForm()
+    # inscription
+    if f2.validate_on_submit():
+        acheteur = f2.get_inscription_user()
+        inscription_acheteur(cnx, acheteur[0], acheteur[1], acheteur[2], acheteur[3])
+        return redirect(url_for('compte'))
+    # connexion
+    if f.validate_on_submit():
         user = f.get_authenticated_user()
         if user != None:
             #login_user(user)
@@ -120,6 +151,7 @@ def compte():
         "compte.html",
         title="Festiut'O | Compte",
         formConnexion=f,
+        formInscription=f2
         )
 
     
