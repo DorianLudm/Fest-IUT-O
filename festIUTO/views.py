@@ -54,36 +54,6 @@ class InscriptionForm(FlaskForm):
 
 @app.route('/')
 def index():
-    # cursor = DATABASE.cursor()
-
-    # if 'user_id' in session:
-    #     user_id = session['user_id'][0]['idAcheteur']
-    #     cursor_username = DATABASE.cursor(dictionary=True)
-    #     cursor_username.execute("SELECT NOM FROM ACHETEUR WHERE idAcheteur = "+str(user_id))
-    #     username_id = cursor_username.fetchall()
-    #     username = username_id[0]['NOM']
-        
-    #     cursor_concert = DATABASE.cursor(dictionary=True)
-    #     # Exécutez une requête SQL pour récupérer des données de la table
-    #     cursor_concert.execute("SELECT * FROM CONCERT")
-    #     # Récupérez toutes les lignes de résultats dans une liste
-    #     concert = cursor_concert.fetchall()
-    #     # Fermez le curseur et la connexion à la base de données
-    #     cursor.close()
-    #     return render_template(
-    #         "home.html",
-    #         title="Festiut'O | Accueil",
-    #         concert=concert,  # Passez les données récupérées à votre modèle HTML
-    #         username=username
-    #     )
-    # else:
-    #     cursor_concert = DATABASE.cursor(dictionary=True)
-    #     # Exécutez une requête SQL pour récupérer des données de la table
-    #     cursor_concert.execute("SELECT * FROM CONCERT")
-    #     # Récupérez toutes les lignes de résultats dans une liste
-    #     concert = cursor_concert.fetchall()
-    #     # Fermez le curseur et la connexion à la base de données
-    #     cursor.close()
         return render_template(
             "home.html",
             title="Festiut'O | Accueil",
@@ -93,16 +63,21 @@ def index():
 @app.route('/programmation')
 def programmation():
     if 'utilisateur' in session:
+        artiste=get_groupe_non_favoris(session['utilisateur'][2])
         artiste_fav=get_groupe_favoris(session['utilisateur'][2])
+        yaQueDesFavoris=False
         yaFavoris=False
         if len(artiste_fav) > 0:
             yaFavoris=True
+        if len(artiste) == 0:
+            yaQueDesFavoris=True
         return render_template(
             "programmation.html", 
             title="Festiut'O | Programmation", 
-            artiste=get_groupe_non_favoris(session['utilisateur'][2]),
+            artiste=artiste,
             artiste_fav=artiste_fav,
-            yaFavoris=yaFavoris
+            yaFavoris=yaFavoris,
+            yaQueDesFavoris=yaQueDesFavoris
         )  
     else:
         return render_template(
@@ -191,36 +166,15 @@ def profilArtiste(id):
         # nomStyle=nomStyle
     )
 
-@app.route('/ajouter_donnees', methods=['POST'])
-def ajouter_donnees():
-    # cursor = DATABASE.cursor()
+@app.route("/ajouter-fav/<int:id>", methods=("GET",))
+def ajouterFav(id):
+    add_groupe_favoris(session['utilisateur'][2], id)
+    return redirect(url_for('programmation'))
 
-    # username = request.form["username"]
-    # nom = request.form["nom"]
-    # prenom = request.form["prenom"]
-    # mdp = request.form["password"]
-
-    # cursor_max = DATABASE.cursor(dictionary=True)
-    # cursor_max.execute("SELECT max(idAcheteur) FROM ACHETEUR")
-    # id_max = cursor_max.fetchall()
-
-    # id_maximum = int(id_max[0]['max(idAcheteur)'])+1
-
-    # # Exemple de requête d'insertion
-    # query = "INSERT INTO ACHETEUR (idAcheteur, nom, prenom, mdp) VALUES (%s, %s, %s, %s)"
-
-    # # Exécutez la requête avec les données fournies
-    # cursor.execute(query, (str(id_maximum), nom, prenom, mdp))
-
-    # # Committez les changements dans la base de données
-    # DATABASE.commit()
-
-    # cursor.close()
-
-    return redirect('/')
-
-
-
+@app.route("/supprimer-fav/<int:id>", methods=("GET",))
+def supprimerFav(id):
+    delete_groupe_favoris(session['utilisateur'][2], id)
+    return redirect(url_for('programmation'))
 
 @app.route("/logout/")
 def logout():

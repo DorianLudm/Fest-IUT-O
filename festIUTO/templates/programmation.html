@@ -22,7 +22,7 @@
                 <div class="info-artiste-container">
                     <div class="nom-groupe-container">
                         <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
-                        <button id="bouton-fav"><img src="../static/img/coeur-plein.png"></button>
+                        <a href="{{ url_for('supprimerFav', id=i[0]) }}"><button id="bouton-fav"><img src="../static/img/coeur-plein.png"></button></a>
                     </div>
                     <li id="style-musicale">{{ i['styleMusicale'] }}</li>
                     <li id="desc-Artiste">{{ i['descArtiste'] }}</li>
@@ -30,7 +30,9 @@
             </section>
             {% endfor %}
         </ul>
+        {% if not yaQueDesFavoris %}
         <h2 class="titre-artiste element">Autres artistes</h2>
+        {% endif %}
         <ul class="liste-artiste">
             {% for i in artiste%}
             <section class="section-artiste element">
@@ -38,7 +40,7 @@
                 <div class="info-artiste-container">
                     <div class="nom-groupe-container">
                         <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
-                        <button id="bouton-fav"><img src="../static/img/coeur-vide.png"></button>
+                        <a href="{{ url_for('ajouterFav', id=i[0]) }}"><button id="bouton-fav"><img src="../static/img/coeur-vide.png"></button></a>
                     </div>
                     <li id="style-musicale">{{ i['styleMusicale'] }}</li>
                     <li id="desc-Artiste">{{ i['descArtiste'] }}</li>
@@ -48,7 +50,28 @@
         </ul>
     </div>
     {% else %}
-    <h2 class="titre-artiste element">Tout les artistes</h2>
+    <div class="artiste-prog">
+        <h2 class="titre-artiste element">Tout les artistes</h2>
+            <ul class="liste-artiste">
+                {% for i in artiste%}
+                <section class="section-artiste element">
+                    <a href="{{ url_for('profilArtiste', id=i['idArtiste']) }}"><img src="../static/img/groupe.png"></a>
+                    <div class="info-artiste-container">
+                        <div class="nom-groupe-container">
+                            <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
+                            <a href="{{ url_for('ajouterFav', id=i[0]) }}"><button id="bouton-fav"><img src="../static/img/coeur-vide.png"></button></a>
+                        </div>
+                        <li id="style-musicale">{{ i['styleMusicale'] }}</li>
+                        <li id="desc-Artiste">{{ i['descArtiste'] }}</li>
+                    </div>
+                </section>
+                {% endfor %}
+            </ul>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="artiste-prog">
+        <h2 class="titre-artiste element">Tous les artistes</h2>
         <ul class="liste-artiste">
             {% for i in artiste%}
             <section class="section-artiste element">
@@ -56,7 +79,6 @@
                 <div class="info-artiste-container">
                     <div class="nom-groupe-container">
                         <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
-                        <button id="bouton-fav"><img src="../static/img/coeur-vide.png"></button>
                     </div>
                     <li id="style-musicale">{{ i['styleMusicale'] }}</li>
                     <li id="desc-Artiste">{{ i['descArtiste'] }}</li>
@@ -64,23 +86,7 @@
             </section>
             {% endfor %}
         </ul>
-    {% endif %}
-    {% else %}
-    <h2 class="titre-artiste element">Tous les artistes</h2>
-    <ul class="liste-artiste">
-        {% for i in artiste%}
-        <section class="section-artiste element">
-            <a href="{{ url_for('profilArtiste', id=i['idArtiste']) }}"><img src="../static/img/groupe.png"></a>
-            <div class="info-artiste-container">
-                <div class="nom-groupe-container">
-                    <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
-                </div>
-                <li id="style-musicale">{{ i['styleMusicale'] }}</li>
-                <li id="desc-Artiste">{{ i['descArtiste'] }}</li>
-            </div>
-        </section>
-        {% endfor %}
-    </ul>
+    </div>
     {% endif %}
     {% endblock %}
 </body>

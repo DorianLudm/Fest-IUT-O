@@ -66,3 +66,20 @@ def get_groupe_favoris(mail):
     except:
         print("Erreur lors de la requête get_all_groupe")
         return []
+
+
+def add_groupe_favoris(mail, idGroupe):
+    try:
+        cnx.execute(text("INSERT INTO FAVORIS (mailAcheteur, idGroupe) VALUES ('"+mail+"', "+str(idGroupe)+");"))
+        cnx.commit()
+        print("Ajout réussi")
+    except:
+        print("Erreur lors de la requête add_groupe_favoris")
+
+def delete_groupe_favoris(mail, idGroupe):
+    try:
+        cnx.execute(text("DELETE FROM FAVORIS WHERE mailAcheteur = '"+mail+"' AND idGroupe = "+str(idGroupe)+";"))
+        cnx.commit()
+        print("Suppression réussie")
+    except:
+        print("Erreur lors de la requête del_groupe_favoris")
