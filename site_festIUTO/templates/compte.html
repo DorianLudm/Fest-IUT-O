@@ -9,6 +9,7 @@
 <body>
     {% extends "base.html" %}
     {% block base %}
+    {% if 'utilisateur' not in session %}
     <div id="login-container">
     <div id="login-box">
         <h2 class="element">Connexion</h2>
@@ -16,7 +17,7 @@
           {{ formConnexion.hidden_tag() }}
           <div class="user-box">
             {{ formConnexion.email(size=50, class_="form-control element", id="username") }}
-            <label class="element" for="username">Username</label>
+            <label class="element" for="email">Email</label>
           </div>
           <div class="user-box">
             {{ formConnexion.password(size=50, class_="form-control element", id="password") }}
@@ -62,7 +63,9 @@
       </form>
     </div>
     </div>
+    {% else %}
     <a class="bienvenue-message" href="{{ url_for('logout') }}"><button>Se deconnecter</button></a>
+    {% endif %}
 </body>
     <script src="../static/js/signup-login.js"></script>
     {% endblock %}
