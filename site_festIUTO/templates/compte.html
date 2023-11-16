@@ -21,7 +21,7 @@
           </div>
           <div class="user-box">
             {{ formConnexion.password(size=50, class_="form-control element", id="password") }}
-            <label class="element" for="password">Password</label>
+            <label class="element" for="password">Mot de passe</label>
           </div>
           <div class="valid-container">
             <input type="submit" value="Se Connecter" class="element">
@@ -31,30 +31,23 @@
     </div>
     <div id="signup-box">
       <h2 class="element">S'inscrire</h2>
-      <form action="/ajouter_donnees" method="post">
+      <form role="form" method="POST" action ="{{ url_for('compte') }}">
+        {{ formInscription.hidden_tag() }}
         <div class="user-box">
-          <input class="element" type="text" name="username" id="username" required>
-          <label class="element" for="username">Username</label>
-        </div>
-        <div class="user-box">
-          <input class="element" type="text" name="nom" id="nom" required>
-          <label class="element" for="nom">Nom</label>
-        </div>
-        <div class="user-box">
-          <input class="element" type="text" name="prenom" id="prenom" required>
-          <label class="element" for="prenom">Prénom</label>
-        </div>
-        <div class="user-box">
-          <input class="element" type="password" name="password" id="password" required=>
-          <label class="element" for="password">Password</label>
-        </div>
-        <div class="user-box">
-          <input class="element" type="email" name="email" id="email" required=>
+          {{ formInscription.email(size=50, class_="form-control element", id="email") }}
           <label class="element" for="email">Email</label>
         </div>
         <div class="user-box">
-          <input class="element" type="tel" name="tel" id="tel" required=>
-          <label class="element" for="tel">Numéro de téléphone</label>
+          {{ formInscription.nom(size=50, class_="form-control element", id="nom") }}
+          <label class="element" for="nom">Nom</label>
+        </div>
+        <div class="user-box">
+          {{ formInscription.prenom(size=50, class_="form-control element", id="prenom") }} 
+          <label class="element" for="prenom">Prénom</label>
+        </div>
+        <div class="user-box">
+          {{ formInscription.password(size=50, class_="form-control element", id="passwordj") }} 
+          <label class="element" for="password">Mot de passe</label>
         </div>
         <div class="valid-container">
           <input type="submit" value="S'inscrire" class="element">

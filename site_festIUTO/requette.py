@@ -26,7 +26,25 @@ def get_password_with_email(cnx, email):
     except: 
         print("Erreur lors de la requête get_password_with_email")
 
-# marche pas
+def inscription_acheteur(cnx, email, mdp, nom, prenom):
+    try:
+        cnx.execute(text("INSERT INTO ACHETEUR (mailAcheteur, mdp, nom, prenom) VALUES ('"+email+"', '"+mdp+"', '"+nom+"', '"+prenom+"');"))
+        cnx.commit()
+        print("Inscription réussie")
+    except:
+        print("Erreur lors de la requête inscription_acheteur")
+
+def get_all_groupe():
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM GROUPE;"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_groupe")
+        return []
+
 def get_groupe_non_favoris(mail):
     try:
         liste = []
@@ -38,7 +56,6 @@ def get_groupe_non_favoris(mail):
         print("Erreur lors de la requête get_all_groupe")
         return []
 
-# marche pas
 def get_groupe_favoris(mail):
     try:
         liste = []
