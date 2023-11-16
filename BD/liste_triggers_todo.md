@@ -7,3 +7,4 @@
 - Même vérification qu'au dessus mais sur les disponibilités du groupe
 - Vérification des pré-inscription, ne doit pas dépasser la capacité du lieu
 - Vérification du nombre de billet (COMPLEXE à cause des tickets à plusieurs jours)
+- D'autres sont sur le rendu 1 de la SAE (je crois)
