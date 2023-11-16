@@ -29,6 +29,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 1em;
+    flex-grow: 1;
 }
 
 .nom-groupe-container {
@@ -36,6 +37,7 @@ body {
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
+    flex-grow: 1;
 }
 
 .section-artiste {
@@ -64,6 +66,8 @@ body {
     font-size: 1.5em;
     font-weight: bold;
     font-size: 22px;
+    flex-grow: 1;
+    text-align: center;
 }
 
 #desc-Artiste {

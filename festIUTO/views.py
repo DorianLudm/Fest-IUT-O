@@ -137,29 +137,13 @@ def contact():
                            title="Festiut'O | Contact"
                            )
 
-@app.route('/profilArtiste/<string:id>', methods=("GET",))
-def profilArtiste(id):
-    # cursor = DATABASE.cursor()
-
-    # cursor_Groupe = DATABASE.cursor(dictionary=True)
-    # cursor_Groupe.execute("SELECT * FROM ARTISTE natural join STYLEMUSICAL WHERE idArtiste = "+str(id))
-    # Groupe = cursor_Groupe.fetchall()
-
-    # idGroupe = Groupe[0]['idArtiste']
-    # nomGroupe = Groupe[0]['nomGroupe']
-    # descArtiste = Groupe[0]['descArtiste']
-    
-    # cursor_styleMusical = DATABASE.cursor(dictionary=True)
-    # cursor_styleMusical.execute("SELECT * FROM STYLEMUSICAL WHERE idStyle = "+str(Groupe[0]['idStyle']))
-    # styleMusical = cursor_styleMusical.fetchall()
-
-    # nomStyle = styleMusical[0]['nom']
-
-    # cursor.close()
+@app.route('/profilGroupe/<int:id>', methods=("GET",))
+def profilGroupe(id):
+    print(get_profil_groupe(id))
     return render_template(
-        "profilArtiste.html",
-        title="Festiut'O | profilArtiste",
-        # Groupe=Groupe,
+        "profilGroupe.html",
+        title="Festiut'O | profilGroupe",
+        Groupe=get_profil_groupe(id),
         # nomGroupe=nomGroupe,
         # idGroupe=idGroupe,
         # descArtiste=descArtiste,

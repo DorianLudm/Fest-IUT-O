@@ -83,3 +83,15 @@ def delete_groupe_favoris(mail, idGroupe):
         print("Suppression réussie")
     except:
         print("Erreur lors de la requête del_groupe_favoris")
+
+def get_profil_groupe(idGroupe):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM GROUPE NATURAL JOIN STYLEMUSICAL WHERE idGroupe = "+str(idGroupe)))
+        print(res)
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_profil_groupe")
+        return []
