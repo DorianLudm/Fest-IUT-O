@@ -60,8 +60,8 @@ def index():
         )
 
 
-@app.route('/programmation')
-def programmation():
+@app.route('/artistes')
+def artistes():
     if 'utilisateur' in session:
         artiste=get_groupe_non_favoris(session['utilisateur'][2])
         artiste_fav=get_groupe_favoris(session['utilisateur'][2])
@@ -72,8 +72,8 @@ def programmation():
         if len(artiste) == 0:
             yaQueDesFavoris=True
         return render_template(
-            "programmation.html", 
-            title="Festiut'O | Programmation", 
+            "artistes.html", 
+            title="Festiut'O | Artistes", 
             artiste=artiste,
             artiste_fav=artiste_fav,
             yaFavoris=yaFavoris,
@@ -81,11 +81,31 @@ def programmation():
         )  
     else:
         return render_template(
-            "programmation.html",
-            title="Festiut'O | Programmation",
+            "artistes.html",
+            title="Festiut'O | Artistes",
             artiste=get_all_groupe(),
         )  
     
+@app.route('/planning')
+def planning():
+    return render_template(
+        "planning.html",
+        title="Festiut'O | Planning",
+    )
+
+@app.route('/billeterie')
+def billeterie():
+    return render_template(
+        "billeterie.html",
+        title="Festiut'O | Billeterie",
+    )
+
+@app.route('/boutique')
+def boutique():
+    return render_template(
+        "boutique.html",
+        title="Festiut'O | Boutique"
+    )
 
 @app.route('/condition-de-service')
 def conditionDeService():
@@ -153,12 +173,12 @@ def profilGroupe(id):
 @app.route("/ajouter-fav/<int:id>", methods=("GET",))
 def ajouterFav(id):
     add_groupe_favoris(session['utilisateur'][2], id)
-    return redirect(url_for('programmation'))
+    return redirect(url_for('artistes'))
 
 @app.route("/supprimer-fav/<int:id>", methods=("GET",))
 def supprimerFav(id):
     delete_groupe_favoris(session['utilisateur'][2], id)
-    return redirect(url_for('programmation'))
+    return redirect(url_for('artistes'))
 
 @app.route("/logout/")
 def logout():

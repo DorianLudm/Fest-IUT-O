@@ -16,11 +16,10 @@
                 <ul class="liste-nav">
                     <li class="icon-logo"><a href="{{ url_for('index') }}"><img src="../static/img/icon-logo.png" alt="logo festival"></a></li>
                     <li id="element-a-cacher1"><a href="{{ url_for('index') }}">Accueil</a></li>
-                    <li id="element-a-cacher2"><a href="{{ url_for('programmation') }}">Programmation</a></li>
-                    <li id="element-a-cacher3"><a href="#">Billeterie</a></li>
-                    <li id="element-a-cacher4"><a href="#">Plan du festival</a></li>
-                    <li id="element-a-cacher5"><a href="#">Association</a></li>
-                    <li id="element-a-cacher6"><a href="#">Boutique</a></li>
+                    <li id="element-a-cacher2"><a href="{{ url_for('artistes') }}">Artistes</a></li>
+                    <li id="element-a-cacher3"><a href="{{ url_for('billeterie') }}">Billeterie</a></li>
+                    <li id="element-a-cacher4"><a href="{{ url_for('planning') }}">Planning</a></li>
+                    <li id="element-a-cacher6"><a href="{{ url_for('boutique') }}">Boutique</a></li>
                     <li id="element-a-cacher7"><a href="{{ url_for('contact') }}">Contact</a></li>
                     <li id="barre-recherche">
                         <form>
@@ -54,16 +53,26 @@
         </header>
         {% block base %}{% endblock %}
         <footer class="footer">
-            <a href="https://www.univ-orleans.fr/fr/iut-orleans" target="_blank" class="element" id="logo-iut"><img src="../static/img/logo-iut.png" alt="logo de l'iut"></a>
-            <p class="element"><a href="{{ url_for('conditionDeService') }}">Condition de service</a></p>
-            <p class="element"><a href="{{ url_for('politiqueDeConfidentialite') }}">Politique de confidentialité</a></p>
-            <p class="element"><a href="{{ url_for('politiqueDeRemboursement') }}">Politique de remboursement</a></p>
-            <ul class="reseaux-sociaux">
-                <a class="element" href="https://www.instagram.com/" target="_blank"><i class='bx bxl-instagram'></i></a>
-                <a class="element" href="https://www.facebook.com/?locale=fr_FR" target="_blank"><i class='bx bxl-facebook'></i></a>
-                <a class="element" href="https://www.youtube.com/" target="_blank"><i class='bx bxl-youtube'></i></a>
-                <a class="element" href="https://open.spotify.com/intl-fr" target="_blank"><i class='bx bxl-spotify'></i></a>
-            </ul>
+            <div class="container-top-footer">
+                <a href="https://www.univ-orleans.fr/fr/iut-orleans" target="_blank" class="element" id="logo-iut"><img src="../static/img/logo-iut.png" alt="logo de l'iut"></a>
+                <p class="element"><a href="{{ url_for('conditionDeService') }}">Condition de service</a></p>
+                <p class="element"><a href="{{ url_for('politiqueDeConfidentialite') }}">Politique de confidentialité</a></p>
+                <p class="element"><a href="{{ url_for('politiqueDeRemboursement') }}">Politique de remboursement</a></p>
+                <ul class="reseaux-sociaux">
+                    <a class="element" href="https://www.instagram.com/" target="_blank"><i class='bx bxl-instagram'></i></a>
+                    <a class="element" href="https://www.facebook.com/?locale=fr_FR" target="_blank"><i class='bx bxl-facebook'></i></a>
+                    <a class="element" href="https://www.youtube.com/" target="_blank"><i class='bx bxl-youtube'></i></a>
+                    <a class="element" href="https://open.spotify.com/intl-fr" target="_blank"><i class='bx bxl-spotify'></i></a>
+                </ul>
+            </div>
+            <div class="container-bottom-footer">
+                <ul>
+                    <p>Léo Lucidor</p>
+                    <p>Colin Pilet</p>
+                    <p>Anna Lallier</p>
+                    <p>Dorian Ludman &copy;</p>
+                </ul>
+            </div>
         </footer>
         <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
         <script src="../static/js/menu.js"></script>
