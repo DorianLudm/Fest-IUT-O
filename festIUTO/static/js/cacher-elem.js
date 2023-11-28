@@ -13,14 +13,14 @@ function actionLoupe(){
 function cacherElements() {
     console.log("cache");
     // Parcourir les éléments et changer leur style "display" en "none"
-    for(let i=1; i<=7; i++){
+    for(let i=1; i<=6; i++){
         const elem = document.getElementById('element-a-cacher'+i);
         elem.style.display = 'none';
     }
     const recherche = document.getElementById('barre-recherche');
     recherche.style.display = 'flex';
-    //const filtre = document.getElementById('icon-filtre');
-    //filtre.style.display = 'block';
+    // const filtre = document.getElementById('icon-filtre');
+    // filtre.style.display = 'block';
     cacher = true;
 }
 
@@ -29,9 +29,9 @@ function reafficherElements() {
     console.log("affiche");
     const recherche = document.getElementById('barre-recherche');
     recherche.style.display = 'none';
-    //const filtre = document.getElementById('icon-filtre');
-    //filtre.style.display = 'none';
-    for(let i=1; i<=7; i++){
+    // const filtre = document.getElementById('icon-filtre');
+    // filtre.style.display = 'none';
+    for(let i=1; i<=6; i++){
         const elem = document.getElementById('element-a-cacher'+i);
         elem.style.display = 'flex';
     }
