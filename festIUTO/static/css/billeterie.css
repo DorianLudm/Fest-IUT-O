@@ -62,7 +62,7 @@ h1 {
 .billeterie-content-center,
 .billeterie-content-right {
     flex-basis: 25%;
-    border: #faf6e7 2px solid;
+    border: #2c45d3 2px solid;
     padding: 1em;
     transition: .2s;
 }
@@ -70,25 +70,15 @@ h1 {
 .billeterie-content-left:hover,
 .billeterie-content-center:hover,
 .billeterie-content-right:hover {
-    border: #faf6e7 2px solid;
-    background-color: #faf6e7;
+    background-color: #2c45d3;
+    border: #fff 2px solid;
     transition: .2s;
-    & .billeterie-content-left h2,
-    .billeterie-content-center h2,
-    .billeterie-content-right h2 {
-        background-color: #2c45d3;
-        color: #1f242d;
-    }
-
 }
 
 .billeterie-content-left h2,
 .billeterie-content-center h2,
 .billeterie-content-right h2 {
-    background-color: #ffffff;
-    color: #1f242d;
-    padding: 10px;
-    border-radius: 5px;
+    color: #fff;
 }
 
 .billeterie-content-left h3,
@@ -100,7 +90,6 @@ h1 {
 .billeterie-content-left p,
 .billeterie-content-center p,
 .billeterie-content-right p {
-    margin: 10px 0;
     color: #ffffff;
 }
 
