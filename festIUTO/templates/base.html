@@ -1,85 +1,88 @@
 <!DOCTYPE html>
-<head>
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-</head>
-<body>
-        <!-- Insérez la valeur user_id dans un élément caché -->
-        <input type="hidden" id="user_id" value="{{ user_id }}">
-        <header class="header">
-            <nav class="nav">
-                <ul class="liste-nav">
-                    <li class="icon-logo"><a href="{{ url_for('index') }}"><img src="../static/img/icon-logo.png" alt="logo festival"></a></li>
-                    <li id="element-a-cacher1"><a href="{{ url_for('index') }}">Accueil</a></li>
-                    <li id="element-a-cacher2"><a href="{{ url_for('artistes') }}">Artistes</a></li>
-                    <li id="element-a-cacher3"><a href="{{ url_for('billeterie') }}">Billeterie</a></li>
-                    <li id="element-a-cacher4"><a href="{{ url_for('planning') }}">Planning</a></li>
-                    <li id="element-a-cacher5"><a href="{{ url_for('boutique') }}">Boutique</a></li>
-                    <li id="element-a-cacher6"><a href="{{ url_for('contact') }}">Contact</a></li>
-                    <li id="barre-recherche">
-                        <form>
-                            <input type="search" id="recherche" name="recherche" placeholder="Saisissez votre texte ici...">
-                        </form>
-                    </li>
-                    <!-- <li><button id="icon-filtre"><img src="../static/img/icon-filtre.png" alt="icon pour filtrer les recherches"></button></li> -->
-                    <li><button id="icon-loupe-white"><img src="../static/img/icon-loupe-white.png" alt="icon loupe pour rechercher"></button></li>
-                    <li><button id="icon-user"><img src="../static/img/icon-user.png" alt="icon user"></button></li>
-                </ul>
-            </nav>
-            <nav class="navbarMobile">
-                <button id="menuToggle"><img src="../static/img/menu.png" alt="logo du menu"></button>
-                <button id="croixToggle"><img src="../static/img/croix-menu.png" alt="logo du menu"></button>
-                <div id="menuButton">
-                    <div id="overlay" class="overlay">
-                        <div id="menu" class="menu">
-                            <ul>
-                                <li id="nav-elem-1"><a href="#" class="active">Accueil</a></li>
-                                <li id="nav-elem-2"><a href="#">Programmation</a></li>
-                                <li id="nav-elem-3"><a href="#">Billeterie</a></li>
-                                <li id="nav-elem-4"><a href="#">Plan festival</a></li>
-                                <li id="nav-elem-5"><a href="#">Association</a></li>
-                                <li id="nav-elem-6"><a href="#">Boutique</a></li>
-                                <li id="nav-elem-7"><a href="#">Contact</a></li>
-                            </ul>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='./css/header.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='./css/footer.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        {% block styles %}
+        {% endblock %}
+    </head>
+    <body>
+            <!-- Insérez la valeur user_id dans un élément caché -->
+            <input type="hidden" id="user_id" value="{{ user_id }}">
+            <header class="header">
+                <nav class="nav">
+                    <ul class="liste-nav">
+                        <li class="icon-logo"><a href="{{ url_for('index') }}"><img src="../static/img/icon-logo.png" alt="logo festival"></a></li>
+                        <li id="element-a-cacher1"><a href="{{ url_for('index') }}">Accueil</a></li>
+                        <li id="element-a-cacher2"><a href="{{ url_for('artistes') }}">Artistes</a></li>
+                        <li id="element-a-cacher3"><a href="{{ url_for('billeterie') }}">Billeterie</a></li>
+                        <li id="element-a-cacher4"><a href="{{ url_for('planning') }}">Planning</a></li>
+                        <li id="element-a-cacher5"><a href="{{ url_for('boutique') }}">Boutique</a></li>
+                        <li id="element-a-cacher6"><a href="{{ url_for('contact') }}">Contact</a></li>
+                        <li id="barre-recherche">
+                            <form>
+                                <input type="search" id="recherche" name="recherche" placeholder="Saisissez votre texte ici...">
+                            </form>
+                        </li>
+                        <!-- <li><button id="icon-filtre"><img src="../static/img/icon-filtre.png" alt="icon pour filtrer les recherches"></button></li> -->
+                        <li><button id="icon-loupe-white"><img src="../static/img/icon-loupe-white.png" alt="icon loupe pour rechercher"></button></li>
+                        <li><button id="icon-user"><img src="../static/img/icon-user.png" alt="icon user"></button></li>
+                    </ul>
+                </nav>
+                <nav class="navbarMobile">
+                    <button id="menuToggle"><img src="../static/img/menu.png" alt="logo du menu"></button>
+                    <button id="croixToggle"><img src="../static/img/croix-menu.png" alt="logo du menu"></button>
+                    <div id="menuButton">
+                        <div id="overlay" class="overlay">
+                            <div id="menu" class="menu">
+                                <ul>
+                                    <li id="nav-elem-1"><a href="#" class="active">Accueil</a></li>
+                                    <li id="nav-elem-2"><a href="#">Programmation</a></li>
+                                    <li id="nav-elem-3"><a href="#">Billeterie</a></li>
+                                    <li id="nav-elem-4"><a href="#">Plan festival</a></li>
+                                    <li id="nav-elem-5"><a href="#">Association</a></li>
+                                    <li id="nav-elem-6"><a href="#">Boutique</a></li>
+                                    <li id="nav-elem-7"><a href="#">Contact</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                </nav>
+            </header>
+            {% block base %}{% endblock %}
+            <footer class="footer">
+                <div class="container-top-footer">
+                    <a href="https://www.univ-orleans.fr/fr/iut-orleans" target="_blank" class="element" id="logo-iut"><img src="../static/img/logo-iut.png" alt="logo de l'iut"></a>
+                    <p class="element"><a href="{{ url_for('conditionDeService') }}">Condition de service</a></p>
+                    <p class="element"><a href="{{ url_for('politiqueDeConfidentialite') }}">Politique de confidentialité</a></p>
+                    <p class="element"><a href="{{ url_for('politiqueDeRemboursement') }}">Politique de remboursement</a></p>
+                    <ul class="reseaux-sociaux">
+                        <a class="element" href="https://www.instagram.com/" target="_blank"><i class='bx bxl-instagram'></i></a>
+                        <a class="element" href="https://www.facebook.com/?locale=fr_FR" target="_blank"><i class='bx bxl-facebook'></i></a>
+                        <a class="element" href="https://www.youtube.com/" target="_blank"><i class='bx bxl-youtube'></i></a>
+                        <a class="element" href="https://open.spotify.com/intl-fr" target="_blank"><i class='bx bxl-spotify'></i></a>
+                    </ul>
                 </div>
-            </nav>
-        </header>
-        {% block base %}{% endblock %}
-        <footer class="footer">
-            <div class="container-top-footer">
-                <a href="https://www.univ-orleans.fr/fr/iut-orleans" target="_blank" class="element" id="logo-iut"><img src="../static/img/logo-iut.png" alt="logo de l'iut"></a>
-                <p class="element"><a href="{{ url_for('conditionDeService') }}">Condition de service</a></p>
-                <p class="element"><a href="{{ url_for('politiqueDeConfidentialite') }}">Politique de confidentialité</a></p>
-                <p class="element"><a href="{{ url_for('politiqueDeRemboursement') }}">Politique de remboursement</a></p>
-                <ul class="reseaux-sociaux">
-                    <a class="element" href="https://www.instagram.com/" target="_blank"><i class='bx bxl-instagram'></i></a>
-                    <a class="element" href="https://www.facebook.com/?locale=fr_FR" target="_blank"><i class='bx bxl-facebook'></i></a>
-                    <a class="element" href="https://www.youtube.com/" target="_blank"><i class='bx bxl-youtube'></i></a>
-                    <a class="element" href="https://open.spotify.com/intl-fr" target="_blank"><i class='bx bxl-spotify'></i></a>
-                </ul>
-            </div>
-            <div class="container-bottom-footer">
-                <ul>
-                    <p>Léo Lucidor</p>
-                    <p>Colin Pilet</p>
-                    <p>Anna Lallier</p>
-                    <p>Dorian Ludman &copy;</p>
-                </ul>
-            </div>
-        </footer>
-        <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-        <script src="../static/js/menu.js"></script>
-        <script src="../static/js/cacher-elem.js"></script>
-        <script src="../static/js/header.js"></script>
-        <script src="../static/js/bouton-compte.js"></script>
-        <script src="../static/js/affiche-on-scroll.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</body>
+                <div class="container-bottom-footer">
+                    <ul>
+                        <p>Léo Lucidor</p>
+                        <p>Colin Pilet</p>
+                        <p>Anna Lallier</p>
+                        <p>Dorian Ludman &copy;</p>
+                    </ul>
+                </div>
+            </footer>
+            <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+            <script src="../static/js/menu.js"></script>
+            <script src="../static/js/cacher-elem.js"></script>
+            <script src="../static/js/header.js"></script>
+            <script src="../static/js/bouton-compte.js"></script>
+            <script src="../static/js/affiche-on-scroll.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </body>
 </html>

@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<head>
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/billeterie.css') }}"> -->
-    <link rel="stylesheet" href="../static/css/billeterie.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/musicPlayer.css') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-</head>
-<body>
-    {% extends "base.html" %}
-    {% block base %}
+{% extends "base.html" %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='./css/billeterie.css') }}">
+{% endblock %}
+{% block base %}
 
     <div class="billeterie-container">
         <div class="billeterie-title">
@@ -28,9 +20,6 @@
                 <div class="billeterie-content-left-description">
                     <p>Accès à tous les concerts du jour</p>
                 </div>
-                <div class="billeterie-content-left-button">
-                    <a href="{{ url_for('billeterie') }}">Acheter</a>
-                </div>
             </div>
             <div class="billeterie-content-center">
                 <div class="billeterie-content-center-title">
@@ -41,9 +30,6 @@
                 </div>
                 <div class="billeterie-content-center-description">
                     <p>Accès à tous les concerts des 2 jours</p>
-                </div>
-                <div class="billeterie-content-center-button">
-                    <a href="{{ url_for('billeterie') }}">Acheter</a>
                 </div>
             </div>
             <div class="billeterie-content-right">
@@ -56,13 +42,8 @@
                 <div class="billeterie-content-right-description">
                     <p>Accès à tous les concerts du festival</p>
                 </div>
-                <div class="billeterie-content-right-button">
-                    <a href="{{ url_for('billeterie') }}">Acheter</a>
-                </div>
             </div>
         </div>
     </div>
 
-    {% endblock %}
-</body>
-</html>
+{% endblock %}
