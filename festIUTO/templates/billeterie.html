@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/billeterie.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/billeterie.css') }}"> -->
+    <link rel="stylesheet" href="../static/css/billeterie.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/musicPlayer.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,7 +40,7 @@
                     <h3>35€</h3>
                 </div>
                 <div class="billeterie-content-center-description">
-                    <p>Accès à tous les concerts du festival</p>
+                    <p>Accès à tous les concerts des 2 jours</p>
                 </div>
                 <div class="billeterie-content-center-button">
                     <a href="{{ url_for('billeterie') }}">Acheter</a>
