@@ -30,3 +30,62 @@ body {
 .footer {
     margin-top: 30vh;
 }
+
+/* billeterie */
+
+.billeterie-container {
+    text-align: center;
+}
+
+.billeterie-title {
+    margin-bottom: 20px;
+}
+
+.billeterie-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.billeterie-content-left,
+.billeterie-content-center,
+.billeterie-content-right {
+    width: 30%;
+}
+
+.billeterie-content-left h2,
+.billeterie-content-center h2,
+.billeterie-content-right h2 {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.billeterie-content-left h3,
+.billeterie-content-center h3,
+.billeterie-content-right h3 {
+    color: #3498db;
+}
+
+.billeterie-content-left p,
+.billeterie-content-center p,
+.billeterie-content-right p {
+    margin: 10px 0;
+}
+
+.billeterie-content-left a,
+.billeterie-content-center a,
+.billeterie-content-right a {
+    display: inline-block;
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.billeterie-content-left a:hover,
+.billeterie-content-center a:hover,
+.billeterie-content-right a:hover {
+    background-color: #2980b9;
+}

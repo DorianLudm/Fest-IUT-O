@@ -11,6 +11,57 @@
 <body>
     {% extends "base.html" %}
     {% block base %}
+
+    <div class="billeterie-container">
+        <div class="billeterie-title">
+            <h1>Billeterie</h1>
+        </div>
+        <div class="billeterie-content">
+            <div class="billeterie-content-left">
+                <div class="billeterie-content-left-title">
+                    <h2>Pass 1 jour</h2>
+                </div>
+                <div class="billeterie-content-left-price">
+                    <h3>20€</h3>
+                </div>
+                <div class="billeterie-content-left-description">
+                    <p>Accès à tous les concerts du jour</p>
+                </div>
+                <div class="billeterie-content-left-button">
+                    <a href="{{ url_for('billeterie') }}">Acheter</a>
+                </div>
+            </div>
+            <div class="billeterie-content-center">
+                <div class="billeterie-content-center-title">
+                    <h2>Pass 2 jours</h2>
+                </div>
+                <div class="billeterie-content-center-price">
+                    <h3>35€</h3>
+                </div>
+                <div class="billeterie-content-center-description">
+                    <p>Accès à tous les concerts du festival</p>
+                </div>
+                <div class="billeterie-content-center-button">
+                    <a href="{{ url_for('billeterie') }}">Acheter</a>
+                </div>
+            </div>
+            <div class="billeterie-content-right">
+                <div class="billeterie-content-right-title">
+                    <h2>Pass semaines</h2>
+                </div>
+                <div class="billeterie-content-right-price">
+                    <h3>100€</h3>
+                </div>
+                <div class="billeterie-content-right-description">
+                    <p>Accès à tous les concerts du festival</p>
+                </div>
+                <div class="billeterie-content-right-button">
+                    <a href="{{ url_for('billeterie') }}">Acheter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% endblock %}
 </body>
 </html>
