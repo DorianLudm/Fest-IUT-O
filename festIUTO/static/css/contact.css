@@ -5,8 +5,16 @@ body {
     margin: 0;
 }
 
-#element-a-cacher7 a {
+#element-a-cacher6 a {
     color: #2c45d3;
+}
+
+h1 {
+    color: #faf6e7;
+    font-size: 50px;
+    text-align: center;
+    font-weight: 400;
+    margin-top: 2em;
 }
 
 /* debut prog */    
@@ -28,5 +36,62 @@ body {
 }
 
 .footer {
-    margin-top: 30vh;
+    margin-top: 10vh;
+}
+
+/* contact */
+
+.contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    color: #faf6e7;
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
+
+input {
+    width: 30vw;
+    height: 35px;
+    border-radius: 0.5em;
+    border: none;
+    margin-bottom: 0.5em;
+}
+
+textarea {
+    width: 30vw;
+    height: 15vh;
+    border-radius: 0.5em;
+    border: none;
+    margin-bottom: 1em;
+}
+
+button[type="submit"] {
+    font-family: Montserrat;
+    width: 10vw;
+    height: 50px;
+    border-radius: 0.5em;
+    border: none;
+    background-color: #2c45d3;
+    color: #faf6e7;
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    transition: 0.5s;
+}
+
+button[type="submit"]:hover {
+    box-shadow: 0 0 10px #2c45d3;
+    transition: 0.5s;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
 }
