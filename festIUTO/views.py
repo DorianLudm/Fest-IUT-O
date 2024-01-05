@@ -59,6 +59,27 @@ def index():
             title="Festiut'O | Accueil",
         )
 
+@app.route('/pass-1-jour')
+def pass1jour():
+    return render_template(
+        "pass1jour.html",
+        title="Festiut'O | Pass",
+    )
+
+@app.route('/pass-2-jours')
+def pass2jours():
+    return render_template(
+        "pass2jours.html",
+        title="Festiut'O | Pass",
+    )
+
+@app.route('/pass-semaine')
+def passSemaine():
+    return render_template(
+        "passsemaine.html",
+        title="Festiut'O | Pass",
+    )
+
 
 @app.route('/artistes')
 def artistes():
