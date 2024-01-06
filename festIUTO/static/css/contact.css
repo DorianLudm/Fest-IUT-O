@@ -48,28 +48,6 @@ h1 {
     align-items: center;
 }
 
-label {
-    color: #faf6e7;
-    font-size: 1.5em;
-    margin-bottom: 1em;
-}
-
-input {
-    width: 30vw;
-    height: 35px;
-    border-radius: 0.5em;
-    border: none;
-    margin-bottom: 0.5em;
-}
-
-textarea {
-    width: 30vw;
-    height: 15vh;
-    border-radius: 0.5em;
-    border: none;
-    margin-bottom: 1em;
-}
-
 button[type="submit"] {
     font-family: Montserrat;
     width: 10vw;
@@ -94,4 +72,61 @@ button[type="submit"]:hover {
     justify-content: center;
     align-items: center;
     margin-top: 2em;
+}
+
+label {
+    position: absolute;
+    top:0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s;
+  }
+  
+  .form-group input:focus ~ label,
+  .form-group input:valid ~ label {
+    top: -20px;
+    left: 0;
+    font-size: 12px;
+  }
+
+  .form-group {
+    position: relative;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+  }
+
+textarea {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+    min-height: 100px;
+    min-width: 400px;
+    max-width: 800px;
+    max-height: 200px;
+}
+
+.form-group textarea:focus ~ label,
+.form-group textarea:valid ~ label {
+  top: -20px;
+  left: 0;
+  font-size: 12px;
 }
