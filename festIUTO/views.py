@@ -49,7 +49,33 @@ class InscriptionForm(FlaskForm):
         # passwd = self.password.data
         return (email, mdp, nom, prenom)
 
+class PayementForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    email = StringField('email', validators=[DataRequired()])
+    adresse = StringField('adresse', validators=[DataRequired()])
+    codePostal = StringField('codePostal', validators=[DataRequired()])
+    ville = StringField('ville', validators=[DataRequired()])
+    pays = StringField('pays', validators=[DataRequired()])
+    tel = StringField('téléphone', validators=[DataRequired()])
+    numeroCarte = StringField('numéro de carte', validators=[DataRequired()])
+    dateCarte = DateField('date de validité', validators=[DataRequired()])
+    codeCarte = StringField('code de sécurité', validators=[DataRequired()])
+    next = HiddenField()
 
+    def get_payement_user(self):
+        email = self.email.data
+        nom = self.nom.data
+        prenom = self.prenom.data
+        adresse = self.adresse.data
+        codePostal = self.codePostal.data
+        ville = self.ville.data
+        pays = self.pays.data
+        tel = self.tel.data
+        numeroCarte = self.numeroCarte.data
+        dateCarte = self.dateCarte.data
+        codeCarte = self.codeCarte.data
+        return (email, nom, prenom, adresse, codePostal, ville, pays, tel, numeroCarte, dateCarte, codeCarte)
 
 
 @app.route('/')
@@ -203,6 +229,16 @@ def supprimerFav(id):
 
 @app.route("/logout/")
 def logout():
-    # print(session['utilisateur'])
     session.pop('utilisateur', None)
     return redirect(url_for('compte'))
+
+@app.route('/payement', methods=("GET", "POST",))
+def payement():
+    passe = request.args.get('pass')
+    f = PayementForm()
+    return render_template(
+            "payement.html",
+            title="Festiut'O | Payement",
+            passe=passe,
+            formPayement=f
+        )
