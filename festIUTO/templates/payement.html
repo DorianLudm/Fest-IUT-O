@@ -17,52 +17,40 @@
                 <div class="container-payement-left">
                     {{ formPayement.hidden_tag() }}
                     <div class="container-payement-left-input">
-                        <label class="element" for="nom">Nom</label>
-                        {{ formPayement.nom(size=50, class_="form-control element") }}
-                    </div>
-                    <div class="container-payement-left-input">
-                        <label class="element" for="prenom">Prénom</label>
-                        {{ formPayement.prenom(size=50, class_="form-control element") }}    
-                    </div>            
-                    <div class="container-payement-left-input">
-                        <label class="element" for="email">Email</label>
-                        {{ formPayement.email(size=50, class_="form-control element") }}  
-                    </div>                  
+                        <label class="element" for="pays">Pays</label>
+                        {{ formPayement.pays(size=50, class_="form-control element") }} 
+                    </div>  
                     <div class="container-payement-left-input">
                         <label class="element" for="adresse">Adresse</label>
                         {{ formPayement.adresse(size=50, class_="form-control element") }}  
                     </div>                
                     <div class="container-payement-left-input">
+                        <label class="element" for="carte">Numéro de carte</label>
+                        {{ formPayement.numeroCarte(size=50, class_="form-control element") }}  
+                    </div>  
+                    <div class="container-payement-left-input">
                         <label class="element" for="code_postal">Code postal</label>
                         {{ formPayement.codePostal(size=50, class_="form-control element") }}  
+                    </div>  
+                    <div class="container-payement-left-input">
+                        <label class="element" for="telephone">Téléphone</label>
+                        {{ formPayement.tel(size=50, class_="form-control element") }}   
+                    </div>                                  
+                    <div class="container-payement-left-input">
+                        <label class="element" for="code">Code de sécurité</label>
+                        {{ formPayement.codeCarte(size=50, class_="form-control element") }}  
                     </div>                 
                     <div class="container-payement-left-input">
                         <label class="element" for="ville">Ville</label>
                         {{ formPayement.ville(size=50, class_="form-control element") }} 
-                    </div>                   
+                    </div>                       
                     <div class="container-payement-left-input">
-                        <label class="element" for="pays">Pays</label>
-                        {{ formPayement.pays(size=50, class_="form-control element") }} 
-                    </div>                 
-                    <div class="container-payement-left-input">
-                        <label class="element" for="telephone">Téléphone</label>
-                        {{ formPayement.tel(size=50, class_="form-control element") }}   
-                    </div>                
-                    <div class="container-payement-left-input">
-                        <label class="element" for="carte">Numéro de carte</label>
-                        {{ formPayement.numeroCarte(size=50, class_="form-control element") }}  
-                    </div>         
+                        <input class="element" type="submit" value="Payer">
+                    </div>     
                     <div class="container-payement-left-input">
                         <label class="element" for="date">Date d'expiration</label>
                         {{ formPayement.dateCarte(size=50, class_="form-control element") }}  
-                    </div>
-                    <div class="container-payement-left-input">
-                        <input class="element" type="submit" value="Payer">
-                    </div>                
-                    <div class="container-payement-left-input">
-                        <label class="element" for="code">Code de sécurité</label>
-                        {{ formPayement.codeCarte(size=50, class_="form-control element") }}  
-                    </div>               
+                    </div>                        
                 </div>
             </form>
         </div>
