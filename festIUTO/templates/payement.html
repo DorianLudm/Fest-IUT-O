@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/payement.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    {% if 'utilisateur' in session %}
+        <h1 class="element">Informations de payement</h1>
+        <div class="container-payement">
+            <form action="#" method="POST">
+                <div class="container-payement-left">
+                    {{ formPayement.hidden_tag() }}
+                    <div class="container-payement-left-input">
+                        <label class="element" for="pays">Pays</label>
+                        {{ formPayement.pays(size=50, class_="form-control element") }} 
+                    </div>  
+                    <div class="container-payement-left-input">
+                        <label class="element" for="adresse">Adresse</label>
+                        {{ formPayement.adresse(size=50, class_="form-control element") }}  
+                    </div>                
+                    <div class="container-payement-left-input">
+                        <label class="element" for="carte">Numéro de carte</label>
+                        {{ formPayement.numeroCarte(size=50, class_="form-control element") }}  
+                    </div>  
+                    <div class="container-payement-left-input">
+                        <label class="element" for="code_postal">Code postal</label>
+                        {{ formPayement.codePostal(size=50, class_="form-control element") }}  
+                    </div>  
+                    <div class="container-payement-left-input">
+                        <label class="element" for="telephone">Téléphone</label>
+                        {{ formPayement.tel(size=50, class_="form-control element") }}   
+                    </div>                                  
+                    <div class="container-payement-left-input">
+                        <label class="element" for="code">Code de sécurité</label>
+                        {{ formPayement.codeCarte(size=50, class_="form-control element") }}  
+                    </div>                 
+                    <div class="container-payement-left-input">
+                        <label class="element" for="ville">Ville</label>
+                        {{ formPayement.ville(size=50, class_="form-control element") }} 
+                    </div>                       
+                    <div class="container-payement-left-input">
+                        <input class="element" type="submit" value="Payer">
+                    </div>     
+                    <div class="container-payement-left-input">
+                        <label class="element" for="date">Date d'expiration</label>
+                        {{ formPayement.dateCarte(size=50, class_="form-control element") }}  
+                    </div>                        
+                </div>
+            </form>
+        </div>
+    {% else %}
+        <h1 class="element" style="margin-top: 30vh; margin-bottom: 30vh;">Vous devez être connecté pour accéder à cette page</h1>
+    {% endif %}
+    {% endblock %}
+</body>
+</html>

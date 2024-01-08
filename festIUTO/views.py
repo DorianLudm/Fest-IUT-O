@@ -49,7 +49,33 @@ class InscriptionForm(FlaskForm):
         # passwd = self.password.data
         return (email, mdp, nom, prenom)
 
+class PayementForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    email = StringField('email', validators=[DataRequired()])
+    adresse = StringField('adresse', validators=[DataRequired()])
+    codePostal = StringField('codePostal', validators=[DataRequired()])
+    ville = StringField('ville', validators=[DataRequired()])
+    pays = StringField('pays', validators=[DataRequired()])
+    tel = StringField('téléphone', validators=[DataRequired()])
+    numeroCarte = StringField('numéro de carte', validators=[DataRequired()])
+    dateCarte = DateField('date de validité', validators=[DataRequired()])
+    codeCarte = StringField('code de sécurité', validators=[DataRequired()])
+    next = HiddenField()
 
+    def get_payement_user(self):
+        email = self.email.data
+        nom = self.nom.data
+        prenom = self.prenom.data
+        adresse = self.adresse.data
+        codePostal = self.codePostal.data
+        ville = self.ville.data
+        pays = self.pays.data
+        tel = self.tel.data
+        numeroCarte = self.numeroCarte.data
+        dateCarte = self.dateCarte.data
+        codeCarte = self.codeCarte.data
+        return (email, nom, prenom, adresse, codePostal, ville, pays, tel, numeroCarte, dateCarte, codeCarte)
 
 
 @app.route('/')
@@ -59,9 +85,30 @@ def index():
             title="Festiut'O | Accueil",
         )
 
+@app.route('/pass-1-jour')
+def pass1jour():
+    return render_template(
+        "pass1jour.html",
+        title="Festiut'O | Pass",
+    )
 
-@app.route('/programmation')
-def programmation():
+@app.route('/pass-2-jours')
+def pass2jours():
+    return render_template(
+        "pass2jours.html",
+        title="Festiut'O | Pass",
+    )
+
+@app.route('/pass-semaine')
+def passSemaine():
+    return render_template(
+        "passsemaine.html",
+        title="Festiut'O | Pass",
+    )
+
+
+@app.route('/artistes')
+def artistes():
     if 'utilisateur' in session:
         artiste=get_groupe_non_favoris(session['utilisateur'][2])
         artiste_fav=get_groupe_favoris(session['utilisateur'][2])
@@ -72,8 +119,8 @@ def programmation():
         if len(artiste) == 0:
             yaQueDesFavoris=True
         return render_template(
-            "programmation.html", 
-            title="Festiut'O | Programmation", 
+            "artistes.html", 
+            title="Festiut'O | Artistes", 
             artiste=artiste,
             artiste_fav=artiste_fav,
             yaFavoris=yaFavoris,
@@ -81,11 +128,31 @@ def programmation():
         )  
     else:
         return render_template(
-            "programmation.html",
-            title="Festiut'O | Programmation",
+            "artistes.html",
+            title="Festiut'O | Artistes",
             artiste=get_all_groupe(),
         )  
     
+@app.route('/planning')
+def planning():
+    return render_template(
+        "planning.html",
+        title="Festiut'O | Planning",
+    )
+
+@app.route('/billeterie')
+def billeterie():
+    return render_template(
+        "billeterie.html",
+        title="Festiut'O | Billeterie",
+    )
+
+@app.route('/boutique')
+def boutique():
+    return render_template(
+        "boutique.html",
+        title="Festiut'O | Boutique"
+    )
 
 @app.route('/condition-de-service')
 def conditionDeService():
@@ -153,15 +220,25 @@ def profilGroupe(id):
 @app.route("/ajouter-fav/<int:id>", methods=("GET",))
 def ajouterFav(id):
     add_groupe_favoris(session['utilisateur'][2], id)
-    return redirect(url_for('programmation'))
+    return redirect(url_for('artistes'))
 
 @app.route("/supprimer-fav/<int:id>", methods=("GET",))
 def supprimerFav(id):
     delete_groupe_favoris(session['utilisateur'][2], id)
-    return redirect(url_for('programmation'))
+    return redirect(url_for('artistes'))
 
 @app.route("/logout/")
 def logout():
-    # print(session['utilisateur'])
     session.pop('utilisateur', None)
     return redirect(url_for('compte'))
+
+@app.route('/payement', methods=("GET", "POST",))
+def payement():
+    passe = request.args.get('pass')
+    f = PayementForm()
+    return render_template(
+            "payement.html",
+            title="Festiut'O | Payement",
+            passe=passe,
+            formPayement=f
+        )

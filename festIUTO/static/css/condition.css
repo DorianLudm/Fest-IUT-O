@@ -1,10 +1,14 @@
 body {
     font-family: Montserrat;
-    background: #ddd8d8; /* #1f242d */ 
+    background: #1f242d;
     /* Pour une compatibilité maximale avec les navigateurs */
     background-repeat: no-repeat;
     background-attachment: fixed;
     margin: 0%;
+}
+
+nav {
+    background-color: rgba(255, 255, 255, 0.3) !important;
 }
 
 .header {
@@ -47,7 +51,7 @@ input[type="text"]::placeholder {
 
 .titre {
     margin-top: 20vh;
-    color: #1f242d !important;
+    color: #fff !important;
     text-align: center;
     font-size: 70px !important;
     font-weight: 700; 
@@ -117,7 +121,7 @@ input[type="text"]::placeholder {
 }
 
 .section-info p {
-    color: #1f242d ;
+    color: #fff ;
     font-weight: 400;
 }
 

@@ -1,0 +1,111 @@
+body {
+    font-family: Montserrat;
+    background: #1f242d;
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    background-color: transparent !important;
+  }
+
+
+#element-a-cacher3 a {
+    color: #2c45d3;
+}
+
+/* debut prog */    
+.liste-artiste {
+    display: flex;
+    flex-wrap: wrap;   
+    justify-content: space-around;
+}
+
+.section-artiste {
+    background-color: #1f242d;
+    border-radius: 1em;
+    padding: 1em;
+    margin: 2em;
+}
+
+.section-artiste li {
+    color: #fff;
+}
+
+.footer {
+    margin-top: 10vh;
+}
+
+/* billeterie */
+
+h1 {
+    color: #faf6e7;
+    font-size: 50px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.billeterie-container {
+    text-align: center;
+    margin-top: 20vh;
+    margin-left: 15vw;
+    margin-right: 15vw;
+}
+
+.billeterie-title {
+    margin-bottom: 20px;
+}
+
+.billeterie-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.billeterie-content a {
+    text-decoration: none;
+}
+
+.billeterie-content-left,
+.billeterie-content-center,
+.billeterie-content-right {
+    flex-basis: 25%;
+    border: #2c45d3 2px solid;
+    border-radius: 1em;
+    padding: 1.5em;
+    transition: .2s;
+    max-width: 250px;
+}
+
+.billeterie-content-left:hover,
+.billeterie-content-center:hover,
+.billeterie-content-right:hover {
+    background-color: #2c45d3;
+    transition: .2s;
+}
+
+.billeterie-content-left h2,
+.billeterie-content-center h2,
+.billeterie-content-right h2 {
+    color: #fff;
+}
+
+.billeterie-content-left h3,
+.billeterie-content-center h3,
+.billeterie-content-right h3 {
+    color: #ffffff;
+}
+
+.billeterie-content-left p,
+.billeterie-content-center p,
+.billeterie-content-right p {
+    color: #ffffff;
+}
+
+@media  screen and (max-width: 1470px) {
+    .billeterie-content {
+        justify-content: center;
+        align-items: center;
+    }
+}

@@ -9,6 +9,7 @@
 <body>
     {% extends "base.html" %}
     {% block base %}
+    <!-- quand on est pas co -->
     {% if 'utilisateur' not in session %}
     <div id="login-container">
     <div id="login-box">
@@ -57,7 +58,16 @@
     </div>
     </div>
     {% else %}
-    <a class="bienvenue-message" href="{{ url_for('logout') }}"><button>Se deconnecter</button></a>
+    <!-- quand on est co -->
+    <div class="container-all">
+      <div class="container-left">
+        <h2>Modifier votre compte {{ session['utilisateur'][1] }}</h2>
+      </div>
+      <div class="container-right">
+        <h2>Vos billets</h2>
+      </div>
+      <a class="deco-btn" href="{{ url_for('logout') }}"><button>Se déconnecter</button></a>
+    </div>
     {% endif %}
 </body>
     <script src="../static/js/signup-login.js"></script>
