@@ -5,6 +5,10 @@ body {
     margin: 0;
 }
 
+nav {
+    background-color: transparent !important;
+  }
+
 #element-a-cacher7 a {
     color: #2c45d3;
 }

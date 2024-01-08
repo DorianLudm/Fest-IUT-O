@@ -4,6 +4,10 @@
     background-color: #2c45d3 !important;
 }
 
+nav {
+  background-color: transparent !important;
+}
+
 body {
     font-family: Montserrat;
     background: #1f242d;
@@ -175,3 +179,56 @@ body {
     align-items: center;
   }
   
+
+  /* quand on est co */
+
+.deco-btn {
+  flex-basis: 100%;
+  text-align: center;
+  margin-top: 10vh;
+}
+
+.deco-btn button {
+  background-color: #2c45d3;
+  border-radius: 5px;
+  border: 0;
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 16px;
+  text-decoration: none;
+  transition: .5s;
+}
+
+.deco-btn button:hover {
+  box-shadow: 0 0 15px #2c45d3;
+  transition: .5s;
+}
+
+h2 {
+  color: #fff;
+  text-align: center;
+  font-size: 2em;
+}
+
+.container-all {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20vh;
+}
+
+.container-left {
+  flex-basis: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-right {
+  flex-basis: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+

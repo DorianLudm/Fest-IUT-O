@@ -5,6 +5,11 @@ body {
     margin: 0;
 }
 
+nav {
+    background-color: transparent !important;
+  }
+
+
 /* debut prog */    
 .container-profil {
     margin-top: 20vh;
