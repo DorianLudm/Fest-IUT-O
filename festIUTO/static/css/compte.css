@@ -271,3 +271,24 @@ h2 {
     outline: none;
     background: transparent;
   }
+
+/* billet */
+
+.container-billet {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  overflow-x: scroll;
+  max-height: 55vh;
+}
+
+.billet {
+  text-align: center;
+  flex-basis: 100%;
+  background-color: #faf6e7;
+  border-radius: 1em;
+  padding: 1em;
+  margin: 2em;
+  font-size: 1.2em;
+}
