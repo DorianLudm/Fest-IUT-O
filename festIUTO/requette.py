@@ -26,6 +26,15 @@ def get_password_with_email(cnx, email):
     except: 
         print("Erreur lors de la requête get_password_with_email")
 
+def modifier_acheteur(cnx, nom, prenom, email, mdp):
+    try:
+        cnx.execute(text("UPDATE ACHETEUR SET nom = '"+nom+"', prenom = '"+prenom+"', mdp = '"+mdp+"' WHERE mailAcheteur = '"+email+"';"))
+        print(text("UPDATE ACHETEUR SET nom = '"+nom+"', prenom = '"+prenom+"', mdp = '"+mdp+"' WHERE mailAcheteur = '"+email+"';"))
+        cnx.commit()
+        print("Modification réussie")
+    except:
+        print("Erreur lors de la requête modifier_acheteur")
+
 def inscription_acheteur(cnx, email, mdp, nom, prenom):
     try:
         cnx.execute(text("INSERT INTO ACHETEUR (mailAcheteur, mdp, nom, prenom) VALUES ('"+email+"', '"+mdp+"', '"+nom+"', '"+prenom+"');"))

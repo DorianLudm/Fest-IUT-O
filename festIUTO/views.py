@@ -77,6 +77,21 @@ class PayementForm(FlaskForm):
         codeCarte = self.codeCarte.data
         return (email, nom, prenom, adresse, codePostal, ville, pays, tel, numeroCarte, dateCarte, codeCarte)
 
+class ModifierForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    mail = StringField('email', validators=[DataRequired()])
+    mdp = PasswordField('Password', validators=[DataRequired()])
+    confirmerMdp = PasswordField('Confirmer Password', validators=[DataRequired()])
+
+    def get_modifier_user(self):
+        nom = self.nom.data
+        prenom = self.prenom.data
+        mail = self.mail.data
+        mdp = self.mdp.data
+        confirmerMdp = self.confirmerMdp.data
+        return (nom, prenom, mail, mdp, confirmerMdp)
+
 
 @app.route('/')
 def index():
@@ -175,6 +190,7 @@ def politiqueDeRemboursement():
 @app.route('/compte', methods=("GET","POST",))
 def compte():
     f = LoginForm()
+    modifForm = ModifierForm()
     f2 = InscriptionForm()
     # inscription
     if f2.validate_on_submit():
@@ -189,10 +205,32 @@ def compte():
             session['utilisateur'] = user
             print("login : "+str(session['utilisateur']))
             return redirect(url_for('index'))
+    if 'utilisateur' in session:
+        # modifForm.nom.data = session['utilisateur'][0]
+        # modifForm.prenom.data = session['utilisateur'][1]
+        # modifForm.mail.data = session['utilisateur'][2]
+        # modifForm.mdp.data = get_password_with_email(cnx, session['utilisateur'][2])
+        render_template(
+            "compte.html",
+            title="Festiut'O | Compte",
+            formConnexion=f,
+            formModif = modifForm,
+            formInscription=f2,
+        )
+    if modifForm.validate_on_submit():
+        modif = modifForm.get_modifier_user()
+        if modif[3] == modif[4]:
+            print("modif : "+str(modif))
+            modifier_acheteur(cnx, modif[0], modif[1], modif[2], modif[3])
+            session.pop('utilisateur', None)
+            session['utilisateur'] = get_nom_and_email(cnx, modif[2])
+            return redirect(url_for('compte'))
+        print("mdp non identique")
     return render_template(
         "compte.html",
         title="Festiut'O | Compte",
         formConnexion=f,
+        formModif = modifForm,
         formInscription=f2
         )
 
