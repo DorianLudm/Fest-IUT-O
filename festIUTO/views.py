@@ -211,14 +211,19 @@ def compte():
         # modifForm.prenom.data = session['utilisateur'][1]
         # modifForm.mail.data = session['utilisateur'][2]
         # modifForm.mdp.data = get_password_with_email(cnx, session['utilisateur'][2])
-        print(get_billet_acheteur(cnx, session['utilisateur'][2]))
+        billets = get_billet_acheteur(cnx, session['utilisateur'][2])
+        yaDesBillets = False
+        if len(billets) > 0:
+            yaDesBillets = True
+        print(yaDesBillets)
         return render_template(
             "compte.html",
             title="Festiut'O | Compte",
             formConnexion=f,
             formModif = modifForm,
             formInscription=f2,
-            billets = get_billet_acheteur(cnx, session['utilisateur'][2])
+            billets = billets,
+            yaDesBillets = yaDesBillets
             )
     if modifForm.validate_on_submit():
         modif = modifForm.get_modifier_user()

@@ -108,8 +108,8 @@ def get_profil_groupe(idGroupe):
 def get_billet_acheteur(cnx, mail):
     try:
         liste = []
-        res = cnx.execute(text("SELECT * FROM BILLET NATURAL JOIN ACHETEUR;"))
-        # res = cnx.execute(text("SELECT * FROM BILLET WHERE mailAcheteur = '"+mail+"';"))
+        # res = cnx.execute(text("SELECT * FROM BILLET NATURAL JOIN ACHETEUR;"))
+        res = cnx.execute(text("SELECT * FROM BILLET NATURAL JOIN ACHETEUR WHERE mailAcheteur = '"+mail+"';"))
         for row in res:
             liste.append(row)
         return liste

@@ -61,7 +61,11 @@
     <!-- quand on est co -->
     <div class="container-all">
       <!-- profil -->
-      <div class="container-left">
+      {% if yaDesBillets == False %}
+        <div class="container-left-no-billet">
+      {% else %}
+        <div class="container-left">
+      {% endif %}
         <h2 class="element">Modifier votre compte {{ session['utilisateur'][1] }}</h2>
         <form role="form" method="POST" action ="{{ url_for('compte') }}">
           {{ formModif.hidden_tag() }}
@@ -92,6 +96,7 @@
       </div>
 
       <!-- billet -->
+      {% if yaDesBillets == True %}
       <div class="container-right">
         <h2 class="element">Vos billets</h2>
         <div class="container-billet">
@@ -105,6 +110,7 @@
           {% endfor %}
         </div>
       </div>
+      {% endif %}
       <a class="deco-btn" href="{{ url_for('logout') }}"><button>Se déconnecter</button></a>
     </div>
     {% endif %}
