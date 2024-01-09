@@ -1,4 +1,3 @@
-import pyotp
 from sqlalchemy import text
 from .connexionPythonSQL import *
 from hashlib import sha256
