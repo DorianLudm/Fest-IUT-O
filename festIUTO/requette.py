@@ -104,3 +104,23 @@ def get_profil_groupe(idGroupe):
     except:
         print("Erreur lors de la requête get_profil_groupe")
         return []
+
+def get_billet_acheteur(cnx, mail):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM BILLET NATURAL JOIN ACHETEUR;"))
+        # res = cnx.execute(text("SELECT * FROM BILLET WHERE mailAcheteur = '"+mail+"';"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_billet_acheteur")
+        return []
+
+def delete_billet(cnx, idBillet):
+    try:
+        cnx.execute(text("DELETE FROM BILLET WHERE idBillet = "+str(idBillet)+";"))
+        cnx.commit()
+        print("Suppression réussie")
+    except:
+        print("Erreur lors de la requête delete_billet")

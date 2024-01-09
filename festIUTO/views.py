@@ -206,17 +206,20 @@ def compte():
             print("login : "+str(session['utilisateur']))
             return redirect(url_for('index'))
     if 'utilisateur' in session:
+        print("modif : "+str(session['utilisateur']))
         # modifForm.nom.data = session['utilisateur'][0]
         # modifForm.prenom.data = session['utilisateur'][1]
         # modifForm.mail.data = session['utilisateur'][2]
         # modifForm.mdp.data = get_password_with_email(cnx, session['utilisateur'][2])
-        render_template(
+        print(get_billet_acheteur(cnx, session['utilisateur'][2]))
+        return render_template(
             "compte.html",
             title="Festiut'O | Compte",
             formConnexion=f,
             formModif = modifForm,
             formInscription=f2,
-        )
+            billets = get_billet_acheteur(cnx, session['utilisateur'][2])
+            )
     if modifForm.validate_on_submit():
         modif = modifForm.get_modifier_user()
         if modif[3] == modif[4]:
@@ -231,7 +234,7 @@ def compte():
         title="Festiut'O | Compte",
         formConnexion=f,
         formModif = modifForm,
-        formInscription=f2
+        formInscription=f2,
         )
 
     
@@ -280,3 +283,8 @@ def payement():
             passe=passe,
             formPayement=f
         )
+
+@app.route("/delete-billet/<int:id>", methods=("GET",))
+def deleteBillet(id):
+    delete_billet(cnx, id)
+    return redirect(url_for('compte'))

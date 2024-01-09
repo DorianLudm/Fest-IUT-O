@@ -205,6 +205,22 @@ body {
   transition: .5s;
 }
 
+.repro-btn button {
+  background-color: #2c45d3;
+  border-radius: 5px;
+  border: 0;
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 16px;
+  text-decoration: none;
+  transition: .5s;
+}
+
+.repro-btn button:hover {
+  box-shadow: 0 0 15px #2c45d3;
+  transition: .5s;
+}
+
 h2 {
   color: #fff;
   text-align: center;
