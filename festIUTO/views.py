@@ -213,6 +213,7 @@ def profilGroupe(id):
         title="Festiut'O | profilGroupe",
         Groupe=get_profil_groupe(id),
         Image="../static/img/" + get_image_groupe(id)[0]
+        
         # nomGroupe=nomGroupe,
         # idGroupe=idGroupe,
         # descArtiste=descArtiste,
