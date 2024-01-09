@@ -95,3 +95,14 @@ def get_profil_groupe(idGroupe):
     except:
         print("Erreur lors de la requête get_profil_groupe")
         return []
+
+def get_creneaux():
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM CRENEAU order by heureDebut;"))
+        print(res)
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_creneau")

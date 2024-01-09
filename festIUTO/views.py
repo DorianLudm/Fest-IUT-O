@@ -125,19 +125,20 @@ def artistes():
             artiste_fav=artiste_fav,
             yaFavoris=yaFavoris,
             yaQueDesFavoris=yaQueDesFavoris
-        )  
+        )
     else:
         return render_template(
             "artistes.html",
             title="Festiut'O | Artistes",
             artiste=get_all_groupe(),
-        )  
-    
+        )
+
 @app.route('/planning')
 def planning():
     return render_template(
         "planning.html",
         title="Festiut'O | Planning",
+        creneaux = get_creneaux(),
     )
 
 @app.route('/billeterie')

@@ -10,6 +10,27 @@ nav {
   }
 
 
+.planning {
+    display: flex;
+    flex-wrap: wrap;   
+    justify-content: center;
+    margin-top: 10em;
+    background-color: #2c45d3;
+} 
+
+th, td {
+    width: 10em;
+    border: 1px solid #333;
+}
+.heure {
+    height: 1vh;
+    text-align: center;
+}
+
+.vide {
+    background-color: #1f242d;
+}
+
 #element-a-cacher7 a {
     color: #2c45d3;
 }
