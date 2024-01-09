@@ -111,6 +111,7 @@ def passSemaine():
 def artistes():
     if 'utilisateur' in session:
         artiste=get_groupe_non_favoris(session['utilisateur'][2])
+        print(artiste)
         artiste_fav=get_groupe_favoris(session['utilisateur'][2])
         yaQueDesFavoris=False
         yaFavoris=False
@@ -211,6 +212,7 @@ def profilGroupe(id):
         "profilGroupe.html",
         title="Festiut'O | profilGroupe",
         Groupe=get_profil_groupe(id),
+        Image="../static/img/" + get_image_groupe(id)[0]
         # nomGroupe=nomGroupe,
         # idGroupe=idGroupe,
         # descArtiste=descArtiste,

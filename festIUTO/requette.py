@@ -94,3 +94,15 @@ def get_profil_groupe(idGroupe):
     except:
         print("Erreur lors de la requête get_profil_groupe")
         return []
+    
+def get_image_groupe(idGroupe):
+    try :
+        liste = []
+        res = cnx.execute(text("SELECT nomImage FROM PHOTOGROUPE NATURAL JOIN GROUPE WHERE idGroupe = "+str(idGroupe)+";"))
+        print(res)
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_image_groupe")
+        return []

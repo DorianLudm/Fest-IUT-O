@@ -1,4 +1,3 @@
--- Table FESTIVAL
 INSERT INTO FESTIVAL (idFestival, nomFestival, dateDebutFestival, dateFinFestival)
 VALUES
     (1, 'A', '2023-09-15 14:00:00', '2023-09-16 23:00:00'),
@@ -7,7 +6,6 @@ VALUES
     (4, 'D', '2023-10-05 14:30:00', '2023-10-06 23:30:00'),
     (5, 'E', '2023-10-10 14:00:00', '2023-10-11 23:00:00');
 
--- Table BILLETSPARJOUR
 INSERT INTO BILLETSPARJOUR (idFestival, jour, nombreBillets)
 VALUES
     (1, 1, 500),
@@ -21,7 +19,6 @@ VALUES
     (5, 1, 600),
     (5, 2, 700);
  
--- Table LIEU
 INSERT INTO LIEU (idLieu, adresse, nomLieu, disponibiliteLieu, nbPlacesLieu)
 VALUES
     (1, 'adresse','Scène A', 1, 150),
@@ -30,7 +27,6 @@ VALUES
     (4, 'adresse','Scène C', 1, 300),
     (5, 'adresse','Scène D', 1, 900);
 
--- Table LIEUSDUFESTIVAL
 INSERT INTO LIEUSDUFESTIVAL (idLieu, idFestival)
 VALUES
     (1, 1),
@@ -39,7 +35,6 @@ VALUES
     (4, 4),
     (5, 5);
 
--- Table HEBERGEMENT
 INSERT INTO HEBERGEMENT (idHebergement, nomHebergement, nombreDePlaces)
 VALUES
     (1, 'Le gîte', 50),
@@ -48,7 +43,6 @@ VALUES
     (4, 'C', 40),
     (5, 'D', 60);
 
--- Table STYLEMUSICAL
 INSERT INTO STYLEMUSICAL (idStyle, nom, description)
 VALUES
     (1, 'Rock', 'Un genre musical caractérisé par des guitares électriques et une forte rythmique.'),
@@ -64,7 +58,6 @@ INSERT INTO LIAISONMUSICALE(idStyle1, idStyle2)
 VALUES
     (2,1);
 
----Table RESEAUXSOCIAUX
 INSERT INTO RESEAUXSOCIAUX(idReseau, nomReseau)
 VALUES
     (1, 'Twitter'),
@@ -89,7 +82,6 @@ VALUES
     (2, 2),
     (3, 1);
 
--- Table GROUPE
 INSERT INTO GROUPE (idGroupe, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe)
 VALUES
     (1, 'Les Harmoniques Étoilées', 5, 1, 'Un groupe de rock énergique avec une passion pour les solos de guitare.', 'lien_video1'),
@@ -110,7 +102,6 @@ VALUES
     (2, 2, 'x'),
     (3, 3, 'x');
 
--- Table ORGANISATIONGROUPE
 INSERT INTO ORGANISATIONGROUPE (idGroupe, idFestival, idHebergement, arrivee, depart, tempsMontage, tempsDemontage)
 VALUES
     (1, 1, 1, '2023-09-14 15:00:00', '2023-09-16 12:00:00', '02:00:00', '01:30:00'),
@@ -126,7 +117,6 @@ VALUES
     (2, 'Interview'),
     (3, 'Backstage');
 
--- Table CRENEAU
 INSERT INTO CRENEAU (idCreneau, idLieu, idGroupe, idEvent, visibleAuPublic, heureDebut, duree, descriptionEvenement, preinscriptionPossible, gratuit)
 VALUES
     (1, 1, 1, 1, 0, '2023-09-15 08:00:00', '02:00:00', 'Festival principal', 0, 1),
@@ -135,7 +125,6 @@ VALUES
     (4, 4, 4, 2, 0, '2023-09-20 10:30:00', '02:15:00', 'Festival principal', 1, 1),
     (5, 5, 5, 2, 0, '2023-09-20 11:00:00', '01:30:00', 'Groupe en première partie', 0, 1);
 
--- Table ACHETEUR
 INSERT INTO ACHETEUR (mailAcheteur, mdp, nom, prenom)
 VALUES
     ('dup@gmail.com', '123', 'Dupont', 'Jean'),
@@ -181,7 +170,6 @@ VALUES
     (2, 2, 90.00), 
     (3, 3, 120.00);
 
--- Table BILLET
 INSERT INTO BILLET (idBillet, idFestival, mailAcheteur, jourdebut, idType)
 VALUES
     (1, 3, 'dup@gmail.com',  '2023-09-25', 3),
@@ -191,7 +179,7 @@ VALUES
     (5, 4, 'gagn@gmail.com', '2023-10-06', 2),
     (6, 5, 'bou@gmail.com',  '2023-10-11', 1);
 
--- Table FAVORIS
+
 INSERT INTO FAVORIS (mailAcheteur, idGroupe)
 VALUES
     ('dup@gmail.com', 1),
@@ -200,3 +188,11 @@ VALUES
     ('mart@gmail.com', 4),
     ('gagn@gmail.com', 5),
     ('bou@gmail.com', 1);
+
+INSERT INTO PHOTOGROUPE(idGroupe, nomImage) 
+VALUES
+    (1, 'daftpunk.png'),
+    (2, 'groupemoderne.png'),
+    (3, 'imagine-dragon.png'),
+    (4, 'groupe.png'),
+    (5, 'groupe2.png');

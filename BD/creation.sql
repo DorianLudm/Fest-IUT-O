@@ -203,5 +203,5 @@ CREATE TABLE PHOTOGROUPE(
     idImage int NOT NULL auto_increment,
     idGroupe int NOT NULL REFERENCES GROUPE,
     nomImage varchar(800) NOT NULL,
-    PRIMARY KEY(idGroupe, idImage)
-)
+    PRIMARY KEY(idImage)
+) ;
