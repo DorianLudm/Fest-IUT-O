@@ -102,8 +102,13 @@
         <div class="container-billet">
           {% for billet in billets %}
           <div class="billet">
-            <h3 class="element">{{ billet[3] }}</h3>
-            <p class="element">{{ billet[5] }} {{ billet[6] }}</p>
+            <img class="element" src="../static/img/icon-logo.png" alt="logo festiuto">
+            <div class="container-nom">
+              <h3 class="element">{{ billet[3] }}</h3>
+              <p class="element">{{ billet[5] }} {{ billet[6] }}</p>
+            </div>
+            <img class="element" src="../static/img/qrcode.png" alt="qr code">
+            <a class="repro-btn" href="#"><button>Télécharger le billet</button></a>
             <a class="repro-btn" href="#"><button>Reprogrammer</button></a>
             <a class="deco-btn" href="{{ url_for('deleteBillet', id=billet[1]) }}"><button>Vendre un billet</button></a>
           </div>

@@ -186,7 +186,6 @@ body {
 .deco-btn {
   flex-basis: 100%;
   text-align: center;
-  margin-top: 10vh;
 }
 
 .deco-btn button {
@@ -312,12 +311,28 @@ h2 {
 }
 
 .billet {
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   flex-basis: 100%;
-  background-color: #faf6e7;
+  background-color: #ccc7b4;
   border-radius: 1em;
   padding: 1em;
   margin: 2em;
   font-size: 1.2em;
-  width: 30vw;
+  width: 35vw;
+}
+
+.billet img {
+  width: 7em;
+  margin-bottom: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.billet a {
+  flex-basis: 33%;
+  flex-grow: 1;
+  text-align: center;
 }
