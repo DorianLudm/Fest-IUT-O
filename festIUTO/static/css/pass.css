@@ -97,7 +97,8 @@ h1 {
     margin-top: 5em;
 }
 
-.buy a {
+.particip-btn {
+    all: unset;
     background-color: #2c45d3;
     padding: 1em;
     border-radius: 1em;
@@ -107,7 +108,7 @@ h1 {
     transition: .3s;
 }
 
-.buy a:hover {
+.particip-btn:hover {
     box-shadow: 0 0 10px #2c45d3;
     transition: .3s;
 }

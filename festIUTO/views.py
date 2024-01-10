@@ -1,8 +1,8 @@
-from .app import app 
+from .app import app, csrf
 from flask import render_template, url_for, redirect, request, session, jsonify, send_file
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_wtf import FlaskForm
-from wtforms import StringField, HiddenField, FileField, SubmitField, SelectField, TextAreaField, DateField
+from wtforms import StringField, HiddenField, FileField, SubmitField, SelectField, TextAreaField, DateField, IntegerField, BooleanField, RadioField
 from wtforms.validators import DataRequired, Optional
 from wtforms import PasswordField
 from hashlib import sha256
@@ -10,6 +10,7 @@ from .models import *
 import time
 import datetime
 from .requette import *
+
 
 class LoginForm(FlaskForm):
     email = StringField('email', validators=[DataRequired()])
@@ -90,7 +91,33 @@ class ModifierForm(FlaskForm):
         mail = self.mail.data
         mdp = self.mdp.data
         confirmerMdp = self.confirmerMdp.data
-        return (nom, prenom, mail, mdp, confirmerMdp)
+        return (nom, prenom, mail, mdp, confirmerMdp) # comment faire que sur un formulaire flaskForm seulement un booleanField soit cliquer a la fois
+
+class SelectJourForm(FlaskForm):
+    lundi = BooleanField('Lundi', validators=[Optional()])
+    mardi = BooleanField('Mardi', validators=[Optional()])
+    mercredi = BooleanField('Mercredi', validators=[Optional()])
+    jeudi = BooleanField('Jeudi', validators=[Optional()])
+    vendredi = BooleanField('Vendredi', validators=[Optional()])
+    samedi = BooleanField('Samedi', validators=[Optional()])
+    submit = SubmitField('Participer')
+
+    def jour_validate(self):
+        jours_selectionnes = [self.lundi.data, self.mardi.data, self.mercredi.data, self.jeudi.data, self.vendredi.data, self.samedi.data]
+        if jours_selectionnes.count(True) != 1:
+            return False
+        return True
+
+    def get_jour(self):
+        lundi = self.lundi.data
+        mardi = self.mardi.data
+        mercredi = self.mercredi.data
+        jeudi = self.jeudi.data
+        vendredi = self.vendredi.data
+        samedi = self.samedi.data
+        return (lundi, mardi, mercredi, jeudi, vendredi, samedi)
+
+
 
 
 @app.route('/')
@@ -100,14 +127,36 @@ def index():
             title="Festiut'O | Accueil",
         )
 
-@app.route('/pass-1-jour')
+@app.route('/pass-1-jour', methods=("GET","POST",))
+@csrf.exempt
 def pass1jour():
+    f = SelectJourForm()
+    if f.validate_on_submit():
+        # if f.jour_validate == True:
+        jour = f.get_jour()
+        jourChoisit = ""
+        if jour[0]:
+            jourChoisit = "lundi"
+        elif jour[1]:
+            jourChoisit = "mardi"
+        elif jour[2]:
+            jourChoisit = "mercredi"
+        elif jour[3]:
+            jourChoisit = "jeudi"
+        elif jour[4]:
+            jourChoisit = "vendredi"
+        elif jour[5]:
+            jourChoisit = "samedi"
+        
+        return redirect("/payement?pass=1jour&jour="+jourChoisit+"")
     return render_template(
         "pass1jour.html",
         title="Festiut'O | Pass",
+        form=f
     )
 
 @app.route('/pass-2-jours')
+@csrf.exempt
 def pass2jours():
     return render_template(
         "pass2jours.html",
@@ -115,6 +164,7 @@ def pass2jours():
     )
 
 @app.route('/pass-semaine')
+@csrf.exempt
 def passSemaine():
     return render_template(
         "passsemaine.html",
@@ -279,6 +329,7 @@ def logout():
     return redirect(url_for('compte'))
 
 @app.route('/payement', methods=("GET", "POST",))
+@csrf.exempt
 def payement():
     passe = request.args.get('pass')
     f = PayementForm()
