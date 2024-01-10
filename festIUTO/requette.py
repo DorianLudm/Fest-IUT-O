@@ -47,7 +47,7 @@ def get_all_groupe():
 def get_groupe_non_favoris(mail):
     try:
         liste = []
-        res = cnx.execute(text("SELECT * FROM GROUPE WHERE idGroupe not IN (SELECT idGroupe FROM FAVORIS NATURAL JOIN GROUPE WHERE mailAcheteur = '"+mail+"');"))
+        res = cnx.execute(text("SELECT idGroupe, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe, nomImage FROM GROUPE NATURAL JOIN PHOTOGROUPE WHERE idGroupe not IN (SELECT idGroupe FROM FAVORIS NATURAL JOIN GROUPE WHERE mailAcheteur = '"+mail+"');"))
         for row in res:
             liste.append(row)
         return liste
@@ -58,7 +58,7 @@ def get_groupe_non_favoris(mail):
 def get_groupe_favoris(mail):
     try:
         liste = []
-        res = cnx.execute(text("SELECT * FROM FAVORIS NATURAL JOIN GROUPE WHERE mailAcheteur = '"+mail+"';"))
+        res = cnx.execute(text("SELECT idGroupe, mailAcheteur, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe, nomImage FROM GROUPE NATURAL JOIN FAVORIS NATURAL JOIN GROUPE WHERE mailAcheteur = '"+mail+"';"))
         for row in res:
             liste.append(row)
         return liste
