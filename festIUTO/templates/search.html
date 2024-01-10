@@ -11,21 +11,39 @@
 <body>
     {% extends "base.html" %}
     {% block base %}
-    <form method="post" action="{{ url_for('search') }}" class="form-search">
+    <form method="post" action="{{ url_for('search') }}" class="form-search" id="form-search">
         {{ form.hidden_tag() }}
         <div class="form-box">
-            {{ form.recherche(size=50, class_="element", id="recherche", placeholder="Artiste, concerts, billets...") }}
-            {{ form.submit(size=50, class="element", id="input-recherche") }}
+            {{ form.recherche(size=50, class_="", id="recherche", placeholder="Artiste, concerts, billets...") }}
+            {{ form.submit(size=50, class="", id="input-recherche") }}
         </div>
     </form>
-    <div class="container-all-recherche">
+    <div class="container-all-recherche" id="container-all-recherche">
         <div class="container-recherche">
         {% for contenu in recherche %} 
-                <!-- <a class="lien-contenu"> -->
-                <div class="container-recherche-element">
-                    <h2>{{ contenu[1] }}</h2>
-                    <p>{{ contenu[4] }}</p>
-                </div>
+            {% if contenu[0] == "1" %}
+                <a class="lien-contenu" href="{{ url_for('profilGroupe', id=contenu[1]) }}"> 
+                    <div class="container-recherche-element">
+                        <h2>{{ contenu[2] }}</h2>
+                        <p>{{ contenu[5] }}</p>
+                    </div>
+                </a>
+            {% elif contenu[0] == "2" %}
+                <a class="lien-contenu" href="{{ url_for('planning') }}"> 
+                    <div class="container-recherche-element">
+                        <h2>{{ contenu[7] }}</h2>
+                        <p>{{ contenu[5] }}</p>
+                        <p>{{ contenu[6] }}</p>
+                    </div>
+                </a>
+            {% elif contenu[0] == "3" %}
+                <a class="lien-contenu" href="/pass-1-jour?check={{ contenu[2] }}"> 
+                    <div class="container-recherche-element">
+                        <h2>{{ contenu[1] }}</h2>
+                        <p>{{ contenu[2] }}</p>
+                    </div>
+                </a>
+            {% endif %}
         {% endfor %}
         </div>
     </div>

@@ -144,12 +144,23 @@ def create_billet(cnx, mail, jour):
         print("Erreur lors de la requête create_billet")
 
 def recherche_groupe(cnx, recherche):
-    try:
-        liste = []
-        res = cnx.execute(text("SELECT * FROM GROUPE WHERE nomGroupe LIKE '%"+recherche+"%';"))
-        for row in res:
-            liste.append(row)
-        return liste
-    except:
-        print("Erreur lors de la requête recherhce_groupe")
-        return []
+    liste = []
+    res = cnx.execute(text("SELECT * FROM GROUPE WHERE nomGroupe LIKE '%"+recherche+"%';"))
+    for row in res:
+        # Convertir l'objet Row en tuple
+        row_tuple = tuple(row)  
+        # Ajouter une nouvelle ID à l'indice 0 de chaque ligne
+        row_with_id = ("1",) + row_tuple
+        liste.append(row_with_id)
+    return liste
+  
+def recherche_creneau(cnx, recherche):
+    liste = []
+    res = cnx.execute(text("SELECT * FROM CRENEAU WHERE descriptionEvenement LIKE '%"+recherche+"%';"))
+    for row in res:
+        # Convertir l'objet Row en tuple
+        row_tuple = tuple(row)  
+        # Ajouter une nouvelle ID à l'indice 0 de chaque ligne
+        row_with_id = ("2",) + row_tuple
+        liste.append(row_with_id)
+    return liste

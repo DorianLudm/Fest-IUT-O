@@ -137,11 +137,14 @@ def search():
     if f.validate_on_submit():
         recherche = f.get_recherche()
         contenu = recherche_groupe(cnx, recherche)
+        contenu = contenu + recherche_creneau(cnx, recherche)
+        contenu = contenu + [("3", "Billet", "lundi"), ("3", "Billet", "mardi"), ("3", "Billet", "mercredi"), ("3", "Billet", "jeudi"), ("3", "Billet", "vendredi"), ("3", "Billet", "samedi")]
+        print(contenu)
         return render_template(
             "search.html",
             title="Festiut'O | Recherche",
             form=f,
-            recherche=recherche_groupe(cnx, recherche)
+            recherche=contenu
         )
     return render_template(
         "search.html",
@@ -152,8 +155,24 @@ def search():
 @app.route('/pass-1-jour', methods=("GET","POST",))
 @csrf.exempt
 def pass1jour():
+    check = request.args.get('check')
     f = SelectJourForm()
     erreur = ""
+    
+    if check != None:
+        if check == "lundi":
+            f.lundi.data = True
+        elif check == "mardi":
+            f.mardi.data = True
+        elif check == "mercredi":
+            f.mercredi.data = True
+        elif check == "jeudi":
+            f.jeudi.data = True
+        elif check == "vendredi":
+            f.vendredi.data = True
+        elif check == "samedi":
+            f.samedi.data = True
+        
     if f.validate_on_submit():
         jours = f.get_jour()
         if les_jours_sont_valide(jours) == True:
