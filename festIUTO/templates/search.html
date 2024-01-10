@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/musicPlayer.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <form method="post" action="{{ url_for('search') }}" class="form-search">
+        {{ form.hidden_tag() }}
+        <div class="form-box">
+            {{ form.recherche(size=50, class_="element", id="recherche", placeholder="Artiste, concerts, billets...") }}
+            {{ form.submit(size=50, class="element", id="input-recherche") }}
+        </div>
+    </form>
+    <div class="container-all-recherche">
+        <div class="container-recherche">
+            {% for contenu in recherche %}
+            <a class="lien-contenu">
+                <div class="container-recherche-element">
+                    <h2>{{ contenu[1] }}</h2>
+                    <p>{{ contenu[4] }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

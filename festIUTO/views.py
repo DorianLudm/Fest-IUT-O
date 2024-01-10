@@ -105,6 +105,13 @@ class SelectJourForm(FlaskForm):
     def get_jour(self):
         return [self.lundi.data, self.mardi.data, self.mercredi.data, self.jeudi.data, self.vendredi.data, self.samedi.data]
 
+class RechercheForm(FlaskForm):
+    recherche = StringField('recherche', validators=[DataRequired()])
+    submit = SubmitField('Rechercher')
+
+    def get_recherche(self):
+        return self.recherche.data
+
 
 def les_jours_sont_valide(liste_jours):
     if liste_jours.count(True) != 1:
@@ -123,6 +130,24 @@ def index():
             "home.html",
             title="Festiut'O | Accueil",
         )
+
+@app.route('/search', methods=("GET","POST",))
+def search():
+    f = RechercheForm()
+    if f.validate_on_submit():
+        recherche = f.get_recherche()
+        contenu = recherche_groupe(cnx, recherche)
+        return render_template(
+            "search.html",
+            title="Festiut'O | Recherche",
+            form=f,
+            recherche=recherche_groupe(cnx, recherche)
+        )
+    return render_template(
+        "search.html",
+        title="Festiut'O | Recherche",
+        form=f,
+    )
 
 @app.route('/pass-1-jour', methods=("GET","POST",))
 @csrf.exempt

@@ -142,3 +142,14 @@ def create_billet(cnx, mail, jour):
         print("Ajout réussi")
     except:
         print("Erreur lors de la requête create_billet")
+
+def recherche_groupe(cnx, recherche):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM GROUPE WHERE nomGroupe LIKE '%"+recherche+"%';"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête recherhce_groupe")
+        return []
