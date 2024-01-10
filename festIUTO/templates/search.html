@@ -20,14 +20,13 @@
     </form>
     <div class="container-all-recherche">
         <div class="container-recherche">
-            {% for contenu in recherche %}
-            <a class="lien-contenu">
+        {% for contenu in recherche %} 
+                <!-- <a class="lien-contenu"> -->
                 <div class="container-recherche-element">
                     <h2>{{ contenu[1] }}</h2>
                     <p>{{ contenu[4] }}</p>
                 </div>
-            </div>
-            {% endfor %}
+        {% endfor %}
         </div>
     </div>
     {% endblock %}
