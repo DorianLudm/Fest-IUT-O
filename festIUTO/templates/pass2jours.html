@@ -17,34 +17,38 @@
                     <h1>Pass 2 jour - 35€</h1>
                     <p class="acces-festival">Accès au festival les 2 jours de votre choix</p>
                 </div>
-                <ul class="liste-jour">
-                    <li>
-                        <p>Lundi</p>
-                        <input type="checkbox">
-                    </li>
-                    <li>
-                        <p>Mardi</p>
-                        <input type="checkbox">
-                    </li>
-                    <li>
-                        <p>Mercredi</p>
-                        <input type="checkbox">
-                    <li>
-                        <p>Jeudi</p>
-                        <input type="checkbox">
-                    </li>
-                    <li>
-                        <p>Vendredi</p>
-                        <input type="checkbox">
-                    </li>
-                    <li>
-                        <p>Samedi</p>
-                        <input type="checkbox">
-                    </li>
-                </ul>
-                <div class="buy">
-                    <a href="/payement?pass=2jours">Participer</a>
-                </div>
+                <form class="form-2jours" method="post" action="{{ url_for('pass2jours') }}">
+                    {{ form.hidden_tag() }}
+                    <ul class="liste-jour">
+                        <li>
+                            <p class="element">Lundi</p>
+                            {{ form.lundi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Mardi</p>
+                            {{ form.mardi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Mercredi</p>
+                            {{ form.mercredi(size=50, class_="element") }} 
+                        <li>
+                            <p class="element">Jeudi</p>
+                            {{ form.jeudi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Vendredi</p>
+                            {{ form.vendredi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Samedi</p>
+                            {{ form.samedi(size=50, class_="element") }} 
+                        </li>
+                    </ul>
+                    <p class="erreur">{{ erreur }}</p>
+                    <div class="buy">
+                        {{ form.submit(size=50, class_="element particip-btn") }} 
+                    </div>
+                </form>
             </div>
         </div>
     </div>  

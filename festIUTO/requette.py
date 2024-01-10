@@ -124,3 +124,21 @@ def delete_billet(cnx, idBillet):
         print("Suppression réussie")
     except:
         print("Erreur lors de la requête delete_billet")
+
+def get_max_idBillet(cnx):
+    try:
+        res = cnx.execute(text("SELECT MAX(idBillet) FROM BILLET;"))
+        for row in res:
+            return row[0]
+    except:
+        print("Erreur lors de la requête get_max_idBillet")
+
+def create_billet(cnx, mail, jour):
+    try:
+        idBillet = get_max_idBillet(cnx) + 1
+        print(idBillet)
+        cnx.execute(text("INSERT INTO BILLET (idBillet, mailAcheteur, idFestival, jourdebut, idType) VALUES ('"+str(idBillet)+"', '"+mail+"', 1, 2024-01-09, 1);"))
+        cnx.commit()
+        print("Ajout réussi")
+    except:
+        print("Erreur lors de la requête create_billet")

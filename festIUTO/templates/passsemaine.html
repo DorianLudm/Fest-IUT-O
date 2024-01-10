@@ -17,9 +17,12 @@
                     <h1>Pass semaine - 90€</h1>
                     <p class="acces-festival">Accès au festival tout les jours de la semaine <span class="dimanche">excepter le dimanche</span></p>
                 </div>
-                <div class="buy">
-                    <a href="/payement?pass=semaine">Participer</a>
-                </div>
+                <form class="form-semaine" method="post" action="{{ url_for('passSemaineValid') }}">
+                    <div class="buy">
+                        <input type="submit" class="particip-btn" value="Participer">
+                        <!-- <a class="particip-btn" href="/payement?pass=semaine">Participer</a> -->
+                    </div>
+                </form>
             </div>
         </div>
     </div>  
