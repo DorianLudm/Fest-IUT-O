@@ -103,7 +103,9 @@ class SelectJourForm(FlaskForm):
     submit = SubmitField('Participer')
 
     def jour_validate(self):
+        print("testssss")
         jours_selectionnes = [self.lundi.data, self.mardi.data, self.mercredi.data, self.jeudi.data, self.vendredi.data, self.samedi.data]
+        print(jours_selectionnes)
         if jours_selectionnes.count(True) != 1:
             return False
         return True
@@ -131,28 +133,33 @@ def index():
 @csrf.exempt
 def pass1jour():
     f = SelectJourForm()
+    erreur = ""
     if f.validate_on_submit():
-        # if f.jour_validate == True:
-        jour = f.get_jour()
-        jourChoisit = ""
-        if jour[0]:
-            jourChoisit = "lundi"
-        elif jour[1]:
-            jourChoisit = "mardi"
-        elif jour[2]:
-            jourChoisit = "mercredi"
-        elif jour[3]:
-            jourChoisit = "jeudi"
-        elif jour[4]:
-            jourChoisit = "vendredi"
-        elif jour[5]:
-            jourChoisit = "samedi"
+        if f.jour_validate == True:
+            jour = f.get_jour()
+            jourChoisit = ""
+            if jour[0]:
+                jourChoisit = "lundi"
+            elif jour[1]:
+                jourChoisit = "mardi"
+            elif jour[2]:
+                jourChoisit = "mercredi"
+            elif jour[3]:
+                jourChoisit = "jeudi"
+            elif jour[4]:
+                jourChoisit = "vendredi"
+            elif jour[5]:
+                jourChoisit = "samedi"
         
-        return redirect("/payement?pass=1jour&jour="+jourChoisit+"")
+            return redirect("/payement?pass=1jour&jour="+jourChoisit+"")
+        else:
+            print("erreur")
+            erreur = "Veuillez choisir seulement un jour"
     return render_template(
         "pass1jour.html",
         title="Festiut'O | Pass",
-        form=f
+        form=f,
+        erreur=erreur
     )
 
 @app.route('/pass-2-jours')
