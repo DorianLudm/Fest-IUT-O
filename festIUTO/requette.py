@@ -45,7 +45,7 @@ def inscription_acheteur(cnx, email, mdp, nom, prenom):
 def get_all_groupe():
     try:
         liste = []
-        res = cnx.execute(text("SELECT * FROM GROUPE;"))
+        res = cnx.execute(text("SELECT idGroupe, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe, nomImage FROM GROUPE NATURAL JOIN PHOTOGROUPE ;"))
         for row in res:
             liste.append(row)
         return liste
