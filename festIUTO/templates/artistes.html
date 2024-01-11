@@ -18,7 +18,7 @@
         <ul class="liste-artiste">
             {% for i in artiste_fav %}
             <section class="section-artiste element">
-                <a href="{{ url_for('profilGroupe', id=i[0]) }}"><img src="../static/img/groupe.png"></a>
+                <a href="{{ url_for('profilGroupe', id=i[0]) }}"><img src="{{artiste_images[i[0]]}}">></a>
                 <div class="info-artiste-container">
                     <div class="nom-groupe-container">
                         <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
@@ -34,11 +34,11 @@
         <ul class="liste-artiste">
             {% for i in artiste%}
             <section class="section-artiste element">
-                <a href="{{ url_for('profilGroupe', id=i[0]) }}"><img src="../static/img/groupe.png"></a>
+                <a href="{{ url_for('profilGroupe', id=i[0]) }}"><img src="{{artiste_images[i[0]]}}">></a>
                 <div class="info-artiste-container">
                     <div class="nom-groupe-container">
                         <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
-                        <a href="{{ url_for('ajouterFav', id=i[0]) }}"><button id="bouton-fav"><img src="../static/img/coeur-vide.png"></button></a>
+                        <a href="{{ url_for('ajouterFav', id=i[0]) }}"><button id="bouton-fav"><img src="{{artiste_images[i[0]]}}"></button></a>
                     </div>
                 </div>
             </section>
@@ -51,7 +51,7 @@
             <ul class="liste-artiste">
                 {% for i in artiste%}
                 <section class="section-artiste element">
-                    <a href="{{ url_for('profilGroupe', id=i[0]) }}"><img src="../static/img/groupe.png"></a>
+                    <a href="{{ url_for('profilGroupe', id=i[0]) }}"><img src="{{artiste_images[i[0]]}}"></a>
                     <div class="info-artiste-container">
                         <div class="nom-groupe-container">
                             <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
@@ -69,7 +69,7 @@
         <ul class="liste-artiste">
             {% for i in artiste%}
             <section class="section-artiste element">
-                <a href="{{ url_for('profilGroupe', id=i[0]) }}"><img src="../static/img/groupe.png"></a>
+                <a href="{{ url_for('profilGroupe', id=i[0]) }}"><img src="{{artiste_images[i[0]]}}"></a>
                 <div class="info-artiste-container">
                     <div class="nom-groupe-container">
                         <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
