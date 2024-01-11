@@ -14,25 +14,29 @@
         <table>
             <thead>
                 <tr>
-                    <th>Heure</th>
-                    <th>Lundi</th>
-                    <th>Mardi</th>
-                    <th>Mercredi</th>
-                    <th>Jeudi</th>
-                    <th>Vendredi</th>
-                    <th>Samedi</th>
-                    <th>Dimanche</th>
+                    <th class="jour">Heure</th>
+                    <th class="jour">Lundi</th>
+                    <th class="jour">Mardi</th>
+                    <th class="jour">Mercredi</th>
+                    <th class="jour">Jeudi</th>
+                    <th class="jour">Vendredi</th>
+                    <th class="jour">Samedi</th>
                 </tr>
             </thead>
             <tbody>
                 {% for heure in range(24) %}
                     <tr>
-                        <td class="heure">{{heure}} H</td>                
-                        {% for c in creneaux  %}
-                            {% if heure == c[4].strftime("%H")|int %}
-                                <td rowspan="1">{{c[6]}}</td>
-                            {% else %}
-                                <td class="vide">{{c[5]}}</td>
+                        <td class="heure">{{heure}} H</td>
+                        {% for j in range(6) %}
+                        {% set concert = false %}
+                            {% for c in creneaux  %}
+                                {% if heure == c[4].strftime("%H")|int and c[4].weekday() == j %}
+                                    <td class="plein">{{c[6]}}</td>
+                                    {% set concert = true %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if not concert %}
+                                <td class="vide">Pas de concert</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
