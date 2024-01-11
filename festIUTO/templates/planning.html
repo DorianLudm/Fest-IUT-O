@@ -10,6 +10,41 @@
 <body>
     {% extends "base.html" %}
     {% block base %}
+    <div class="planning">
+        <table>
+            <thead>
+                <tr>
+                    <th class="jour">Heure</th>
+                    <th class="jour">Lundi</th>
+                    <th class="jour">Mardi</th>
+                    <th class="jour">Mercredi</th>
+                    <th class="jour">Jeudi</th>
+                    <th class="jour">Vendredi</th>
+                    <th class="jour">Samedi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for heure in range(24) %}
+                    <tr>
+                        <td class="heure">{{heure}} H</td>
+                        {% set concert = false %}
+                        {% for j in range(6) %}
+                            {% for c in creneaux  %}
+                                {% if heure == c[4].strftime("%H")|int and c[4].weekday() == j %}
+                                    {% set concert = true %}    
+                                    <td rowspan="1" class="plein">{{c[6]}}</td>
+                                {% endif %}
+                            {% endfor %}
+                            {% if not concert %}
+                                <td class="vide">Pas de concert</td>
+                            {% endif %}
+                        {% endfor %}
+                        {% set concert = false %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% endblock %}
 </body>
 </html>
