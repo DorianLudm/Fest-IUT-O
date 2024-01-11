@@ -45,8 +45,10 @@ def inscription_acheteur(cnx, email, mdp, nom, prenom):
 def get_all_groupe():
     try:
         liste = []
-        res = cnx.execute(text("SELECT idGroupe, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe, nomImage FROM GROUPE NATURAL JOIN PHOTOGROUPE ;"))
+        print("get_all_groupe")
+        res = cnx.execute(text("SELECT idGroupe, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe, nomImage FROM GROUPE NATURAL JOIN PHOTOGROUPE;"))
         for row in res:
+            print(row)
             liste.append(row)
         return liste
     except:
@@ -61,18 +63,18 @@ def get_groupe_non_favoris(mail):
             liste.append(row)
         return liste
     except:
-        print("Erreur lors de la requête get_all_groupe")
+        print("Erreur lors de la requête get_all_groupe_non_favoris")
         return []
 
 def get_groupe_favoris(mail):
     try:
         liste = []
-        res = cnx.execute(text("SELECT idGroupe, mailAcheteur, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe, nomImage FROM GROUPE NATURAL JOIN FAVORIS NATURAL JOIN GROUPE WHERE mailAcheteur = '"+mail+"';"))
+        res = cnx.execute(text("SELECT idGroupe, mailAcheteur, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe, nomImage FROM GROUPE NATURAL JOIN FAVORIS NATURAL JOIN PHOTOGROUPE WHERE mailAcheteur = '"+mail+"';"))
         for row in res:
             liste.append(row)
         return liste
     except:
-        print("Erreur lors de la requête get_all_groupe")
+        print("Erreur lors de la requête get_all_groupe_favoris")
         return []
 
 

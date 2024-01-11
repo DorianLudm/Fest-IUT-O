@@ -53,8 +53,9 @@ nav {
     max-width: 40vh;
 }
 
-.section-artiste img {
-    width: 100%;
+.section-artiste > a > img {
+    width: 100%; 
+    height: 30vh; 
     border-radius: 1em 1em 0 0;; 
 }
 

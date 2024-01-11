@@ -256,6 +256,11 @@ def artistes():
         artiste_fav=get_groupe_favoris(session['utilisateur'][2])
 
         artiste_images=['default']
+        for a in artiste_fav:
+            for i in range(len(a)):
+                if i == 6:
+                    artiste_images.append("../static/img/" + a[i])
+
         for a in artiste:
             for i in range(len(a)):
                 if i == 6:
@@ -279,7 +284,6 @@ def artistes():
             artiste_images=artiste_images
         )  
     else:
-
         artiste = get_all_groupe()
         artiste_images=['default']
         for a in artiste:
@@ -292,7 +296,7 @@ def artistes():
         return render_template(
             "artistes.html",
             title="Festiut'O | Artistes",
-            artiste=get_all_groupe(),
+            artiste=artiste,
             artiste_images=artiste_images
         )  
     
