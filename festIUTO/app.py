@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, session
 #from flask_sqlalchemy import SQLAlchemy  # pip install Flask-SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-import mysql.connector 
 from datetime import datetime
 from flask import Flask
 import os.path

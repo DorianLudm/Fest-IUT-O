@@ -254,6 +254,16 @@ def artistes():
     if 'utilisateur' in session:
         artiste=get_groupe_non_favoris(session['utilisateur'][2])
         artiste_fav=get_groupe_favoris(session['utilisateur'][2])
+
+        artiste_images=['default']
+        for a in artiste:
+            for i in range(len(a)):
+                if i == 6:
+                    artiste_images.append("../static/img/" + a[i])
+        
+        print("artiste_images")
+        print(artiste_images)
+        
         yaQueDesFavoris=False
         yaFavoris=False
         if len(artiste_fav) > 0:
@@ -266,7 +276,8 @@ def artistes():
             artiste=artiste,
             artiste_fav=artiste_fav,
             yaFavoris=yaFavoris,
-            yaQueDesFavoris=yaQueDesFavoris
+            yaQueDesFavoris=yaQueDesFavoris,
+            artiste_images=artiste_images
         )  
     else:
         return render_template(
@@ -384,6 +395,8 @@ def profilGroupe(id):
         "profilGroupe.html",
         title="Festiut'O | profilGroupe",
         Groupe=get_profil_groupe(id),
+        Image="../static/img/" + get_image_groupe(id)[0]
+
         # nomGroupe=nomGroupe,
         # idGroupe=idGroupe,
         # descArtiste=descArtiste,
