@@ -94,12 +94,12 @@ class ModifierForm(FlaskForm):
         return (nom, prenom, mail, mdp, confirmerMdp) # comment faire que sur un formulaire flaskForm seulement un booleanField soit cliquer a la fois
 
 class SelectJourForm(FlaskForm):
-    lundi = BooleanField('Lundi', validators=[Optional()])
-    mardi = BooleanField('Mardi', validators=[Optional()])
-    mercredi = BooleanField('Mercredi', validators=[Optional()])
-    jeudi = BooleanField('Jeudi', validators=[Optional()])
-    vendredi = BooleanField('Vendredi', validators=[Optional()])
-    samedi = BooleanField('Samedi', validators=[Optional()])
+    lundi = BooleanField('Lundi 17 mai', validators=[Optional()])
+    mardi = BooleanField('Mardi 18 mai', validators=[Optional()])
+    mercredi = BooleanField('Mercredi 19 mai', validators=[Optional()])
+    jeudi = BooleanField('Jeudi 20 mai', validators=[Optional()])
+    vendredi = BooleanField('Vendredi 21 mai', validators=[Optional()])
+    samedi = BooleanField('Samedi 22 mai', validators=[Optional()])
     submit = SubmitField('Participer')
 
     def get_jour(self):
@@ -210,22 +210,20 @@ def pass2jours():
     if f.validate_on_submit():
         jours = f.get_jour()
         if les_jours_sont_valide_2jours(jours) == True:
-            print("test2")
-            jour = f.get_jour()
-            jourChoisit = ""
-            if jour[0]:
-                jourChoisit = "lundi"
-            elif jour[1]:
-                jourChoisit = "mardi"
-            elif jour[2]:
-                jourChoisit = "mercredi"
-            elif jour[3]:
-                jourChoisit = "jeudi"
-            elif jour[4]:
-                jourChoisit = "vendredi"
-            elif jour[5]:
-                jourChoisit = "samedi"
-            return redirect("/payement?pass=1jour&jour="+jourChoisit+"")
+            jourChoisit = []
+            if jours[0]:
+                jourChoisit.append("lundi")
+            if jours[1]:
+                jourChoisit.append("mardi")
+            if jours[2]:
+                jourChoisit.append("mercredi")
+            if jours[3]:
+                jourChoisit.append("jeudi")
+            if jours[4]:
+                jourChoisit.append("vendredi")
+            if jours[5]:
+                jourChoisit.append("samedi")
+            return redirect("/payement?pass=2jours&jour1="+jourChoisit[0]+"&jour2="+jourChoisit[1]+"")
         else:
             print("erreur")
             erreur = "Veuillez choisir deux jours"
@@ -415,8 +413,60 @@ def payement():
    # if f.validate_on_submit():
     if passe == "1jour":
         jour = request.args.get('jour')
+        match jour:
+            case "lundi":
+                jour = "2024-05-17"
+            case "mardi":
+                jour = "2024-05-18"
+            case "mercredi":
+                jour = "2024-05-19"
+            case "jeudi":
+                jour = "2024-05-20"
+            case "vendredi":
+                jour = "2024-05-21"
+            case "samedi":
+                jour = "2024-05-22"
+        print(jour)
         create_billet(cnx, session['utilisateur'][2], jour)
-        return redirect(url_for('compte'))
+    elif passe == "2jours":
+        jour1 = request.args.get('jour1')
+        jour2 = request.args.get('jour2')
+        print(jour1)
+        print(jour2)
+        match jour1:
+            case "lundi":
+                jour1 = "2024-05-17"
+            case "mardi":
+                jour1 = "2024-05-18"
+            case "mercredi":
+                jour1 = "2024-05-19"
+            case "jeudi":
+                jour1 = "2024-05-20"
+            case "vendredi":
+                jour1 = "2024-05-21"
+            case "samedi":
+                jour1 = "2024-05-22"
+        match jour2:
+            case "lundi":
+                jour2 = "2024-05-17"
+            case "mardi":
+                jour2 = "2024-05-18"
+            case "mercredi":
+                jour2 = "2024-05-19"
+            case "jeudi":
+                jour2 = "2024-05-20"
+            case "vendredi":
+                jour2 = "2024-05-21"
+            case "samedi":
+                jour2 = "2024-05-22"
+        print(jour1)
+        print(jour2)
+        create_billet(cnx, session['utilisateur'][2], jour1)
+    elif passe == "semaine":
+        create_billet(cnx, session['utilisateur'][2], "2024-05-17")
+
+    return redirect(url_for('compte'))
+    
     return render_template(
             "payement.html",
             title="Festiut'O | Payement",

@@ -137,7 +137,7 @@ def create_billet(cnx, mail, jour):
     try:
         idBillet = get_max_idBillet(cnx) + 1
         print(idBillet)
-        cnx.execute(text("INSERT INTO BILLET (idBillet, mailAcheteur, idFestival, jourdebut, idType) VALUES ('"+str(idBillet)+"', '"+mail+"', 1, 2024-01-09, 1);"))
+        cnx.execute(text("INSERT INTO BILLET (idBillet, mailAcheteur, idFestival, jourdebut, idType) VALUES ('"+str(idBillet)+"', '"+mail+"', 1, '"+jour+"', 1);"))
         cnx.commit()
         print("Ajout réussi")
     except:

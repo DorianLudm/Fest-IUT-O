@@ -104,7 +104,11 @@
           <div class="billet">
             <img class="element" src="../static/img/icon-logo.png" alt="logo festiuto">
             <div class="container-nom">
+              {% if billet[3] == "2024-05-17" %}
+              <h3 class="element">Lundi 17 Mai</h3>
+              {% else %}
               <h3 class="element">{{ billet[3] }}</h3>
+              {% endif %}
               <p class="element">{{ billet[5] }} {{ billet[6] }}</p>
             </div>
             <img class="element" src="../static/img/qrcode.png" alt="qr code">
