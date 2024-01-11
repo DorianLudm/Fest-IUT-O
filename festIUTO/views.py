@@ -1,8 +1,8 @@
-from .app import app 
+from .app import app, csrf
 from flask import render_template, url_for, redirect, request, session, jsonify, send_file
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_wtf import FlaskForm
-from wtforms import StringField, HiddenField, FileField, SubmitField, SelectField, TextAreaField, DateField
+from wtforms import StringField, HiddenField, FileField, SubmitField, SelectField, TextAreaField, DateField, IntegerField, BooleanField, RadioField
 from wtforms.validators import DataRequired, Optional
 from wtforms import PasswordField
 from hashlib import sha256
@@ -10,6 +10,7 @@ from .models import *
 import time
 import datetime
 from .requette import *
+
 
 class LoginForm(FlaskForm):
     email = StringField('email', validators=[DataRequired()])
@@ -50,17 +51,17 @@ class InscriptionForm(FlaskForm):
         return (email, mdp, nom, prenom)
 
 class PayementForm(FlaskForm):
-    nom = StringField('nom', validators=[DataRequired()])
-    prenom = StringField('prenom', validators=[DataRequired()])
-    email = StringField('email', validators=[DataRequired()])
-    adresse = StringField('adresse', validators=[DataRequired()])
-    codePostal = StringField('codePostal', validators=[DataRequired()])
-    ville = StringField('ville', validators=[DataRequired()])
-    pays = StringField('pays', validators=[DataRequired()])
-    tel = StringField('téléphone', validators=[DataRequired()])
-    numeroCarte = StringField('numéro de carte', validators=[DataRequired()])
-    dateCarte = DateField('date de validité', validators=[DataRequired()])
-    codeCarte = StringField('code de sécurité', validators=[DataRequired()])
+    nom = StringField('nom')
+    prenom = StringField('prenom')
+    email = StringField('email')
+    adresse = StringField('adresse')
+    codePostal = StringField('codePostal')
+    ville = StringField('ville')
+    pays = StringField('pays')
+    tel = StringField('téléphone')
+    numeroCarte = StringField('numéro de carte')
+    dateCarte = DateField('date de validité')
+    codeCarte = StringField('code de sécurité')
     next = HiddenField()
 
     def get_payement_user(self):
@@ -77,6 +78,51 @@ class PayementForm(FlaskForm):
         codeCarte = self.codeCarte.data
         return (email, nom, prenom, adresse, codePostal, ville, pays, tel, numeroCarte, dateCarte, codeCarte)
 
+class ModifierForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    mail = StringField('email', validators=[DataRequired()])
+    mdp = PasswordField('Password', validators=[DataRequired()])
+    confirmerMdp = PasswordField('Confirmer Password', validators=[DataRequired()])
+
+    def get_modifier_user(self):
+        nom = self.nom.data
+        prenom = self.prenom.data
+        mail = self.mail.data
+        mdp = self.mdp.data
+        confirmerMdp = self.confirmerMdp.data
+        return (nom, prenom, mail, mdp, confirmerMdp) # comment faire que sur un formulaire flaskForm seulement un booleanField soit cliquer a la fois
+
+class SelectJourForm(FlaskForm):
+    lundi = BooleanField('Lundi 17 mai', validators=[Optional()])
+    mardi = BooleanField('Mardi 18 mai', validators=[Optional()])
+    mercredi = BooleanField('Mercredi 19 mai', validators=[Optional()])
+    jeudi = BooleanField('Jeudi 20 mai', validators=[Optional()])
+    vendredi = BooleanField('Vendredi 21 mai', validators=[Optional()])
+    samedi = BooleanField('Samedi 22 mai', validators=[Optional()])
+    submit = SubmitField('Participer')
+
+    def get_jour(self):
+        return [self.lundi.data, self.mardi.data, self.mercredi.data, self.jeudi.data, self.vendredi.data, self.samedi.data]
+
+class RechercheForm(FlaskForm):
+    recherche = StringField('recherche', validators=[DataRequired()])
+    submit = SubmitField('Rechercher')
+
+    def get_recherche(self):
+        return self.recherche.data
+
+
+def les_jours_sont_valide(liste_jours):
+    if liste_jours.count(True) != 1:
+        return False
+    return True
+
+def les_jours_sont_valide_2jours(liste_jours):
+    if liste_jours.count(True) != 2:
+        return False
+    return True
+
 
 @app.route('/')
 def index():
@@ -85,26 +131,122 @@ def index():
             title="Festiut'O | Accueil",
         )
 
-@app.route('/pass-1-jour')
+@app.route('/search', methods=("GET","POST",))
+def search():
+    f = RechercheForm()
+    if f.validate_on_submit():
+        recherche = f.get_recherche()
+        contenu = recherche_groupe(cnx, recherche)
+        contenu = contenu + recherche_creneau(cnx, recherche)
+        contenu = contenu + [("3", "Billet", "lundi"), ("3", "Billet", "mardi"), ("3", "Billet", "mercredi"), ("3", "Billet", "jeudi"), ("3", "Billet", "vendredi"), ("3", "Billet", "samedi")]
+        print(contenu)
+        return render_template(
+            "search.html",
+            title="Festiut'O | Recherche",
+            form=f,
+            recherche=contenu
+        )
+    return render_template(
+        "search.html",
+        title="Festiut'O | Recherche",
+        form=f,
+    )
+
+@app.route('/pass-1-jour', methods=("GET","POST",))
+@csrf.exempt
 def pass1jour():
+    check = request.args.get('check')
+    f = SelectJourForm()
+    erreur = ""
+    
+    if check != None:
+        if check == "lundi":
+            f.lundi.data = True
+        elif check == "mardi":
+            f.mardi.data = True
+        elif check == "mercredi":
+            f.mercredi.data = True
+        elif check == "jeudi":
+            f.jeudi.data = True
+        elif check == "vendredi":
+            f.vendredi.data = True
+        elif check == "samedi":
+            f.samedi.data = True
+        
+    if f.validate_on_submit():
+        jours = f.get_jour()
+        if les_jours_sont_valide(jours) == True:
+            print("test2")
+            jour = f.get_jour()
+            jourChoisit = ""
+            if jour[0]:
+                jourChoisit = "lundi"
+            elif jour[1]:
+                jourChoisit = "mardi"
+            elif jour[2]:
+                jourChoisit = "mercredi"
+            elif jour[3]:
+                jourChoisit = "jeudi"
+            elif jour[4]:
+                jourChoisit = "vendredi"
+            elif jour[5]:
+                jourChoisit = "samedi"
+            return redirect("/payement?pass=1jour&jour="+jourChoisit+"")
+        else:
+            print("erreur")
+            erreur = "Veuillez choisir seulement un jour"
     return render_template(
         "pass1jour.html",
         title="Festiut'O | Pass",
+        form=f,
+        erreur=erreur
     )
 
-@app.route('/pass-2-jours')
+@app.route('/pass-2-jours', methods=("GET","POST",))
+@csrf.exempt
 def pass2jours():
+    f = SelectJourForm()
+    erreur = ""
+    if f.validate_on_submit():
+        jours = f.get_jour()
+        if les_jours_sont_valide_2jours(jours) == True:
+            jourChoisit = []
+            if jours[0]:
+                jourChoisit.append("lundi")
+            if jours[1]:
+                jourChoisit.append("mardi")
+            if jours[2]:
+                jourChoisit.append("mercredi")
+            if jours[3]:
+                jourChoisit.append("jeudi")
+            if jours[4]:
+                jourChoisit.append("vendredi")
+            if jours[5]:
+                jourChoisit.append("samedi")
+            return redirect("/payement?pass=2jours&jour1="+jourChoisit[0]+"&jour2="+jourChoisit[1]+"")
+        else:
+            print("erreur")
+            erreur = "Veuillez choisir deux jours"
     return render_template(
         "pass2jours.html",
         title="Festiut'O | Pass",
+        form=f,
+        erreur=erreur
     )
 
-@app.route('/pass-semaine')
+@app.route('/pass-semaine', methods=("GET","POST",))
+@csrf.exempt
 def passSemaine():
     return render_template(
         "passsemaine.html",
         title="Festiut'O | Pass",
     )
+
+@app.route('/pass-semaine-valid', methods=("GET","POST",))
+@csrf.exempt
+def passSemaineValid():
+    create_billet(cnx, session['utilisateur'][2], "semaine")
+    return redirect(url_for('compte'))
 
 
 @app.route('/artistes')
@@ -186,6 +328,7 @@ def politiqueDeRemboursement():
 @app.route('/compte', methods=("GET","POST",))
 def compte():
     f = LoginForm()
+    modifForm = ModifierForm()
     f2 = InscriptionForm()
     # inscription
     if f2.validate_on_submit():
@@ -200,11 +343,41 @@ def compte():
             session['utilisateur'] = user
             print("login : "+str(session['utilisateur']))
             return redirect(url_for('index'))
+    if 'utilisateur' in session:
+        print("modif : "+str(session['utilisateur']))
+        # modifForm.nom.data = session['utilisateur'][0]
+        # modifForm.prenom.data = session['utilisateur'][1]
+        # modifForm.mail.data = session['utilisateur'][2]
+        # modifForm.mdp.data = get_password_with_email(cnx, session['utilisateur'][2])
+        billets = get_billet_acheteur(cnx, session['utilisateur'][2])
+        yaDesBillets = False
+        if len(billets) > 0:
+            yaDesBillets = True
+        print(yaDesBillets)
+        return render_template(
+            "compte.html",
+            title="Festiut'O | Compte",
+            formConnexion=f,
+            formModif = modifForm,
+            formInscription=f2,
+            billets = billets,
+            yaDesBillets = yaDesBillets
+            )
+    if modifForm.validate_on_submit():
+        modif = modifForm.get_modifier_user()
+        if modif[3] == modif[4]:
+            print("modif : "+str(modif))
+            modifier_acheteur(cnx, modif[0], modif[1], modif[2], modif[3])
+            session.pop('utilisateur', None)
+            session['utilisateur'] = get_nom_and_email(cnx, modif[2])
+            return redirect(url_for('compte'))
+        print("mdp non identique")
     return render_template(
         "compte.html",
         title="Festiut'O | Compte",
         formConnexion=f,
-        formInscription=f2
+        formModif = modifForm,
+        formInscription=f2,
         )
 
     
@@ -246,12 +419,75 @@ def logout():
     return redirect(url_for('compte'))
 
 @app.route('/payement', methods=("GET", "POST",))
+@csrf.exempt
 def payement():
     passe = request.args.get('pass')
     f = PayementForm()
+   # if f.validate_on_submit():
+    if passe == "1jour":
+        jour = request.args.get('jour')
+        match jour:
+            case "lundi":
+                jour = "2024-05-17"
+            case "mardi":
+                jour = "2024-05-18"
+            case "mercredi":
+                jour = "2024-05-19"
+            case "jeudi":
+                jour = "2024-05-20"
+            case "vendredi":
+                jour = "2024-05-21"
+            case "samedi":
+                jour = "2024-05-22"
+        print(jour)
+        create_billet(cnx, session['utilisateur'][2], jour)
+    elif passe == "2jours":
+        jour1 = request.args.get('jour1')
+        jour2 = request.args.get('jour2')
+        print(jour1)
+        print(jour2)
+        match jour1:
+            case "lundi":
+                jour1 = "2024-05-17"
+            case "mardi":
+                jour1 = "2024-05-18"
+            case "mercredi":
+                jour1 = "2024-05-19"
+            case "jeudi":
+                jour1 = "2024-05-20"
+            case "vendredi":
+                jour1 = "2024-05-21"
+            case "samedi":
+                jour1 = "2024-05-22"
+        match jour2:
+            case "lundi":
+                jour2 = "2024-05-17"
+            case "mardi":
+                jour2 = "2024-05-18"
+            case "mercredi":
+                jour2 = "2024-05-19"
+            case "jeudi":
+                jour2 = "2024-05-20"
+            case "vendredi":
+                jour2 = "2024-05-21"
+            case "samedi":
+                jour2 = "2024-05-22"
+        print(jour1)
+        print(jour2)
+        create_billet(cnx, session['utilisateur'][2], jour1)
+    elif passe == "semaine":
+        create_billet(cnx, session['utilisateur'][2], "2024-05-17")
+
+    return redirect(url_for('compte'))
+    
     return render_template(
             "payement.html",
             title="Festiut'O | Payement",
             passe=passe,
             formPayement=f
         )
+
+@app.route("/delete-billet/<int:id>", methods=("GET",))
+def deleteBillet(id):
+    delete_billet(cnx, id)
+    return redirect(url_for('compte'))

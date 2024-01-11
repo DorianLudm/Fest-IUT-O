@@ -10,44 +10,53 @@
 <body>
     {% extends "base.html" %}
     {% block base %}
+
+    {% if 'utilisateur' in session %}
     <div class="container">
         <div class="content">
             <div class="details">
                 <div class="center">
-                    <h1>Pass 1 jour - 20€</h1>
-                    <p class="acces-festival">Accès au festival le jour de votre choix</p>
+                    <h1 class="element">Pass 1 jour - 20€</h1>
+                    <p class="acces-festival element">Accès au festival le jour de votre choix</p>
                 </div>
-                <ul class="liste-jour">
-                    <li>
-                        <p>Lundi</p>
-                        <input type="checkbox">
-                    </li>
-                    <li>
-                        <p>Mardi</p>
-                        <input type="checkbox">
-                    </li>
-                    <li>
-                        <p>Mercredi</p>
-                        <input type="checkbox">
-                    <li>
-                        <p>Jeudi</p>
-                        <input type="checkbox">
-                    </li>
-                    <li>
-                        <p>Vendredi</p>
-                        <input type="checkbox">
-                    </li>
-                    <li>
-                        <p>Samedi</p>
-                        <input type="checkbox">
-                    </li>
-                </ul>
-                <div class="buy">
-                    <a href="/payement?pass=1jour">Participer</a>
-                </div>
+                <form class="form-1jour" method="post" action="{{ url_for('pass1jour') }}">
+                    {{ form.hidden_tag() }}
+                    <ul class="liste-jour">
+                        <li>
+                            <p class="element">Lundi 17 Mai</p>
+                            {{ form.lundi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Mardi 18 Mai</p>
+                            {{ form.mardi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Mercredi 19 Mai</p>
+                            {{ form.mercredi(size=50, class_="element") }} 
+                        <li>
+                            <p class="element">Jeudi 20 Mai</p>
+                            {{ form.jeudi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Vendredi 21 Mai</p>
+                            {{ form.vendredi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Samedi 22 Mai</p>
+                            {{ form.samedi(size=50, class_="element") }} 
+                        </li>
+                    </ul>
+                    <p class="erreur">{{ erreur }}</p>
+                    <div class="buy">
+                        {{ form.submit(size=50, class_="element particip-btn") }} 
+                    </div>
+                </form>
             </div>
         </div>
     </div>  
+    {% else %}
+    <h1 class="element pas-co">Vous devez être connecté pour voir cette page</h1>
+    {% endif %}
     {% endblock %}
 </body>
 </html>
