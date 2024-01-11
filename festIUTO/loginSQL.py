@@ -1,7 +1,7 @@
-login = "335676" # pip install pymysql
-passwd = "annafestiuto"
-serveur= "mysql-annalallier.alwaysdata.net"
-bd = "annalallier_festiuto"
+login = "ludmann" # pip install pymysql
+passwd = "ludmann"
+serveur= "servinfo-maria"
+bd = "DBludmann"
 
 def getLogin():
     return login
