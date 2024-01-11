@@ -27,21 +27,21 @@
                 {% for heure in range(24) %}
                     <tr>
                         <td class="heure">{{heure}} H</td>
-                        {% for j in range(6) %}
                         {% set concert = false %}
+                        {% for j in range(6) %}
                             {% for c in creneaux  %}
                                 {% if heure == c[4].strftime("%H")|int and c[4].weekday() == j %}
-                                    <td class="plein">{{c[6]}}</td>
-                                    {% set concert = true %}
+                                    {% set concert = true %}    
+                                    <td rowspan="1" class="plein">{{c[6]}}</td>
                                 {% endif %}
                             {% endfor %}
                             {% if not concert %}
                                 <td class="vide">Pas de concert</td>
                             {% endif %}
                         {% endfor %}
+                        {% set concert = false %}
                     </tr>
                 {% endfor %}
-
             </tbody>
         </table>
     </div>

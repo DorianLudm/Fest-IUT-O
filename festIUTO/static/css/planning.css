@@ -23,7 +23,7 @@ th, td {
     border: 1px solid #333;
 }
 .heure {
-    height: 1vh;
+    height: 3vh;
     text-align: center;
     background-color: aqua;
 }
