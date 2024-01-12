@@ -28,3 +28,60 @@ begin
     signal SQLSTATE '45000' set MESSAGE_TEXT = mes;
 end |
 delimiter ;
+
+delimiter |
+create or replace TRIGGER verif_horaires_creneau_dans_dates_festival before insert on CRENEAU for each row
+begin
+    declare date_debut date;
+    declare date_fin date;
+    declare datetimeDebut datetime;
+    declare dureeHeure time;
+    declare fini boolean default false ;
+
+    SELECT dateDebutFestival, dateFinFestival into date_debut, date_fin from FESTIVAL NATURAL JOIN LIEUSDUFESTIVAL NATURAL JOIN LIEU NATURAL JOIN CRENEAU where idCreneau = new.idCreneau;
+    SELECT heureDebutCreneau, duree into datetimeDebut, dureeHeure from CRENEAU where idCreneau = new.idCreneau;
+    declare heureFinCreneau datetime;
+    set heureFinCreneau = DATE_ADD(datetimeDebut, INTERVAL  HOUR(dureeHeure) HOUR_SECOND);
+
+
+    if (date_debut > date(datetimeDebut) or date_fin < date(datetimeDebut) or date_debut > date(heureFinCreneau) or date_fin < date(heureFinCreneau)) then
+        set fini = true;
+    end if;
+    end |
+delimiter ;
+
+
+delimiter |
+create or replace TRIGGER modificationStockLaboInsert after insert on BONCOMMANDE for each row
+BEGIN
+    declare idM int ;
+    declare qte int ;
+    declare prixIndividuel float;
+    declare fini boolean default false ;
+    declare etat int ;
+    declare stock int ;
+       
+    declare produits cursor for 
+        SELECT idMateriel, quantite FROM AJOUTERMATERIEL WHERE idDemande = new.idDemande;
+
+    declare continue handler for not found set fini = true ;
+
+    SELECT idEtat INTO etat FROM BONCOMMANDE WHERE idBonCommande = new.idBonCommande ;
+
+    if etat = 3 then 
+        open produits ;
+        while not fini do
+            fetch produits into idM, qte ;
+            if not fini then
+                SELECT recupereStockLabo(idM) into stock ;
+                if stock is null then
+                    INSERT INTO STOCKLABORATOIRE VALUES (idM, qte) ;
+                else 
+                    UPDATE STOCKLABORATOIRE set quantiteLaboratoire = stock + qte WHERE idMateriel = idM ;
+                end if ;
+            end if ;
+        end while ;
+        close produits ;
+    end if;
+end |
+delimiter ;
