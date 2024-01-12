@@ -6,8 +6,8 @@ body {
 }
 
 nav {
-    background-color: transparent !important;
-  }
+    background-color: rgba(31, 35, 45, 1) !important;
+}
 
 #element-a-cacher7 a {
     color: #2c45d3;
@@ -24,7 +24,7 @@ h1{
 }
 
 body .products-container {
-    column-count: 5;
+    column-count: 4;
     column-gap: 1em;
     width: 80%;
     margin: 0 10vw;

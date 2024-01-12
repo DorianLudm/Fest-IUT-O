@@ -1,24 +1,56 @@
-[{
-    "name": "Pull Gris",
-    "price": 39.99,
-    "description": "Pull gris à l'éffigie de l'association, plusieurs tailles disponibles",
-    "image": "static/img/Pull1.png"
-},
-{
-    "name": "Pull Bleu",
-    "price": 39.99,
-    "description": "Pull bleu à l'éffigie de l'association, plusieurs tailles et sous couleurs disponibles",
-    "image": "static/img/Pull2.png"
-},
-{
-    "name": "Porte-Clés",
-    "price": 4.99,
-    "description": "Pour guarder un souvenir de ce séjour partout avec vous!",
-    "image": "static/img/KeyChain.png"
-},
-{
-    "name": "Gourde",
-    "price": 14.99,
-    "description": "Gourde isothèrme afin de rester hydraté pendant toute la journée",
-    "image": "static/img/Gourde.png"
-}]
+[
+    {
+        "name": "T-Shirt du festival",
+        "price": 19.99,
+        "description": "T-shirt commémoratif avec le logo du festival. Disponible en différentes tailles.",
+        "image": "static/img/TShirt.png"
+    },
+    {
+        "name": "Affiche du festival",
+        "price": 9.99,
+        "description": "Une affiche avec l'artwork du festival. Parfait pour décorer votre chambre!",
+        "image": "static/img/Poster.png"
+    },
+    {
+        "name": "Bracelet du festival",
+        "price": 4.99,
+        "description": "Un bracelet pour se souvenir du festival. Portez-le avec fierté!",
+        "image": "static/img/Wristband.png"
+    },
+    {
+        "name": "Gourde du festival",
+        "price": 14.99,
+        "description": "Restez hydraté pendant le festival avec cette gourde réutilisable.",
+        "image": "static/img/Gourde.png"
+    },
+    {
+        "name": "Casquette du festival",
+        "price": 14.99,
+        "description": "Une casquette avec le logo du festival. Protégez-vous du soleil!",
+        "image": "static/img/Cap.png"
+    },
+    {
+        "name": "Sac à dos du festival",
+        "price": 29.99,
+        "description": "Un sac à dos pratique pour transporter vos affaires pendant le festival.",
+        "image": "static/img/Backpack.png"
+    },
+    {
+        "name": "Porte-clés du festival",
+        "price": 4.99,
+        "description": "Un porte-clés pour garder un souvenir du festival.",
+        "image": "static/img/KeyChain.png"
+    },
+    {
+        "name": "Mug du festival",
+        "price": 9.99,
+        "description": "Un mug avec le logo du festival. Parfait pour votre café du matin!",
+        "image": "static/img/Mug.png"
+    },
+    {
+        "name": "Stickers du festival",
+        "price": 2.99,
+        "description": "Un pack de stickers avec différents designs du festival.",
+        "image": "static/img/Stickers.png"
+    }
+]
