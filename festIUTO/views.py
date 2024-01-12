@@ -280,14 +280,11 @@ def artistes():
             artiste_images_favs = artistes_images_fav
         )  
     else:
-        artiste = get_all_groupe()
-        artiste_images=['default']
-        for a in artiste:
-            for i in range(len(a)):
-                if i == 6:
-                    artiste_images.append("../static/img/" + a[i])
+        artiste=get_all_groupe()
         
-        print(artiste_images)
+        artistes_images={}
+        for a in artiste:
+            artistes_images[a[0]]="../static/img/" + a[6]
 
         return render_template(
             "artistes.html",
