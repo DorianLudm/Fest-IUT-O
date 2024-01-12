@@ -110,7 +110,6 @@ VALUES
     (4, 4, 4, '2023-10-04 17:45:00', '2023-10-06 14:30:00', '02:15:00', '02:00:00'),
     (5, 5, 5, '2023-10-09 13:00:00', '2023-10-11 10:00:00', '02:15:00', '01:45:00');
 
--- Table EVENTTYPE
 INSERT INTO EVENTTYPE (idEvent, nom)
 VALUES
     (1, 'Concert'),
@@ -168,18 +167,18 @@ VALUES
 
 INSERT INTO TYPEBILLET (idType, dureeEnJours, prix)
 VALUES
-    (1, 1, 50.00), 
-    (2, 2, 90.00), 
-    (3, 3, 120.00);
+    (1, 1, 20.00), 
+    (2, 2, 35.00), 
+    (3, 3, 90.00);
 
-INSERT INTO BILLET (idBillet, idFestival, mailAcheteur, jourdebut, idType)
+INSERT INTO BILLET (idBillet, idFestival, mailAcheteur, jourdebut, jourDeux, idType)
 VALUES
-    (1, 3, 'dup@gmail.com',  '2023-09-25', 3),
-    (2, 3, 'ars@gmail.com',  '2023-09-25', 3),
-    (3, 3, 'mart@gmail.com', '2023-09-26', 2),
-    (4, 4, 'mart@gmail.com', '2023-10-05', 1),
-    (5, 4, 'gagn@gmail.com', '2023-10-06', 2),
-    (6, 5, 'bou@gmail.com',  '2023-10-11', 1);
+    (1, 3, 'dup@gmail.com',  '2023-09-25', NULL, 3),
+    (2, 3, 'ars@gmail.com',  '2023-09-25', NULL, 3),
+    (3, 3, 'mart@gmail.com', '2023-09-26', '2023-09-26', 2),
+    (4, 4, 'mart@gmail.com', '2023-10-05', NULL, 1),
+    (5, 4, 'gagn@gmail.com', '2023-10-06', '2023-10-07', 2),
+    (6, 5, 'bou@gmail.com',  '2023-10-11', NULL, 1);
 
 
 INSERT INTO FAVORIS (mailAcheteur, idGroupe)

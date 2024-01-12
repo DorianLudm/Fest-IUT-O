@@ -186,6 +186,7 @@ CREATE TABLE BILLET(
     idFestival int NOT NULL REFERENCES FESTIVAL,
     mailAcheteur varchar(100) NOT NULL REFERENCES ACHETEUR,
     jourdebut date NOT NULL ,
+    jourDeux date,
     idType int NOT NULL REFERENCES TYPEBILLET,
     PRIMARY KEY(idBillet)
 );
