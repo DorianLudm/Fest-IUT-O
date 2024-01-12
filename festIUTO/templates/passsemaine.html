@@ -10,19 +10,26 @@
 <body>
     {% extends "base.html" %}
     {% block base %}
+    {% if 'utilisateur' in session %}
     <div class="container">
         <div class="content">
             <div class="details">
                 <div class="center">
-                    <h1>Pass semaine - 90€</h1>
+                    <h1>Pass semaine - <span class="dimanche">90€</span></h1>
                     <p class="acces-festival">Accès au festival tout les jours de la semaine <span class="dimanche">excepter le dimanche</span></p>
+                    <p class="acces-festival">Lundi 17 Mai, Mardi 18 Mai, Mercredi 19 Mai, Jeudi 20 Mai, Vendredi 21 Mai, Samedi 22 Mai</p>
                 </div>
-                <div class="buy">
-                    <a href="/payement?pass=semaine">Participer</a>
-                </div>
+                <form class="form-semaine" method="post" action="{{ url_for('passSemaineValid') }}">
+                    <div class="buy">
+                        <input type="submit" class="particip-btn" value="Participer">
+                    </div>
+                </form>
             </div>
         </div>
     </div>  
+    {% else %}
+    <h1 class="element pas-co">Vous devez être connecté pour voir cette page</h1>
+    {% endif %}
     {% endblock %}
 </body>
 </html>

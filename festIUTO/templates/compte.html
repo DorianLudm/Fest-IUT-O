@@ -60,12 +60,66 @@
     {% else %}
     <!-- quand on est co -->
     <div class="container-all">
-      <div class="container-left">
-        <h2>Modifier votre compte {{ session['utilisateur'][1] }}</h2>
+      <!-- profil -->
+      {% if yaDesBillets == False %}
+        <div class="container-left-no-billet">
+      {% else %}
+        <div class="container-left">
+      {% endif %}
+        <h2 class="element">Modifier votre compte {{ session['utilisateur'][1] }}</h2>
+        <form role="form" method="POST" action ="{{ url_for('compte') }}">
+          {{ formModif.hidden_tag() }}
+          <div class="user-box">
+            {{ formModif.mail(size=50, class_="form-control element", id="email") }}
+            <label class="element" for="email">Email</label>
+          </div>
+          <div class="user-box">
+            {{ formModif.nom(size=50, class_="form-control element", id="nom") }}
+            <label class="element" for="nom">Nom</label>
+          </div>
+          <div class="user-box">
+            {{ formModif.prenom(size=50, class_="form-control element", id="prenom") }} 
+            <label class="element" for="prenom">Prénom</label>
+          </div>
+          <div class="user-box">
+            {{ formModif.mdp(size=50, class_="form-control element", id="password") }} 
+            <label class="element" for="password">Mot de passe</label>
+          </div>
+          <div class="user-box">
+            {{ formModif.confirmerMdp(size=50, class_="form-control element", id="ConfirmPassword") }} 
+            <label class="element" for="password">Confirmer mot de passe</label>
+          </div>
+          <div class="valid-container">
+            <input type="submit" value="Modifier" class="element">
+          </div>
+        </form>
       </div>
+
+      <!-- billet -->
+      {% if yaDesBillets == True %}
       <div class="container-right">
-        <h2>Vos billets</h2>
+        <h2 class="element">Vos billets</h2>
+        <div class="container-billet">
+          {% for billet in billets %}
+          <div class="billet">
+            <img class="element" src="../static/img/icon-logo.png" alt="logo festiuto">
+            <div class="container-nom">
+              {% if billet[3] == "2024-05-17" %}
+              <h3 class="element">Lundi 17 Mai</h3>
+              {% else %}
+              <h3 class="element">{{ billet[3] }}</h3>
+              {% endif %}
+              <p class="element">{{ billet[5] }} {{ billet[6] }}</p>
+            </div>
+            <img class="element" src="../static/img/qrcode.png" alt="qr code">
+            <a class="repro-btn" href="#"><button>Télécharger le billet</button></a>
+            <a class="repro-btn" href="#"><button>Reprogrammer</button></a>
+            <a class="deco-btn" href="{{ url_for('deleteBillet', id=billet[1]) }}"><button>Vendre un billet</button></a>
+          </div>
+          {% endfor %}
+        </div>
       </div>
+      {% endif %}
       <a class="deco-btn" href="{{ url_for('logout') }}"><button>Se déconnecter</button></a>
     </div>
     {% endif %}
