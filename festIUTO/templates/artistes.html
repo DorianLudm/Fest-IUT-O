@@ -38,7 +38,7 @@
                 <div class="info-artiste-container">
                     <div class="nom-groupe-container">
                         <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
-                        <a href="{{ url_for('ajouterFav', id=i[0]) }}"><button id="bouton-fav"><img src="{{artiste_images[i[0]]}}"></button></a>
+                        <a href="{{ url_for('ajouterFav', id=i[0]) }}"><button id="bouton-fav"><img src="../static/img/coeur-vide.png"></button></a>
                     </div>
                 </div>
             </section>

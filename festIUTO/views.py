@@ -113,23 +113,13 @@ def artistes():
         artiste=get_groupe_non_favoris(session['utilisateur'][2])
         artiste_fav=get_groupe_favoris(session['utilisateur'][2])
 
-        artiste_images=['default']
+        artistes_images={}
         for a in artiste:
-            for i in range(len(a)):
-                if i == 6:
-                    artiste_images.append("../static/img/" + a[i])
+            artistes_images[a[0]]="../static/img/" + a[6]
 
-        artiste_images_favs=['default']
+        artistes_images_fav={}
         for a in artiste_fav:
-            for i in range(len(a)):
-                print(len(a))
-                if i == 7:
-                    artiste_images_favs.append("../static/img/" + a[i])
-        print(artiste_fav)
-        print(artiste_images_favs)
-
-        print("artiste_images")
-        print(artiste_images)
+            artistes_images_fav[a[0]]="../static/img/" + a[7]
         
         yaQueDesFavoris=False
         yaFavoris=False
@@ -144,14 +134,21 @@ def artistes():
             artiste_fav=artiste_fav,
             yaFavoris=yaFavoris,
             yaQueDesFavoris=yaQueDesFavoris,
-            artiste_images=artiste_images,
-            artiste_images_favs = artiste_images_favs
+            artiste_images=artistes_images,
+            artiste_images_favs = artistes_images_fav
         )  
     else:
+        artiste=get_all_groupe()
+        
+        artistes_images={}
+        for a in artiste:
+            artistes_images[a[0]]="../static/img/" + a[6]
+
         return render_template(
             "artistes.html",
             title="Festiut'O | Artistes",
             artiste=get_all_groupe(),
+            artiste_images=artistes_images
         )  
     
 @app.route('/planning')
