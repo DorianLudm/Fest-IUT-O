@@ -336,3 +336,7 @@ h2 {
   flex-grow: 1;
   text-align: center;
 }
+
+.billet h3, .billet p, .billet h4 {
+  text-align: center;
+}

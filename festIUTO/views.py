@@ -369,7 +369,13 @@ def compte():
             formModif = modifForm,
             formInscription=f2,
             billets = billets,
-            yaDesBillets = yaDesBillets
+            yaDesBillets = yaDesBillets,
+            ILundi = datetime.date(2024, 5, 17),
+            IMardi = datetime.date(2024, 5, 18),
+            IMercredi = datetime.date(2024, 5, 19),
+            IJeudi = datetime.date(2024, 5, 20),
+            IVendredi = datetime.date(2024, 5, 21),
+            ISamedi = datetime.date(2024, 5, 22)
             )
     if modifForm.validate_on_submit():
         modif = modifForm.get_modifier_user()
@@ -482,7 +488,7 @@ def payement():
                 jour2 = "2024-05-22"
         print(jour1)
         print(jour2)
-        create_billet(cnx, session['utilisateur'][2], jour1, 2)
+        create_billet(cnx, session['utilisateur'][2], jour1, 2, jour2)
     elif passe == "semaine":
         create_billet(cnx, session['utilisateur'][2], "2024-05-17", 3)
 
