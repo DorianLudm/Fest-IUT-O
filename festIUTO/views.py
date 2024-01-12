@@ -245,7 +245,7 @@ def passSemaine():
 @app.route('/pass-semaine-valid', methods=("GET","POST",))
 @csrf.exempt
 def passSemaineValid():
-    create_billet(cnx, session['utilisateur'][2], "semaine")
+    create_billet(cnx, session['utilisateur'][2], "semaine", 3)
     return redirect(url_for('compte'))
 
 
@@ -448,7 +448,7 @@ def payement():
             case "samedi":
                 jour = "2024-05-22"
         print(jour)
-        create_billet(cnx, session['utilisateur'][2], jour)
+        create_billet(cnx, session['utilisateur'][2], jour, 1)
     elif passe == "2jours":
         jour1 = request.args.get('jour1')
         jour2 = request.args.get('jour2')
@@ -482,9 +482,9 @@ def payement():
                 jour2 = "2024-05-22"
         print(jour1)
         print(jour2)
-        create_billet(cnx, session['utilisateur'][2], jour1)
+        create_billet(cnx, session['utilisateur'][2], jour1, 2)
     elif passe == "semaine":
-        create_billet(cnx, session['utilisateur'][2], "2024-05-17")
+        create_billet(cnx, session['utilisateur'][2], "2024-05-17", 3)
 
     return redirect(url_for('compte'))
     

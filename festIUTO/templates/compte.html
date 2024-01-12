@@ -86,7 +86,7 @@
             <label class="element" for="password">Mot de passe</label>
           </div>
           <div class="user-box">
-            {{ formModif.confirmerMdp(size=50, class_="form-control element", id="ConfirmPassword") }} 
+            {{ formModif.confirmerMdp(sizàe=50, class_="form-control element", id="ConfirmPassword") }} 
             <label class="element" for="password">Confirmer mot de passe</label>
           </div>
           <div class="valid-container">
@@ -104,11 +104,33 @@
           <div class="billet">
             <img class="element" src="../static/img/icon-logo.png" alt="logo festiuto">
             <div class="container-nom">
+              <!-- type de pass -->
+              {% if billet[4] == 1 %}
+              <h3 class="element">Pass 1 jour</h3>
+              {% elif billet[4] == 2 %}
+              <h3 class="element">Pass 2 jours
+              {% else %}
+              <h3 class="element">Pass semaine</h3>
+              {% endif %}
+
+              <!-- afficher les jours -->
               {% if billet[3] == "2024-05-17" %}
               <h3 class="element">Lundi 17 Mai</h3>
+              {% elif billet[3] == "2024-05-18" %}
+              <h3 class="element">Mardi 18 Mai</h3>
+              {% elif billet[3] == "2024-05-19" %}
+              <h3 class="element">Mercredi 19 Mai</h3>
+              {% elif billet[3] == "2024-05-20" %}
+              <h3 class="element">Jeudi 20 Mai</h3>
+              {% elif billet[3] == "2024-05-21" %}
+              <h3 class="element">Vendredi 21 Mai</h3>
+              {% elif billet[3] == "2024-05-22" %}
+              <h3 class="element">Samedi 22 Mai</h3>
               {% else %}
               <h3 class="element">{{ billet[3] }}</h3>
               {% endif %}
+
+
               <p class="element">{{ billet[5] }} {{ billet[6] }}</p>
             </div>
             <img class="element" src="../static/img/qrcode.png" alt="qr code">
