@@ -1,0 +1,24 @@
+[{
+    "name": "Pull Gris",
+    "price": 39.99,
+    "description": "Pull gris à l'éffigie de l'association, plusieurs tailles disponibles",
+    "image": "static/img/Pull1.png"
+},
+{
+    "name": "Pull Bleu",
+    "price": 39.99,
+    "description": "Pull bleu à l'éffigie de l'association, plusieurs tailles et sous couleurs disponibles",
+    "image": "static/img/Pull2.png"
+},
+{
+    "name": "Porte-Clés",
+    "price": 4.99,
+    "description": "Pour guarder un souvenir de ce séjour partout avec vous!",
+    "image": "static/img/KeyChain.png"
+},
+{
+    "name": "Gourde",
+    "price": 14.99,
+    "description": "Gourde isothèrme afin de rester hydraté pendant toute la journée",
+    "image": "static/img/Gourde.png"
+}]

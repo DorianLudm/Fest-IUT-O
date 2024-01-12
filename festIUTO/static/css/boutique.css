@@ -13,24 +13,6 @@ nav {
     color: #2c45d3;
 }
 
-/* debut prog */    
-.liste-artiste {
-    display: flex;
-    flex-wrap: wrap;   
-    justify-content: space-around;
-}
-
-.section-artiste {
-    background-color: #1f242d;
-    border-radius: 1em;
-    padding: 1em;
-    margin: 2em;
-}
-
-.section-artiste li {
-    color: #fff;
-}
-
 .footer {
     margin-top: 30vh;
 }
@@ -53,7 +35,7 @@ body .products-container {
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 20px;
-    background-color: white;
+    background-color: #faf6e7;
     flex: 1 0 21%;
     margin: 1%;
     display: inline-block;

@@ -13,30 +13,14 @@
     {% block base %}
     <h1>Boutique</h1>
     <div class="products-container">
-        <div>
-            <h2>Pull Gris</h2>
-            <img src="../static/img/Pull1.png" alt="sheep">
-            <p> Pull gris à l'éffigie de l'association, plusieurs tailles disponibles</p>
-            <p> Prix : 39.99€</p>
+    {% for article in articles %}
+        <div class="article">
+            <img src="{{ article['image'] }}" alt="Image de l'article: ">
+            <h2>{{ article['name'] }}</h2>
+            <p>{{ article['description'] }}</p>
+            <p>{{ article['price'] }}€</p>
         </div>
-        <div>
-            <h2>Pull Bleu</h2>
-            <img src="../static/img/Pull2.png" alt="sheep">
-            <p> Pull bleu à l'éffigie de l'association, plusieurs tailles et sous couleurs disponibles</p>
-            <p> Prix : 39.99€</p>
-        </div>
-        <div>
-            <h2>Porte-Clés</h2>
-            <img src="../static/img/KeyChain.png" alt="sheep">
-            <p> Pour guarder un souvenir de ce séjour partout avec vous!</p>
-            <p> Prix : 4.99€</p>
-        </div>
-        <div>
-            <h2>Gourde</h2>
-            <img src="../static/img/Gourde.png" alt="sheep">
-            <p> Gourde isothèrme afin de rester hydrater pendant toute la journée</p>
-            <p> Prix : 14.99€</p>
-        </div>
+    {% endfor %}
     </div>
     {% endblock %}
 </body>
