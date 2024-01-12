@@ -157,7 +157,9 @@ VALUES
     ('gel@gmail.com', '123', 'Gélinas', 'Martin'),
     ('ars@gmail.com', '123', 'Arsenault', 'Geneviève'),
     ('pla@gmail.com', '123', 'Plante', 'Alexandre'),
-    ('anna@', 'cbo', "Lallier", "Anna");
+    ('anna@', 'cbo', "Lallier", "Anna"),
+    ('leo.lucidor@gmail.com', '123', 'lucidor', 'léo'),
+    ('colin@', '123', 'pilet', 'colin');
 
 INSERT INTO PREINSCRIRE(idCreneau, mailAcheteur)
 VALUES
