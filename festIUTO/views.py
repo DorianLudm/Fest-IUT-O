@@ -288,10 +288,20 @@ def artistes():
 
 @app.route('/planning')
 def planning():
+    concertChoisit = request.args.get('concert')
+    if concertChoisit != None:
+        return render_template(
+        "planning.html",
+        title="Festiut'O | Planning",
+        creneaux = get_creneaux(),
+        pla = get_planning(),
+        concertChoisit=concertChoisit
+        )
     return render_template(
         "planning.html",
         title="Festiut'O | Planning",
         creneaux = get_creneaux(),
+        pla = get_planning(),
     )
 
 @app.route('/billeterie')

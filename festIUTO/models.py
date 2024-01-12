@@ -1,6 +1,7 @@
 from flask_login import UserMixin
 from .app import login_manager
 from .connexionPythonSQL import *
+from .requette import get_creneaux
 
 
 
@@ -8,3 +9,13 @@ from .connexionPythonSQL import *
 def load_user(email):
     cnx = get_cnx()
     return get_nom_whith_email(cnx, email)
+
+def get_planning():
+    creneaux = get_creneaux()
+    planning = dict()
+    for c in creneaux:
+        if (int(c[4].strftime("%H")), c[4].weekday()) in planning.keys():
+            planning[int(c[4].strftime("%H")), c[4].weekday()].append(c[6])
+        else:
+            planning[int(c[4].strftime("%H")), c[4].weekday()] = [c[6]]
+    return planning
