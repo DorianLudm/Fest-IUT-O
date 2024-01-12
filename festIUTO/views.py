@@ -256,12 +256,16 @@ def artistes():
         artiste_fav=get_groupe_favoris(session['utilisateur'][2])
 
         artiste_images=['default']
+        for a in artiste_fav:
+            for i in range(len(a)):
+                if i == 6:
+                    artiste_images.append("../static/img/" + a[i])
+
         for a in artiste:
             for i in range(len(a)):
                 if i == 6:
                     artiste_images.append("../static/img/" + a[i])
         
-        print("artiste_images")
         print(artiste_images)
         
         yaQueDesFavoris=False
@@ -280,6 +284,15 @@ def artistes():
             artiste_images=artiste_images
         )  
     else:
+        artiste = get_all_groupe()
+        artiste_images=['default']
+        for a in artiste:
+            for i in range(len(a)):
+                if i == 6:
+                    artiste_images.append("../static/img/" + a[i])
+        
+        print(artiste_images)
+
         return render_template(
             "artistes.html",
             title="Festiut'O | Artistes",
