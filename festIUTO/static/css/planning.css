@@ -10,6 +10,34 @@ nav {
   }
 
 
+.planning {
+    display: flex;
+    flex-wrap: wrap;   
+    justify-content: center;
+    margin-top: 10em;
+    background-color: #1f242d;
+} 
+
+th, td {
+    width: 10em;
+    border: 1px solid #333;
+}
+.heure {
+    height: 3vh;
+    text-align: center;
+    background-color: aqua;
+}
+
+.jour {
+    background-color: antiquewhite;
+}
+
+.vide {
+    background-color: #2c45d3;
+}
+.plein {
+    background-color: aquamarine;
+}
 #element-a-cacher7 a {
     color: #2c45d3;
 }

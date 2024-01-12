@@ -255,18 +255,13 @@ def artistes():
         artiste=get_groupe_non_favoris(session['utilisateur'][2])
         artiste_fav=get_groupe_favoris(session['utilisateur'][2])
 
-        artiste_images=['default']
-        for a in artiste_fav:
-            for i in range(len(a)):
-                if i == 6:
-                    artiste_images.append("../static/img/" + a[i])
-
+        artistes_images={}
         for a in artiste:
-            for i in range(len(a)):
-                if i == 6:
-                    artiste_images.append("../static/img/" + a[i])
-        
-        print(artiste_images)
+            artistes_images[a[0]]="../static/img/" + a[6]
+
+        artistes_images_fav={}
+        for a in artiste_fav:
+            artistes_images_fav[a[0]]="../static/img/" + a[7]
         
         yaQueDesFavoris=False
         yaFavoris=False
@@ -281,23 +276,21 @@ def artistes():
             artiste_fav=artiste_fav,
             yaFavoris=yaFavoris,
             yaQueDesFavoris=yaQueDesFavoris,
-            artiste_images=artiste_images
+            artiste_images=artistes_images,
+            artiste_images_favs = artistes_images_fav
         )  
     else:
-        artiste = get_all_groupe()
-        artiste_images=['default']
-        for a in artiste:
-            for i in range(len(a)):
-                if i == 6:
-                    artiste_images.append("../static/img/" + a[i])
+        artiste=get_all_groupe()
         
-        print(artiste_images)
+        artistes_images={}
+        for a in artiste:
+            artistes_images[a[0]]="../static/img/" + a[6]
 
         return render_template(
             "artistes.html",
             title="Festiut'O | Artistes",
-            artiste=artiste,
-            artiste_images=artiste_images
+            artiste=get_all_groupe(),
+            artiste_images=artistes_images
         )  
     
 @app.route('/planning')
@@ -305,6 +298,7 @@ def planning():
     return render_template(
         "planning.html",
         title="Festiut'O | Planning",
+        creneaux = get_creneaux(),
     )
 
 @app.route('/billeterie')

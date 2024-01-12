@@ -1,4 +1,3 @@
--- Drop tables
 DROP TABLE IF EXISTS PHOTOGROUPE ;
 DROP TABLE IF EXISTS IMAGE;
 DROP TABLE IF EXISTS FAVORIS;
@@ -26,7 +25,7 @@ DROP TABLE IF EXISTS FESTIVAL;
 
 
 CREATE TABLE FESTIVAL(
-    idFestival int NOT NULL,
+    idFestival int NOT NULL auto_increment,
     nomFestival varchar(30) NOT NULL,
     dateDebutFestival datetime NOT NULL check((HOUR(dateDebutFestival) between 14 and 23 or HOUR(dateDebutFestival) between 0 and 4) AND dateFinFestival > dateDebutFestival and (day(dateDebutFestival)+1) <= day(dateFinFestival)),
     dateFinFestival datetime NOT NULL check((HOUR(dateFinFestival) between 14 and 23 or (HOUR(dateFinFestival) between 0 and 4) AND dateFinFestival > dateDebutFestival and (day(dateDebutFestival)+1) <= day(dateFinFestival))),
@@ -41,7 +40,7 @@ CREATE TABLE BILLETSPARJOUR(
 );
 
 CREATE TABLE LIEU(
-    idLieu int NOT NULL,
+    idLieu int NOT NULL auto_increment,
     nomLieu varchar(30) NOT NULL ,
     adresse varchar(255) NOT NULL ,
     disponibiliteLieu boolean NOT NULL,
@@ -56,14 +55,14 @@ CREATE TABLE LIEUSDUFESTIVAL(
 );
 
 CREATE TABLE HEBERGEMENT(
-    idHebergement int NOT NULL ,
+    idHebergement int NOT NULL auto_increment,
     nombreDePlaces int NOT NULL check(nombreDePlaces > 0),
     nomHebergement varchar(30) NOT NULL,
     PRIMARY KEY(idHebergement)
 );
 
 CREATE TABLE STYLEMUSICAL(
-    idStyle int NOT NULL,
+    idStyle int NOT NULL auto_increment,
     nom varchar(30) NOT NULL ,
     description varchar(255) NOT NULL ,
     PRIMARY KEY(idStyle),
@@ -77,21 +76,21 @@ CREATE TABLE LIAISONMUSICALE(
 );
 
 CREATE TABLE RESEAUXSOCIAUX(
-    idReseau int NOT NULL ,
+    idReseau int NOT NULL auto_increment,
     nomReseau varchar(30) NOT NULL ,
     UNIQUE(nomReseau),
     PRIMARY KEY(idReseau, nomReseau)
 );
 
 CREATE TABLE INSTRUMENT(
-    idInstrument int NOT NULL,
+    idInstrument int NOT NULL auto_increment,
     nomInstrument varchar(30),
     UNIQUE(nomInstrument),
     PRIMARY KEY(idInstrument)
 );
 
 CREATE TABLE ARTISTE(
-    idArtiste int NOT NULL,
+    idArtiste int NOT NULL auto_increment,
     nomArtiste varchar(30) NOT NULL,
     prenomArtiste varchar(30) NOT NULL,
     PRIMARY KEY (idArtiste)
@@ -104,7 +103,7 @@ CREATE TABLE JOUEINSTRUMENT(
 );
 
 CREATE TABLE GROUPE(
-    idGroupe int NOT NULL,
+    idGroupe int NOT NULL auto_increment,
     nomGroupe varchar(30) NOT NULL ,
     nbPersn int NOT NULL check(nbPersn > 0),
     idStyle int NOT NULL REFERENCES STYLEMUSICAL,
@@ -141,27 +140,25 @@ CREATE TABLE ORGANISATIONGROUPE(
 --reprise ici
 
 CREATE TABLE EVENTTYPE(
-    idEvent int NOT NULL,
+    idEvent int NOT NULL auto_increment,
     nom varchar(300) NOT NULL,
     UNIQUE(nom),
     PRIMARY KEY(idEvent)
 );
 
 CREATE TABLE CRENEAU(
-    idCreneau int NOT NULL,
+    idCreneau int NOT NULL auto_increment,
     idLieu int NOT NULL REFERENCES LIEU,
     idGroupe int NOT NULL REFERENCES GROUPE,
     idEvent int NOT NULL REFERENCES EVENTTYPE,
     heureDebut datetime NOT NULL check(HOUR(heureDebut) between 4 and 14),
-    duree TIME NOT NULL,
+    duree TIME NOT NULL check ((HOUR(heureDebut) + HOUR(duree) + MINUTE(duree) + SECOND(duree)) between 4 and 14 AND duree > 0),
     descriptionEvenement varchar(255) NOT NULL,
     preinscriptionPossible boolean NOT NULL,
     gratuit boolean NOT NULL,
     visibleAuPublic boolean NOT NULL,
     PRIMARY KEY(idCreneau)
 );
-
---faire une fonction sur la duree/heure..
 
 CREATE TABLE ACHETEUR(
     mailAcheteur varchar(100) NOT NULL,
@@ -178,14 +175,14 @@ CREATE TABLE PREINSCRIRE(
 );
 
 CREATE TABLE TYPEBILLET(
-    idType int NOT NULL,
+    idType int NOT NULL auto_increment,
     dureeEnJours int NOT NULL,
     prix float NOT NULL,
     PRIMARY KEY(idType)
 );
 
 CREATE TABLE BILLET(
-    idBillet int NOT NULL,
+    idBillet int NOT NULL auto_increment,
     idFestival int NOT NULL REFERENCES FESTIVAL,
     mailAcheteur varchar(100) NOT NULL REFERENCES ACHETEUR,
     jourdebut date NOT NULL ,
@@ -204,4 +201,4 @@ CREATE TABLE PHOTOGROUPE(
     idGroupe int NOT NULL REFERENCES GROUPE,
     nomImage varchar(800) NOT NULL,
     PRIMARY KEY(idImage)
-) ;
+);
