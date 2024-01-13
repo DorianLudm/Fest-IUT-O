@@ -157,8 +157,26 @@ def search():
 @csrf.exempt
 def pass1jour():
     check = request.args.get('check')
+    idBillet = request.args.get('idBillet')
+    if idBillet != None:
+        billet = get_billet(cnx, idBillet)
+        print(billet)
     f = SelectJourForm()
     erreur = ""
+
+    if idBillet != None:
+        if billet[3] == datetime.date(2024, 5, 17):
+            f.lundi.data = True
+        elif billet[3] == datetime.date(2024, 5, 18):
+            f.mardi.data = True
+        elif billet[3] == datetime.date(2024, 5, 19):
+            f.mercredi.data = True
+        elif billet[3] == datetime.date(2024, 5, 20):
+            f.jeudi.data = True
+        elif billet[3] == datetime.date(2024, 5, 21):
+            f.vendredi.data = True
+        elif billet[3] == datetime.date(2024, 5, 22):
+            f.samedi.data = True
     
     if check != None:
         if check == "lundi":
@@ -202,15 +220,35 @@ def pass1jour():
         "pass1jour.html",
         title="Festiut'O | Pass",
         form=f,
-        erreur=erreur
+        erreur=erreur,
+        idBillet=idBillet
     )
 
 @app.route('/pass-2-jours', methods=("GET","POST",))
 @csrf.exempt
 def pass2jours():
     nbJour = request.args.get('nbJour')
+    idBillet = request.args.get('idBillet')
+    if idBillet != None:
+        billet = get_billet(cnx, idBillet)
+        print(billet)
     f = SelectJourForm()
     erreur = ""
+
+    if idBillet != None:
+        if billet[3] == datetime.date(2024, 5, 17) or billet[4] == datetime.date(2024, 5, 17):
+            f.lundi.data = True
+        elif billet[3] == datetime.date(2024, 5, 18) or billet[4] == datetime.date(2024, 5, 18):
+            f.mardi.data = True
+        elif billet[3] == datetime.date(2024, 5, 19) or billet[4] == datetime.date(2024, 5, 19):
+            f.mercredi.data = True
+        elif billet[3] == datetime.date(2024, 5, 20) or billet[4] == datetime.date(2024, 5, 20):
+            f.jeudi.data = True
+        elif billet[3] == datetime.date(2024, 5, 21) or billet[4] == datetime.date(2024, 5, 21):
+            f.vendredi.data = True
+        elif billet[3] == datetime.date(2024, 5, 22) or billet[4] == datetime.date(2024, 5, 22):
+            f.samedi.data = True
+
     if f.validate_on_submit():
         jours = f.get_jour()
         nombreJour = jours[6]
@@ -233,11 +271,17 @@ def pass2jours():
         else:
             print("erreur")
             erreur = "Veuillez choisir deux jours"
+    
+    if idBillet == None:
+        idBillet = True
+    else:
+        idBillet = False
     return render_template(
         "pass2jours.html",
         title="Festiut'O | Pass",
         form=f,
-        erreur=erreur
+        erreur=erreur,
+        idBillet=idBillet
     )
 
 @app.route('/pass-semaine', methods=("GET","POST",))

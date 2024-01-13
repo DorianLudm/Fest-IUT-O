@@ -144,6 +144,17 @@ def get_billet_acheteur(cnx, mail):
         print("Erreur lors de la requête get_billet_acheteur")
         return []
 
+def get_billet(cnx, idBillet):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM BILLET WHERE idBillet = '"+idBillet+"';"))
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_billet")
+        return None
+
 def delete_billet(cnx, idBillet):
     try:
         cnx.execute(text("DELETE FROM BILLET WHERE idBillet = "+str(idBillet)+";"))
