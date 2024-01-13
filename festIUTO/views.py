@@ -100,10 +100,11 @@ class SelectJourForm(FlaskForm):
     jeudi = BooleanField('Jeudi 20 mai', validators=[Optional()])
     vendredi = BooleanField('Vendredi 21 mai', validators=[Optional()])
     samedi = BooleanField('Samedi 22 mai', validators=[Optional()])
+    nombreBillet = IntegerField('Quantité de billets', validators=[DataRequired()])
     submit = SubmitField('Participer')
 
     def get_jour(self):
-        return [self.lundi.data, self.mardi.data, self.mercredi.data, self.jeudi.data, self.vendredi.data, self.samedi.data]
+        return [self.lundi.data, self.mardi.data, self.mercredi.data, self.jeudi.data, self.vendredi.data, self.samedi.data, self.nombreBillet.data]
 
 class RechercheForm(FlaskForm):
     recherche = StringField('recherche', validators=[DataRequired()])
@@ -175,6 +176,8 @@ def pass1jour():
         
     if f.validate_on_submit():
         jours = f.get_jour()
+        nombreJour = jours[6]
+        jours = jours[:5]
         if les_jours_sont_valide(jours) == True:
             print("test2")
             jour = f.get_jour()
@@ -191,7 +194,7 @@ def pass1jour():
                 jourChoisit = "vendredi"
             elif jour[5]:
                 jourChoisit = "samedi"
-            return redirect("/payement?pass=1jour&jour="+jourChoisit+"")
+            return redirect("/payement?pass=1jour&jour="+jourChoisit+"&nbJour="+str(jour[6])+"")
         else:
             print("erreur")
             erreur = "Veuillez choisir seulement un jour"
@@ -205,10 +208,13 @@ def pass1jour():
 @app.route('/pass-2-jours', methods=("GET","POST",))
 @csrf.exempt
 def pass2jours():
+    nbJour = request.args.get('nbJour')
     f = SelectJourForm()
     erreur = ""
     if f.validate_on_submit():
         jours = f.get_jour()
+        nombreJour = jours[6]
+        jours = jours[:6]
         if les_jours_sont_valide_2jours(jours) == True:
             jourChoisit = []
             if jours[0]:
@@ -223,7 +229,7 @@ def pass2jours():
                 jourChoisit.append("vendredi")
             if jours[5]:
                 jourChoisit.append("samedi")
-            return redirect("/payement?pass=2jours&jour1="+jourChoisit[0]+"&jour2="+jourChoisit[1]+"")
+            return redirect("/payement?pass=2jours&jour1="+jourChoisit[0]+"&jour2="+jourChoisit[1]+"&nbJour="+str(nombreJour)+"")
         else:
             print("erreur")
             erreur = "Veuillez choisir deux jours"
@@ -237,9 +243,14 @@ def pass2jours():
 @app.route('/pass-semaine', methods=("GET","POST",))
 @csrf.exempt
 def passSemaine():
+    form = SelectJourForm()
+    if form.validate_on_submit():
+        jours = form.get_jour()
+        return redirect("/payement?pass=semaine&nbJour="+str(jours[6])+"")
     return render_template(
         "passsemaine.html",
         title="Festiut'O | Pass",
+        form=form
     )
 
 @app.route('/pass-semaine-valid', methods=("GET","POST",))
@@ -453,6 +464,7 @@ def logout():
 @csrf.exempt
 def payement():
     passe = request.args.get('pass')
+    nbJour = request.args.get('nbJour')
     f = PayementForm()
    # if f.validate_on_submit():
     if passe == "1jour":
@@ -471,7 +483,8 @@ def payement():
             case "samedi":
                 jour = "2024-05-22"
         print(jour)
-        create_billet(cnx, session['utilisateur'][2], jour, 1)
+        for i in range(int(nbJour)):
+            create_billet(cnx, session['utilisateur'][2], jour, 1)
     elif passe == "2jours":
         jour1 = request.args.get('jour1')
         jour2 = request.args.get('jour2')
@@ -505,9 +518,11 @@ def payement():
                 jour2 = "2024-05-22"
         print(jour1)
         print(jour2)
-        create_billet(cnx, session['utilisateur'][2], jour1, 2, jour2)
+        for i in range(int(nbJour)):
+            create_billet(cnx, session['utilisateur'][2], jour1, 2, jour2)
     elif passe == "semaine":
-        create_billet(cnx, session['utilisateur'][2], "2024-05-17", 3)
+        for i in range(int(nbJour)):
+            create_billet(cnx, session['utilisateur'][2], "2024-05-17", 3)
 
     return redirect(url_for('compte'))
     

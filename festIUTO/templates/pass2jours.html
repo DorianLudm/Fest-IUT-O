@@ -45,6 +45,9 @@
                             {{ form.samedi(size=50, class_="element") }} 
                         </li>
                     </ul>
+                    <div class="container-qte">
+                        {{ form.nombreBillet(size=50, class_="element", placeholder="Quantité", min="1", value="1") }}
+                    </div>
                     <p class="erreur">{{ erreur }}</p>
                     <div class="buy">
                         {{ form.submit(size=50, class_="element particip-btn") }} 
