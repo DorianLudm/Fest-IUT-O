@@ -419,12 +419,9 @@ def profilGroupe(id):
         "profilGroupe.html",
         title="Festiut'O | profilGroupe",
         Groupe=get_profil_groupe(id),
-        Image="../static/img/" + get_image_groupe(id)[0]
-
-        # nomGroupe=nomGroupe,
-        # idGroupe=idGroupe,
-        # descArtiste=descArtiste,
-        # nomStyle=nomStyle
+        Image="../static/img/" + get_image_groupe(id)[0],
+        suggestions=get_artistes_avec_meme_style(cnx, id),
+        favoris=artiste_favoris_acheteur(cnx, session['utilisateur'][2], id)
     )
 
 @app.route("/ajouter-fav/<int:id>", methods=("GET",))
@@ -436,6 +433,16 @@ def ajouterFav(id):
 def supprimerFav(id):
     delete_groupe_favoris(session['utilisateur'][2], id)
     return redirect(url_for('artistes'))
+
+@app.route("/ajouter-favoris/<int:id>", methods=("GET",))
+def ajouterFavoris(id):
+    add_groupe_favoris(session['utilisateur'][2], id)
+    return redirect(url_for('profilGroupe', id=id))
+
+@app.route("/supprimer-favoris/<int:id>", methods=("GET",))
+def supprimerFavoris(id):
+    delete_groupe_favoris(session['utilisateur'][2], id)
+    return redirect(url_for('profilGroupe', id=id))
 
 @app.route("/logout/")
 def logout():

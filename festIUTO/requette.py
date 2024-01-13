@@ -194,3 +194,30 @@ def recherche_creneau(cnx, recherche):
         row_with_id = ("2",) + row_tuple
         liste.append(row_with_id)
     return liste
+
+def get_artistes_avec_meme_style(cnx, idGroupe):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT idGroupe, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe, nomImage FROM GROUPE NATURAL JOIN PHOTOGROUPE WHERE idStyle = (SELECT idStyle FROM GROUPE WHERE idGroupe = "+str(idGroupe)+");"))
+        for row in res:
+            print(row)
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_artistes_avec_meme_style")
+        return []
+
+def artiste_favoris_acheteur(cnx, mail, idGroupe):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM FAVORIS WHERE mailAcheteur = '"+mail+"' AND idGroupe = "+str(idGroupe)+";"))
+        for row in res:
+            liste.append(row)
+        if len(liste) == 0:
+            return False
+        else:
+            return True
+    except:
+        print("Erreur lors de la requête artiste_favoris_acheteur")
+        return []
+   

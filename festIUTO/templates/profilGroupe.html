@@ -12,11 +12,13 @@
 <body>
     {% extends "base.html" %}
     {% block base %}
-    <section class="container-profil">
+    <section class="container-profil element">
         <div class="info-artiste-container">
-            <p id="nom-groupe">{{ Groupe[2] }}</p>
-            <!-- <button id="bouton-fav"><img src="../static/img/coeur-vide.png"></button> -->
-            <p id="style-musicale">{{ Groupe[6] }}</p>
+            {% if favoris %}
+            <p id="nom-groupe">{{ Groupe[2] }} - {{ Groupe[6] }}  <a href="{{ url_for('supprimerFavoris', id=Groupe[0]) }}"><img class="img-fav" src="../static/img/coeur-plein.png" alt="favoris"></a></p>
+            {% else %}
+            <p id="nom-groupe">{{ Groupe[2] }} - {{ Groupe[6] }}  <a href="{{ url_for('ajouterFavoris', id=Groupe[0]) }}"><img class="img-fav" src="../static/img/coeur-vide.png" alt="favoris"></a></p>
+            {% endif %}
             <p id="desc-Artiste">{{ Groupe[4] }}</p>
             <div class="music-container" id="music-container">
                 <div class="music-info">
@@ -41,11 +43,29 @@
                 </button>
                 </div>
             </div>
+            <ul class="reseaux-sociaux">
+                <a class="element" href="https://www.instagram.com/" target="_blank"><i class='bx bxl-instagram'></i></a>
+                <a class="element" href="https://www.facebook.com/?locale=fr_FR" target="_blank"><i class='bx bxl-facebook'></i></a>
+                <a class="element" href="https://www.youtube.com/" target="_blank"><i class='bx bxl-youtube'></i></a>
+                <a class="element" href="https://open.spotify.com/intl-fr" target="_blank"><i class='bx bxl-spotify'></i></a>
+            </ul>
         </div>
         <aside class="aside">
             <img src={{Image}}>
         </aside>
     </section>
+    <h2 class="titre-suggestion element">Vous pourriez aussi aimer</h2>
+    <div class="container-suggestion">
+        {% for artiste in suggestions %}
+        <a href="{{ url_for('profilGroupe', id=artiste[0]) }}" class="element">
+            <div class="suggestion">
+                <img src=../static/img/{{artiste[6]}} alt="image artiste"> 
+                <p>{{artiste[1]}}</p>
+                <p>{{artiste[4]}}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
     <script src="../static/js/musicPlayer.js"></script>
     {% endblock %}
 </body>
