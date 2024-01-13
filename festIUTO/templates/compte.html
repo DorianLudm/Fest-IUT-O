@@ -171,7 +171,11 @@
             </div>
             <img class="" src="../static/img/qrcode.png" alt="qr code">
             <a class="repro-btn" href="#"><button>Télécharger le billet</button></a>
+            {% if billet[5] == 1 %}
             <a class="repro-btn" href="/pass-1-jour?idBillet={{ billet[1] }}"><button>Reprogrammer</button></a>
+            {% elif billet[5] == 2 %}
+            <a class="repro-btn" href="/pass-2-jours?idBillet={{ billet[1] }}"><button>Reprogrammer</button></a>
+            {% endif %}
             <a class="deco-btn" href="{{ url_for('deleteBillet', id=billet[1]) }}"><button>Vendre un billet</button></a>
           </div>
           {% endfor %}

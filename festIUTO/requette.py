@@ -155,6 +155,19 @@ def get_billet(cnx, idBillet):
         print("Erreur lors de la requête get_billet")
         return None
 
+def set_billet(cnx, idBillet, jour, jourDeux=None):
+    try:
+        if jourDeux == None:
+            print("UPDATE BILLET SET jourDebut = '"+jour+"' WHERE idBillet = '"+str(idBillet)+"';")
+            cnx.execute(text("UPDATE BILLET SET jourDebut = '"+jour+"' WHERE idBillet = '"+str(idBillet)+"';"))
+        else:
+            print("UPDATE BILLET SET jourDebut = '"+jour+"', jourDeux = '"+jourDeux+"' WHERE idBillet = '"+str(idBillet)+"';")
+            cnx.execute(text("UPDATE BILLET SET jourDebut = '"+jour+"', jourDeux = '"+jourDeux+"' WHERE idBillet = '"+str(idBillet)+"';"))
+        cnx.commit()
+        print("Modification réussie")
+    except:
+        print("Erreur lors de la requête set_billet")
+
 def delete_billet(cnx, idBillet):
     try:
         cnx.execute(text("DELETE FROM BILLET WHERE idBillet = "+str(idBillet)+";"))

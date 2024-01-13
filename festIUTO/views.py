@@ -158,11 +158,17 @@ def search():
 def pass1jour():
     check = request.args.get('check')
     idBillet = request.args.get('idBillet')
+    idBilletReprog = request.args.get('idBilletReprog')
+    erreurRequest = request.args.get('erreur')
+    idBilletConst = idBillet
     if idBillet != None:
         billet = get_billet(cnx, idBillet)
         print(billet)
     f = SelectJourForm()
+
     erreur = ""
+    if erreurRequest != None:
+        erreur = erreurRequest
 
     if idBillet != None:
         if billet[3] == datetime.date(2024, 5, 17):
@@ -197,7 +203,6 @@ def pass1jour():
         nombreJour = jours[6]
         jours = jours[:5]
         if les_jours_sont_valide(jours) == True:
-            print("test2")
             jour = f.get_jour()
             jourChoisit = ""
             if jour[0]:
@@ -212,16 +217,44 @@ def pass1jour():
                 jourChoisit = "vendredi"
             elif jour[5]:
                 jourChoisit = "samedi"
+
+            if idBilletReprog != None:
+                print("idBilletReprog != None")
+                if jourChoisit == "lundi":
+                    jourChoisit = "2024-05-17"
+                elif jourChoisit == "mardi":
+                    jourChoisit = "2024-05-18"
+                elif jourChoisit == "mercredi":
+                    jourChoisit = "2024-05-19"
+                elif jourChoisit == "jeudi":
+                    jourChoisit = "2024-05-20"
+                elif jourChoisit == "vendredi":
+                    jourChoisit = "2024-05-21"
+                elif jourChoisit == "samedi":
+                    jourChoisit = "2024-05-22"
+                print(jourChoisit)
+                
+                set_billet(cnx, idBilletReprog, jourChoisit)
+                return redirect(url_for('compte'))
+
             return redirect("/payement?pass=1jour&jour="+jourChoisit+"&nbJour="+str(jour[6])+"")
         else:
             print("erreur")
             erreur = "Veuillez choisir seulement un jour"
+            if idBilletReprog != None:
+                return redirect('/pass-1-jour?idBillet='+str(idBilletReprog)+"&erreur=Veuillez choisir seulement un jour")
+
+    if idBillet == None:
+        idBillet = True
+    else:
+        idBillet = False
     return render_template(
         "pass1jour.html",
         title="Festiut'O | Pass",
         form=f,
         erreur=erreur,
-        idBillet=idBillet
+        idBillet=idBillet,
+        idBilletConst=idBilletConst
     )
 
 @app.route('/pass-2-jours', methods=("GET","POST",))
@@ -229,24 +262,31 @@ def pass1jour():
 def pass2jours():
     nbJour = request.args.get('nbJour')
     idBillet = request.args.get('idBillet')
+    idBilletReprog = request.args.get('idBilletReprog')
+    erreurRequest = request.args.get('erreur')
+    idBilletConst = idBillet
+
     if idBillet != None:
         billet = get_billet(cnx, idBillet)
         print(billet)
     f = SelectJourForm()
+    
     erreur = ""
+    if erreurRequest != None:
+        erreur = erreurRequest
 
     if idBillet != None:
         if billet[3] == datetime.date(2024, 5, 17) or billet[4] == datetime.date(2024, 5, 17):
             f.lundi.data = True
-        elif billet[3] == datetime.date(2024, 5, 18) or billet[4] == datetime.date(2024, 5, 18):
+        if billet[3] == datetime.date(2024, 5, 18) or billet[4] == datetime.date(2024, 5, 18):
             f.mardi.data = True
-        elif billet[3] == datetime.date(2024, 5, 19) or billet[4] == datetime.date(2024, 5, 19):
+        if billet[3] == datetime.date(2024, 5, 19) or billet[4] == datetime.date(2024, 5, 19):
             f.mercredi.data = True
-        elif billet[3] == datetime.date(2024, 5, 20) or billet[4] == datetime.date(2024, 5, 20):
+        if billet[3] == datetime.date(2024, 5, 20) or billet[4] == datetime.date(2024, 5, 20):
             f.jeudi.data = True
-        elif billet[3] == datetime.date(2024, 5, 21) or billet[4] == datetime.date(2024, 5, 21):
+        if billet[3] == datetime.date(2024, 5, 21) or billet[4] == datetime.date(2024, 5, 21):
             f.vendredi.data = True
-        elif billet[3] == datetime.date(2024, 5, 22) or billet[4] == datetime.date(2024, 5, 22):
+        if billet[3] == datetime.date(2024, 5, 22) or billet[4] == datetime.date(2024, 5, 22):
             f.samedi.data = True
 
     if f.validate_on_submit():
@@ -267,10 +307,46 @@ def pass2jours():
                 jourChoisit.append("vendredi")
             if jours[5]:
                 jourChoisit.append("samedi")
+            
+            if idBilletReprog != None:
+                jourChoisit1 = ""
+                jourChoisit2 = ""
+                print("idBilletReprog != None")
+                if jourChoisit[0] == "lundi":
+                    jourChoisit1 = "2024-05-17"
+                elif jourChoisit[0] == "mardi":
+                    jourChoisit1 = "2024-05-18"
+                elif jourChoisit[0] == "mercredi":
+                    jourChoisit1 = "2024-05-19"
+                elif jourChoisit[0] == "jeudi":
+                    jourChoisit1 = "2024-05-20"
+                elif jourChoisit[0] == "vendredi":
+                    jourChoisit1 = "2024-05-21"
+                elif jourChoisit[0] == "samedi":
+                    jourChoisit1 = "2024-05-22"
+                
+                if jourChoisit[1] == "lundi":
+                    jourChoisit2 = "2024-05-17"
+                elif jourChoisit[1] == "mardi":
+                    jourChoisit2 = "2024-05-18"
+                elif jourChoisit[1] == "mercredi":
+                    jourChoisit2 = "2024-05-19"
+                elif jourChoisit[1] == "jeudi":
+                    jourChoisit2 = "2024-05-20"
+                elif jourChoisit[1] == "vendredi":
+                    jourChoisit2 = "2024-05-21"
+                elif jourChoisit[1] == "samedi":
+                    jourChoisit2 = "2024-05-22"
+                
+                set_billet(cnx, idBilletReprog, jourChoisit1, jourChoisit2)
+                return redirect(url_for('compte'))
+
             return redirect("/payement?pass=2jours&jour1="+jourChoisit[0]+"&jour2="+jourChoisit[1]+"&nbJour="+str(nombreJour)+"")
         else:
             print("erreur")
             erreur = "Veuillez choisir deux jours"
+            if idBilletReprog != None:
+                return redirect('/pass-2-jours?idBillet='+str(idBilletReprog)+"&erreur=Veuillez choisir deux jours")
     
     if idBillet == None:
         idBillet = True
@@ -281,7 +357,8 @@ def pass2jours():
         title="Festiut'O | Pass",
         form=f,
         erreur=erreur,
-        idBillet=idBillet
+        idBillet=idBillet,
+        idBilletConst=idBilletConst
     )
 
 @app.route('/pass-semaine', methods=("GET","POST",))

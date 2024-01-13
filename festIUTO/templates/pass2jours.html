@@ -18,6 +18,7 @@
                     <h1>Pass 2 jour - 35€</h1>
                     <p class="acces-festival">Accès au festival les 2 jours de votre choix</p>
                 </div>
+                {% if idBillet %}
                 <form class="form-2jours" method="post" action="{{ url_for('pass2jours') }}">
                     {{ form.hidden_tag() }}
                     <ul class="liste-jour">
@@ -45,16 +46,51 @@
                             {{ form.samedi(size=50, class_="element") }} 
                         </li>
                     </ul>
-                    {% if idBillet %}
                     <div class="container-qte">
                         {{ form.nombreBillet(size=50, class_="element", placeholder="Quantité", min="1", value="1") }}
                     </div>
-                    {% endif %}
                     <p class="erreur">{{ erreur }}</p>
                     <div class="buy">
                         {{ form.submit(size=50, class_="element particip-btn") }} 
                     </div>
                 </form>
+                {% else %}
+                <form class="form-2jours" method="post" action="/pass-2-jours?idBilletReprog={{idBilletConst}}">
+                    {{ form.hidden_tag() }}
+                    <ul class="liste-jour">
+                        <li>
+                            <p class="element">Lundi 17 Mai</p>
+                            {{ form.lundi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Mardi 18 Mai</p>
+                            {{ form.mardi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Mercredi 19 Mai</p>
+                            {{ form.mercredi(size=50, class_="element") }} 
+                        <li>
+                            <p class="element">Jeudi 20 Mai</p>
+                            {{ form.jeudi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Vendredi 21 Mai</p>
+                            {{ form.vendredi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Samedi 22 Mai</p>
+                            {{ form.samedi(size=50, class_="element") }} 
+                        </li>
+                    </ul>
+                    <div class="container-qte" style="display: none;">
+                        {{ form.nombreBillet(size=50, class_="element", placeholder="Quantité", min="1", value="1") }}
+                    </div>
+                    <p class="erreur">{{ erreur }}</p>
+                    <div class="buy">
+                        {{ form.submit(size=50, class_="element particip-btn") }} 
+                    </div>
+                </form>
+                {% endif %}
             </div>
         </div>
     </div>  
