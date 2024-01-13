@@ -86,7 +86,7 @@
             <label class="element" for="password">Mot de passe</label>
           </div>
           <div class="user-box">
-            {{ formModif.confirmerMdp(size=50, class_="form-control element", id="ConfirmPassword") }} 
+            {{ formModif.confirmerMdp(sizàe=50, class_="form-control element", id="ConfirmPassword") }} 
             <label class="element" for="password">Confirmer mot de passe</label>
           </div>
           <div class="valid-container">
@@ -102,16 +102,74 @@
         <div class="container-billet">
           {% for billet in billets %}
           <div class="billet">
-            <img class="element" src="../static/img/icon-logo.png" alt="logo festiuto">
+            <img class="" src="../static/img/icon-logo.png" alt="logo festiuto">
             <div class="container-nom">
-              {% if billet[3] == "2024-05-17" %}
-              <h3 class="element">Lundi 17 Mai</h3>
+              <!-- type de pass -->
+              {% if billet[5] == 1 %}
+              <h3 class="">Pass 1 jour</h3>
+              
+              <!-- afficher les jours -->
+              {% if billet[3] == ILundi %}
+              <h4 class="">Lundi 17 Mai</h4>
+              {% elif billet[3] == IMardi %}
+              <h4 class="">Mardi 18 Mai</h4>
+              {% elif billet[3] == IMercredi %}
+              <h4 class="">Mercredi 19 Mai</h4>
+              {% elif billet[3] == IJeudi %}
+              <h4 class="">Jeudi 20 Mai</h4>
+              {% elif billet[3] == IVendredi %}
+              <h4 class="">Vendredi 21 Mai</h4>
+              {% elif billet[3] == ISamedi %}
+              <h4 class="">Samedi 22 Mai</h4>
               {% else %}
-              <h3 class="element">{{ billet[3] }}</h3>
+              <h4 class="">{{ billet[3] }}</h4>
               {% endif %}
-              <p class="element">{{ billet[5] }} {{ billet[6] }}</p>
+
+              {% elif billet[5] == 2 %}
+              <h3 class="">Pass 2 jours
+
+              <!-- afficher les jours -->
+              {% if billet[3] == ILundi %}
+              <h4 class="">Lundi 17 Mai</h4>
+              {% elif billet[3] == IMardi %}
+              <h4 class="">Mardi 18 Mai</h4>
+              {% elif billet[3] == IMercredi %}
+              <h4 class="">Mercredi 19 Mai</h3>
+              {% elif billet[3] == IJeudi %}
+              <h4 class="">Jeudi 20 Mai</h4>
+              {% elif billet[3] == IVendredi %}
+              <h4 class="">Vendredi 21 Mai</h4>
+              {% elif billet[3] == ISamedi %}
+              <h4 class="">Samedi 22 Mai</h4>
+              {% else %}
+              <h4 class="">{{ billet[3] }}</h4>
+              {% endif %}
+
+              <!-- afficher les jours deux -->
+              {% if billet[4] == ILundi %}
+              <h4 class="">Lundi 17 Mai</h4>
+              {% elif billet[4] == IMardi %}
+              <h4 class="">Mardi 18 Mai</h4>
+              {% elif billet[4] == IMercredi %}
+              <h4 class="">Mercredi 19 Mai</h3>
+              {% elif billet[4] == IJeudi %}
+              <h4 class="">Jeudi 20 Mai</h4>
+              {% elif billet[4] == IVendredi %}
+              <h4 class="">Vendredi 21 Mai</h4>
+              {% elif billet[4] == ISamedi %}
+              <h4 class="">Samedi 22 Mai</h4>
+              {% else %}
+              <h4 class="">{{ billet[4] }}</h4>
+              {% endif %}
+
+              {% else %}
+              <h3 class="">Pass semaine</h3>
+              <h4 class="">Du Lundi 17 Mai <br> au <br> Samedi 22 Mai</h4>
+              {% endif %}
+
+              <p class="">{{ billet[6] }} {{ billet[7] }}</p>
             </div>
-            <img class="element" src="../static/img/qrcode.png" alt="qr code">
+            <img class="" src="../static/img/qrcode.png" alt="qr code">
             <a class="repro-btn" href="#"><button>Télécharger le billet</button></a>
             <a class="repro-btn" href="#"><button>Reprogrammer</button></a>
             <a class="deco-btn" href="{{ url_for('deleteBillet', id=billet[1]) }}"><button>Vendre un billet</button></a>

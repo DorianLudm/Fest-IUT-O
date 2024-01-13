@@ -160,11 +160,14 @@ def get_max_idBillet(cnx):
     except:
         print("Erreur lors de la requête get_max_idBillet")
 
-def create_billet(cnx, mail, jour):
+def create_billet(cnx, mail, jour, idType, jourDeux=None):
     try:
         idBillet = get_max_idBillet(cnx) + 1
         print(idBillet)
-        cnx.execute(text("INSERT INTO BILLET (idBillet, mailAcheteur, idFestival, jourdebut, idType) VALUES ('"+str(idBillet)+"', '"+mail+"', 1, '"+jour+"', 1);"))
+        if idType == 2:
+            cnx.execute(text("INSERT INTO BILLET (idBillet, mailAcheteur, idFestival, jourdebut, jourDeux, idType) VALUES ('"+str(idBillet)+"', '"+mail+"', 1, '"+jour+"', '"+jourDeux+"', '"+str(idType)+"');"))
+        else:
+            cnx.execute(text("INSERT INTO BILLET (idBillet, mailAcheteur, idFestival, jourdebut, idType) VALUES ('"+str(idBillet)+"', '"+mail+"', 1, '"+jour+"', '"+str(idType)+"');"))
         cnx.commit()
         print("Ajout réussi")
     except:
