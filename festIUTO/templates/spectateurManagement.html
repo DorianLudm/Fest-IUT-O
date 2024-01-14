@@ -12,8 +12,15 @@
     <div class="container-all">
         <div class="recherche-spectateur">
             <a href="{{ url_for('admin') }}" class="btn-retour"><img src="../static/img/bouton-retour.png" alt="bouton retour"></a>
-            <input class="recherche-barre" type="text" placeholder="Rechercher un spectateur">
-            <input class="btn-recherche" type="submit" value="Rechercher">
+            <form method="post" action="{{ url_for('spectateurManagement') }}" class="form-search" id="form-search">
+                {{ form.hidden_tag() }}
+                <div class="form-box">
+                    {{ form.recherche(size=50, id="recherche-barre", class="recherche-barre", placeholder="Nom, prénom, mail...") }}
+                    {{ form.submit(size=50, class="btn-recherche") }}
+                </div>
+            </form>
+            <!-- <input class="recherche-barre" type="text" placeholder="Rechercher un spectateur">
+            <input class="btn-recherche" type="submit" value="Rechercher"> -->
             <a href="{{ url_for('ajouterSpectateur') }}" class="ajouter-user"><img src="../static/img/ajouter-un-utilisateur.png" alt="ajouter un utilisateur"></a>
         </div>
         <div class="container-all-spectateur">

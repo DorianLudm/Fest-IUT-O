@@ -807,12 +807,23 @@ def supprimerArtiste(id):
     supprimer_artiste(cnx, id)
     return redirect(url_for('artistesManagement'))
 
-@app.route('/spectateurs-management')
+@app.route('/spectateurs-management', methods=("GET", "POST",))
 def spectateurManagement():
+    form = RechercheForm()
+    if form.validate_on_submit():
+        recherche = form.get_recherche()
+        if recherche != None:
+            return render_template(
+                "spectateurManagement.html",
+                title="Festiut'O | Admin",
+                spectateurs=get_all_spectateur_with_search(cnx, recherche),
+                form=form
+            )
     return render_template(
         "spectateurManagement.html",
         title="Festiut'O | Admin",
-        spectateurs=get_all_spectateur()
+        spectateurs=get_all_spectateur(),
+        form=form
     )
 
 @app.route('/modifier-spectateur/<string:mail>', methods=("GET", "POST",))

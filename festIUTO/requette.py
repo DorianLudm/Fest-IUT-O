@@ -311,6 +311,17 @@ def get_all_spectateur():
         print("Erreur lors de la requête get_all_spectateur")
         return []
 
+def get_all_spectateur_with_search(cnx, recherche):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM ACHETEUR WHERE nom LIKE '%"+recherche+"%' OR prenom LIKE '%"+recherche+"%' OR mailAcheteur LIKE '%"+recherche+"%';"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_spectateur_with_search")
+        return []
+
 def get_profil_spectateur(cnx, mail):
     try:
         liste = []
