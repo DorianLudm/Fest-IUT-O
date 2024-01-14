@@ -149,6 +149,28 @@ class AjouterArtisteForm(FlaskForm):
     def get_ajouter_artiste(self):
         return (self.nom.data, self.prenom.data)
 
+class ModifierSpectateurForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    mail = StringField('email', validators=[DataRequired()])
+    mdp = PasswordField('Password', validators=[DataRequired()])
+    confirmerMdp = PasswordField('Confirmer Password', validators=[DataRequired()])
+    submit = SubmitField('Modifier')
+
+    def get_modifier_spectateur(self):
+        return (self.nom.data, self.prenom.data, self.mail.data, self.mdp.data, self.confirmerMdp.data)
+
+class AjouterSpectateurForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    mail = StringField('email', validators=[DataRequired()])
+    mdp = PasswordField('Password', validators=[DataRequired()])
+    confirmerMdp = PasswordField('Confirmer Password', validators=[DataRequired()])
+    submit = SubmitField('Ajouter')
+
+    def get_ajouter_spectateur(self):
+        return (self.nom.data, self.prenom.data, self.mail.data, self.mdp.data, self.confirmerMdp.data)
+
 
 def les_jours_sont_valide(liste_jours):
     if liste_jours.count(True) != 1:
@@ -779,3 +801,45 @@ def ajouterArtiste():
 def supprimerArtiste(id):
     supprimer_artiste(cnx, id)
     return redirect(url_for('artistesManagement'))
+
+@app.route('/spectateurs-management')
+def spectateurManagement():
+    return render_template(
+        "spectateurManagement.html",
+        title="Festiut'O | Admin",
+        spectateurs=get_all_spectateur()
+    )
+
+@app.route('/modifier-spectateur/<string:mail>', methods=("GET", "POST",))
+def modifierSpectateur(mail):
+    form = ModifierSpectateurForm()
+    if form.validate_on_submit():
+        spectateur = form.get_modifier_spectateur()
+        print(spectateur)
+        modifier_spectateur(cnx, spectateur[0], spectateur[1], spectateur[2], spectateur[3])
+        return redirect(url_for('modifierSpectateur', mail=mail))
+    return render_template(
+        "modifierSpectateur.html",
+        title="Festiut'O | Admin",
+        spectateur=get_profil_spectateur(cnx, mail),
+        form=form
+    )
+
+@app.route('/ajouter-spectateur', methods=("GET", "POST",))
+def ajouterSpectateur():
+    form = AjouterSpectateurForm()
+    if form.validate_on_submit():
+        spectateur = form.get_ajouter_spectateur()
+        if spectateur[3] == spectateur[4]:
+            ajouter_spectateur(cnx, spectateur[0], spectateur[1], spectateur[2], spectateur[3])
+            return redirect(url_for('spectateurManagement'))
+    return render_template(
+        "ajouterSpectateur.html",
+        title="Festiut'O | Admin",
+        form=form
+    )
+
+@app.route('/supprimer-spectateur/<string:mail>', methods=("GET",))
+def supprimerSpectateur(mail):
+    supprimer_spectateur(cnx, mail)
+    return redirect(url_for('spectateurManagement'))

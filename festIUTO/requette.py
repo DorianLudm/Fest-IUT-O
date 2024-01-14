@@ -292,3 +292,47 @@ def artiste_favoris_acheteur(cnx, mail, idGroupe):
         print("Erreur lors de la requête artiste_favoris_acheteur")
         return []
    
+def get_all_spectateur():
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM ACHETEUR;"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_spectateur")
+        return []
+
+def get_profil_spectateur(cnx, mail):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM ACHETEUR WHERE mailAcheteur = '"+mail+"';"))
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_profils_spectateur")
+
+def ajouter_spectateur(cnx, nom, prenom, email, mdp):
+    try:
+        cnx.execute(text("INSERT INTO ACHETEUR (mailAcheteur, mdp, nom, prenom) VALUES ('"+email+"', '"+mdp+"', '"+nom+"', '"+prenom+"');"))
+        cnx.commit()
+        print("Ajout réussi")
+    except:
+        print("Erreur lors de la requête ajouter_spectateur")
+
+def supprimer_spectateur(cnx, email):
+    try:
+        cnx.execute(text("DELETE FROM ACHETEUR WHERE mailAcheteur = '"+email+"';"))
+        cnx.commit()
+        print("Suppression réussie")
+    except:
+        print("Erreur lors de la requête supprimer_spectateur")
+
+def modifier_spectateur(cnx, nom, prenom, email, mdp):
+    try:
+        cnx.execute(text("UPDATE ACHETEUR SET nom = '"+nom+"', prenom = '"+prenom+"', mdp = '"+mdp+"' WHERE mailAcheteur = '"+email+"';"))
+        cnx.commit()
+        print("Modification réussie")
+    except:
+        print("Erreur lors de la requête modifier_spectateur")
