@@ -322,6 +322,17 @@ def get_all_spectateur_with_search(cnx, recherche):
         print("Erreur lors de la requête get_all_spectateur_with_search")
         return []
 
+def get_all_artistes_with_search(cnx, recherche):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM ARTISTE WHERE nomArtiste LIKE '%"+recherche+"%' OR prenomArtiste LIKE '%"+recherche+"%';"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_artistes_with_search")
+        return []
+
 def get_profil_spectateur(cnx, mail):
     try:
         liste = []

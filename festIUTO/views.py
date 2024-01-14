@@ -766,12 +766,23 @@ def ajouterGroupe():
         form=form
     )
 
-@app.route('/artistes-management')
+@app.route('/artistes-management', methods=("GET", "POST",))
 def artistesManagement():
+    form = RechercheForm()
+    if form.validate_on_submit():
+        recherche = form.get_recherche()
+        if recherche != None:
+            return render_template(
+                "artisteManagement.html",
+                title="Festiut'O | Admin",
+                artistes=get_all_artistes_with_search(cnx, recherche),
+                form=form
+            )
     return render_template(
         "artisteManagement.html",
         title="Festiut'O | Admin",
-        artistes=get_all_artiste()
+        artistes=get_all_artiste(),
+        form=form
     )
 
 @app.route('/modifier-artiste/<int:id>', methods=("GET", "POST",))
