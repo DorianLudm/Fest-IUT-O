@@ -115,7 +115,7 @@ class RechercheForm(FlaskForm):
 
 class ModifierGroupeForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
-    style = SelectField('style', choices=[('1', 'Rock'), ('2', 'Pop'), ('3', 'Rap'), ('4', 'Jazz'), ('5', 'Classique'), ('6', 'Electro'), ('7', 'Reggae'), ('8', 'Variété'), ('9', 'Autre')], validators=[DataRequired()])
+    style = SelectField('style', choices=get_all_nom_style_musical(cnx), validators=[DataRequired()])
     nbPersn = IntegerField('nombre de personne', validators=[DataRequired()])
     descGroupe = StringField('description', validators=[DataRequired()])
     submit = SubmitField('Modifier')
@@ -125,7 +125,7 @@ class ModifierGroupeForm(FlaskForm):
 
 class AjouterGroupeForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
-    style = SelectField('style', choices=[('1', 'Rock'), ('2', 'Pop'), ('3', 'Rap'), ('4', 'Jazz'), ('5', 'Classique'), ('6', 'Electro'), ('7', 'Reggae'), ('8', 'Variété'), ('9', 'Autre')], validators=[DataRequired()])
+    style = SelectField('style', choices=get_all_nom_style_musical(cnx), validators=[DataRequired()])
     nbPersn = IntegerField('nombre de personne', validators=[DataRequired()])
     descGroupe = StringField('description', validators=[DataRequired()])
     submit = SubmitField('Ajouter')
@@ -732,12 +732,23 @@ def admin():
         title="Festiut'O | Admin",
     )
 
-@app.route("/groupes-management")
+@app.route("/groupes-management", methods=("GET", "POST",))
 def groupeManagement():
+    form = RechercheForm()
+    if form.validate_on_submit():
+        recherche = form.get_recherche()
+        if recherche != None:
+            return render_template(
+                "groupeManagement.html",
+                title="Festiut'O | Admin",
+                groupes=get_all_groupe_with_search(cnx, recherche),
+                form=form
+            )
     return render_template(
         "groupeManagement.html",
         title="Festiut'O | Admin",
-        groupes=get_all_groupe()
+        groupes=get_all_groupe(),
+        form=form
     )
 
 @app.route("/modifier-groupe/<int:id>", methods=("GET", "POST",))
@@ -745,7 +756,8 @@ def modifierGroupe(id):
     form = ModifierGroupeForm()
     if form.validate_on_submit():
         groupe = form.get_modifier_groupe()
-        # modifier_groupe(cnx, id, groupe[0], groupe[1], groupe[2], groupe[3])
+        print(groupe)
+        modifier_groupe(cnx, groupe[0], groupe[2], groupe[1], groupe[3], id)
         return redirect(url_for('modifierGroupe', id=id))
     return render_template(
         "modifierGroupe.html",
@@ -758,8 +770,9 @@ def modifierGroupe(id):
 def ajouterGroupe():
     form = AjouterGroupeForm()
     if form.validate_on_submit():
-        print('ajouter groupe')
-        # ajouter_groupe(cnx, groupe[0], groupe[1], groupe[2], groupe[3])
+        groupe = form.get_ajouter_groupe()
+        print(groupe)
+        ajouter_groupe(cnx, groupe[0], groupe[2], groupe[1], groupe[3])
         return redirect(url_for('ajouterGroupe'))
    
     return render_template(

@@ -12,8 +12,13 @@
     <div class="container-all">
         <div class="recherche-groupe">
             <a href="{{ url_for('admin') }}" class="btn-retour"><img src="../static/img/bouton-retour.png" alt="bouton retour"></a>
-            <input class="recherche-barre" type="text" placeholder="Rechercher un groupe">
-            <input class="btn-recherche" type="submit" value="Rechercher">
+            <form method="post" action="{{ url_for('groupeManagement') }}" class="form-search" id="form-search">
+                {{ form.hidden_tag() }}
+                <div class="form-box">
+                    {{ form.recherche(size=50, id="recherche-barre", class="recherche-barre", placeholder="Nom...") }}
+                    {{ form.submit(size=50, class="btn-recherche") }}
+                </div>
+            </form>
             <a href="{{ url_for('ajouterGroupe') }}" class="ajouter-user"><img src="../static/img/ajouter-un-utilisateur.png" alt="ajouter un utilisateur"></a>
         </div>
         <div class="container-all-groupe">

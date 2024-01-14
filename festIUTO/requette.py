@@ -46,7 +46,7 @@ def get_all_groupe():
     try:
         liste = []
         print("get_all_groupe")
-        res = cnx.execute(text("SELECT idGroupe, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe, nomImage FROM GROUPE NATURAL JOIN PHOTOGROUPE;"))
+        res = cnx.execute(text("SELECT idGroupe, nomGroupe, nbPersn, idStyle, descGroupe FROM GROUPE;"))
         for row in res:
             print(row)
             liste.append(row)
@@ -436,3 +436,55 @@ def get_id_groupe(cnx, nomGroupe):
     except:
         print("Erreur lors de la requête get_id_groupe")
         return []
+
+def get_all_nom_style_musical(cnx):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT nom FROM STYLEMUSICAL;"))
+        for row in res:
+            liste.append(row[0])
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_nom_style_musical")
+        return []
+
+def get_all_groupe_with_search(cnx, recherche):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT idGroupe, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe, nomImage FROM GROUPE NATURAL JOIN PHOTOGROUPE WHERE nomGroupe LIKE '%"+recherche+"%' OR descGroupe LIKE '%"+recherche+"%';"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_groupe_with_search")
+        return []
+
+def modifier_groupe(cnx, nomGroupe, nbPersn, nomStyle, descGroupe, idGroupe):
+    try:
+        idStyle = get_id_style_musical(cnx, nomStyle)[0]
+        print(idStyle)
+        print(idGroupe)
+        cnx.execute(text("UPDATE GROUPE SET nomGroupe = '"+nomGroupe+"', nbPersn = "+str(nbPersn)+", idStyle = "+str(idStyle)+", descGroupe = '"+descGroupe+"' WHERE idGroupe = "+str(idGroupe)+";"))
+        print("Modification réussie")
+    except:
+        print("Erreur lors de la requête modifier_groupe")
+
+def get_id_style_musical(cnx, nomStyle):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT idStyle FROM STYLEMUSICAL WHERE nom = '"+nomStyle+"';"))
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_id_style_musical")
+        return []
+
+def ajouter_groupe(cnx, nomGroupe, nbPersn, nomStyle, descGroupe):
+    try:
+        idStyle = get_id_style_musical(cnx, nomStyle)[0]
+        cnx.execute(text("INSERT INTO GROUPE (nomGroupe, nbPersn, idStyle, descGroupe) VALUES ('"+nomGroupe+"', "+str(nbPersn)+", "+str(idStyle)+", '"+descGroupe+"');"))
+        cnx.commit()
+        print("Ajout réussi")
+    except:
+        print("Erreur lors de la requête ajouter_groupe")
