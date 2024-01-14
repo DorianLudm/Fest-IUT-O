@@ -169,7 +169,7 @@ label {
 .valid-button {
     all: unset;
     text-align: center;
-    width: 10vw;
+    width: 15vw;
     height: 40px;
     color: white;
     background-color: #2c45d3;
@@ -179,5 +179,81 @@ label {
 
 .valid-button:hover {
     box-shadow: 0px 0px 10px 0px #2c45d3;
+    transition: 0.2 s;
+}
+
+/* billets */
+
+/* billet */
+
+.container-billet {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    overflow-x: auto;
+    max-height: 55vh;
+  }
+  
+  .billet {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 70%;
+    background-color: #ccc7b4;
+    border-radius: 1em;
+    padding: 1em;
+    margin: 2em;
+    font-size: 1.2em;
+    width: 35vw;
+  }
+  
+  .billet img {
+    width: 7em;
+    margin-bottom: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+  
+  .billet a {
+    text-decoration: none;
+    flex-basis: 33%;
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .billet h3, .billet p, .billet h4 {
+    text-align: center;
+  }
+
+h2 {
+    color: white;
+    font-size: 30px;
+    margin-top: 10vh;
+    text-align: center;
+}
+
+.lien-vendre-tout {
+    margin-top: 5vh;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vendre-tout {
+    all: unset;
+    text-align: center;
+    width: 15vw;
+    height: 40px;
+    color: white;
+    background-color: #d32f2f;
+    border-radius: 5px;
+    transition: 0.2s;
+}
+
+.vendre-tout:hover {
+    box-shadow: 0px 0px 10px 0px #d32f2f;
     transition: 0.2 s;
 }

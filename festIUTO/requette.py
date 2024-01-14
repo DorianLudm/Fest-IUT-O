@@ -223,6 +223,14 @@ def delete_billet(cnx, idBillet):
     except:
         print("Erreur lors de la requête delete_billet")
 
+def supprimer_all_billet_acheteur(cnx, mail):
+    try:
+        cnx.execute(text("DELETE FROM BILLET WHERE mailAcheteur = '"+mail+"';"))
+        cnx.commit()
+        print("Suppression réussie")
+    except:
+        print("Erreur lors de la requête supprimer_billet_acheteur")
+
 def get_max_idBillet(cnx):
     try:
         res = cnx.execute(text("SELECT MAX(idBillet) FROM BILLET;"))

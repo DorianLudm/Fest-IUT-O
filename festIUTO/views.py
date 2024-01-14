@@ -714,7 +714,12 @@ def payement():
 
 @app.route("/delete-billet/<int:id>", methods=("GET",))
 def deleteBillet(id):
+    redirect_url = request.args.get('redirect')
+    Mail = request.args.get('mail')
+    print(Mail)
     delete_billet(cnx, id)
+    if redirect_url == "admin":
+        return redirect(url_for('modifierSpectateur', mail=Mail))
     return redirect(url_for('compte'))
 
 
@@ -813,6 +818,12 @@ def spectateurManagement():
 @app.route('/modifier-spectateur/<string:mail>', methods=("GET", "POST",))
 def modifierSpectateur(mail):
     form = ModifierSpectateurForm()
+    billets = get_billet_acheteur(cnx, mail)
+    yaDesBillets = False
+    if billets != []:
+        yaDesBillets = True
+    print(yaDesBillets)
+    print(billets)
     if form.validate_on_submit():
         spectateur = form.get_modifier_spectateur()
         print(spectateur)
@@ -822,8 +833,15 @@ def modifierSpectateur(mail):
         "modifierSpectateur.html",
         title="Festiut'O | Admin",
         spectateur=get_profil_spectateur(cnx, mail),
-        form=form
+        form=form,
+        billets=billets,
+        yaDesBillets=yaDesBillets
     )
+
+@app.route('/supprimer-tous-les-billets/<string:mail>', methods=("GET",))
+def supprimerTousLesBillets(mail):
+    supprimer_all_billet_acheteur(cnx, mail)
+    return redirect(url_for('modifierSpectateur', mail=mail))
 
 @app.route('/ajouter-spectateur', methods=("GET", "POST",))
 def ajouterSpectateur():

@@ -21,6 +21,7 @@
             <a class="lien-container-spectateur" href="{{ url_for('modifierSpectateur', mail=spectateur[0]) }}">
                 <div class="container-spectateur">
                     <p>{{ spectateur[1] }}  {{ spectateur[2] }}</p>
+                    <p>{{ spectateur[0] }}</p>
                 </div>
             </a>
             {% endfor %}
