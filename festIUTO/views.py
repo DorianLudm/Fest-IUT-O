@@ -781,6 +781,11 @@ def ajouterGroupe():
         form=form
     )
 
+@app.route('/supprimer-groupe/<int:id>', methods=("GET",))
+def supprimerGroupe(id):
+    delete_groupe(cnx, id)
+    return redirect(url_for('groupeManagement'))
+
 @app.route('/artistes-management', methods=("GET", "POST",))
 def artistesManagement():
     print(get_all_artiste())

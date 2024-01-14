@@ -13,7 +13,7 @@
         <div class="top">
             <a class="btn-retour" href="{{ url_for('groupeManagement')}}"><img src="../static/img/bouton-retour.png" alt="bouton retour"></a>
             <h1>Modifier le groupe "{{ groupes[2] }}"</h1>
-            <a class="btn-supprimer" href="#"><img src="../static/img/supprimer-lutilisateur.png" alt="bouton supprimer"></a>
+            <a class="btn-supprimer" href="{{ url_for('supprimerGroupe', id=groupes[0]) }}"><img src="../static/img/supprimer-lutilisateur.png" alt="bouton supprimer"></a>
         </div>
         <div class="container-form">
             <form role="form" method="POST" action ="{{ url_for('modifierGroupe', id=groupes[0]) }}">

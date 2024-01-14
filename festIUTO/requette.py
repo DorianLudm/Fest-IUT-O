@@ -488,3 +488,14 @@ def ajouter_groupe(cnx, nomGroupe, nbPersn, nomStyle, descGroupe):
         print("Ajout réussi")
     except:
         print("Erreur lors de la requête ajouter_groupe")
+
+def delete_groupe(cnx, idGroupe):
+    try:
+        cnx.execute(text("DELETE FROM ARTISTE WHERE idArtiste IN (SELECT idArtiste FROM GROUPEARTISTE WHERE idGroupe = "+str(idGroupe)+");"))
+        cnx.execute(text("DELETE FROM PHOTOGROUPE WHERE idGroupe = "+str(idGroupe)+";"))
+        cnx.execute(text("DELETE FROM FAVORIS WHERE idGroupe = "+str(idGroupe)+";"))
+        cnx.execute(text("DELETE FROM GROUPEARTISTE WHERE idGroupe = "+str(idGroupe)+";"))
+        cnx.execute(text("DELETE FROM GROUPE WHERE idGroupe = "+str(idGroupe)+";"))
+        print("Suppression réussie")
+    except:
+        print("Erreur lors de la requête delete_groupe")
