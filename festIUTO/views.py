@@ -113,6 +113,42 @@ class RechercheForm(FlaskForm):
     def get_recherche(self):
         return self.recherche.data
 
+class ModifierGroupeForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    style = SelectField('style', choices=[('1', 'Rock'), ('2', 'Pop'), ('3', 'Rap'), ('4', 'Jazz'), ('5', 'Classique'), ('6', 'Electro'), ('7', 'Reggae'), ('8', 'Variété'), ('9', 'Autre')], validators=[DataRequired()])
+    nbPersn = IntegerField('nombre de personne', validators=[DataRequired()])
+    descGroupe = StringField('description', validators=[DataRequired()])
+    submit = SubmitField('Modifier')
+
+    def get_modifier_groupe(self):
+        return (self.nom.data, self.style.data, self.nbPersn.data, self.descGroupe.data)
+
+class AjouterGroupeForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    style = SelectField('style', choices=[('1', 'Rock'), ('2', 'Pop'), ('3', 'Rap'), ('4', 'Jazz'), ('5', 'Classique'), ('6', 'Electro'), ('7', 'Reggae'), ('8', 'Variété'), ('9', 'Autre')], validators=[DataRequired()])
+    nbPersn = IntegerField('nombre de personne', validators=[DataRequired()])
+    descGroupe = StringField('description', validators=[DataRequired()])
+    submit = SubmitField('Ajouter')
+
+    def get_ajouter_groupe(self):
+        return (self.nom.data, self.style.data, self.nbPersn.data, self.descGroupe.data)
+
+class ModifierArtisteForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    submit = SubmitField('Modifier')
+
+    def get_modifier_artiste(self):
+        return (self.nom.data, self.prenom.data)
+
+class AjouterArtisteForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    submit = SubmitField('Ajouter')
+
+    def get_ajouter_artiste(self):
+        return (self.nom.data, self.prenom.data)
+
 
 def les_jours_sont_valide(liste_jours):
     if liste_jours.count(True) != 1:
@@ -658,3 +694,88 @@ def payement():
 def deleteBillet(id):
     delete_billet(cnx, id)
     return redirect(url_for('compte'))
+
+
+@app.route("/admin")
+def admin():
+    return render_template(
+        "admin.html",
+        title="Festiut'O | Admin",
+    )
+
+@app.route("/groupes-management")
+def groupeManagement():
+    return render_template(
+        "groupeManagement.html",
+        title="Festiut'O | Admin",
+        groupes=get_all_groupe()
+    )
+
+@app.route("/modifier-groupe/<int:id>", methods=("GET", "POST",))
+def modifierGroupe(id):
+    form = ModifierGroupeForm()
+    if form.validate_on_submit():
+        groupe = form.get_modifier_groupe()
+        # modifier_groupe(cnx, id, groupe[0], groupe[1], groupe[2], groupe[3])
+        return redirect(url_for('modifierGroupe', id=id))
+    return render_template(
+        "modifierGroupe.html",
+        title="Festiut'O | Admin",
+        groupes=get_profil_groupe(id),
+        form=form
+    )
+
+@app.route('/ajouter-groupe', methods=("GET", "POST",))
+def ajouterGroupe():
+    form = AjouterGroupeForm()
+    if form.validate_on_submit():
+        print('ajouter groupe')
+        # ajouter_groupe(cnx, groupe[0], groupe[1], groupe[2], groupe[3])
+        return redirect(url_for('ajouterGroupe'))
+   
+    return render_template(
+        "ajouterGroupe.html",
+        title="Festiut'O | Admin",
+        form=form
+    )
+
+@app.route('/artistes-management')
+def artistesManagement():
+    return render_template(
+        "artisteManagement.html",
+        title="Festiut'O | Admin",
+        artistes=get_all_artiste()
+    )
+
+@app.route('/modifier-artiste/<int:id>', methods=("GET", "POST",))
+def modifierArtiste(id):
+    form = ModifierArtisteForm()
+    if form.validate_on_submit():
+        artiste = form.get_modifier_artiste()
+        set_profil_artiste(cnx, id, artiste[0], artiste[1])
+        return redirect(url_for('modifierArtiste', id=id))
+    return render_template(
+        "modifierArtiste.html",
+        title="Festiut'O | Admin",
+        artiste=get_profil_artiste(id),
+        form=form
+    )
+
+@app.route('/ajouter-artiste', methods=("GET", "POST",))
+def ajouterArtiste():
+    form = AjouterArtisteForm()
+    if form.validate_on_submit():
+        artiste = form.get_ajouter_artiste()
+        ajouter_artiste(cnx, artiste[0], artiste[1])
+        return redirect(url_for('artistesManagement'))
+   
+    return render_template(
+        "ajouterArtiste.html",
+        title="Festiut'O | Admin",
+        form=form
+    )
+
+@app.route('/supprimer-artiste/<int:id>', methods=("GET",))
+def supprimerArtiste(id):
+    supprimer_artiste(cnx, id)
+    return redirect(url_for('artistesManagement'))

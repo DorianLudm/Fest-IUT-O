@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/artisteManagement.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <div class="container-all">
+        <div class="recherche-artiste">
+            <a href="{{ url_for('admin') }}" class="btn-retour"><img src="../static/img/bouton-retour.png" alt="bouton retour"></a>
+            <input class="recherche-barre" type="text" placeholder="Rechercher un artiste">
+            <input class="btn-recherche" type="submit" value="Rechercher">
+            <a href="{{ url_for('ajouterArtiste') }}" class="ajouter-user"><img src="../static/img/ajouter-un-utilisateur.png" alt="ajouter un utilisateur"></a>
+        </div>
+        <div class="container-all-artiste">
+            {% for artiste in artistes %}
+            <a class="lien-container-artiste" href="{{ url_for('modifierArtiste', id=artiste[0]) }}">
+                <div class="container-artiste">
+                    <p>{{ artiste[2] }} {{ artiste[1] }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

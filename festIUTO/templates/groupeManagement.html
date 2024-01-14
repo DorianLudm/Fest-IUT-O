@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/groupeManagement.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <div class="container-all">
+        <div class="recherche-groupe">
+            <a href="{{ url_for('admin') }}" class="btn-retour"><img src="../static/img/bouton-retour.png" alt="bouton retour"></a>
+            <input class="recherche-barre" type="text" placeholder="Rechercher un groupe">
+            <input class="btn-recherche" type="submit" value="Rechercher">
+            <a href="{{ url_for('ajouterGroupe') }}" class="ajouter-user"><img src="../static/img/ajouter-un-utilisateur.png" alt="ajouter un utilisateur"></a>
+        </div>
+        <div class="container-all-groupe">
+            {% for groupe in groupes %}
+            <a class="lien-container-groupe" href="{{ url_for('modifierGroupe', id=groupe[0]) }}">
+                <div class="container-groupe">
+                    <p>{{ groupe[1] }}</p>
+                    <p>{{ groupe[4] }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

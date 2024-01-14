@@ -55,6 +55,52 @@ def get_all_groupe():
         print("Erreur lors de la requête get_all_groupe")
         return []
 
+def get_all_artiste():
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM ARTISTE;"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_artiste")
+        return []
+
+def ajouter_artiste(cnx, nomArtiste, prenomArtiste):
+    try:
+        cnx.execute(text("INSERT INTO ARTISTE (nomArtiste, prenomArtiste) VALUES ('"+nomArtiste+"', '"+prenomArtiste+"');"))
+        cnx.commit()
+        print("Ajout réussi")
+    except:
+        print("Erreur lors de la requête ajouter_artiste")
+
+def supprimer_artiste(cnx, idArtiste):
+    try:
+        cnx.execute(text("DELETE FROM ARTISTE WHERE idArtiste = "+str(idArtiste)+";"))
+        cnx.commit()
+        print("Suppression réussie")
+    except:
+        print("Erreur lors de la requête supprimer_artiste")
+
+def get_profil_artiste(idArtiste):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM ARTISTE WHERE idArtiste = "+str(idArtiste)+";"))
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_profil_artiste")
+        return []
+
+def set_profil_artiste(cnx, idArtiste, nomArtiste, prenomArtiste):
+    try:
+        cnx.execute(text("UPDATE ARTISTE SET nomArtiste = '"+nomArtiste+"', prenomArtiste = '"+prenomArtiste+"' WHERE idArtiste = "+str(idArtiste)+";"))
+        cnx.commit()
+        print("Modification réussie")
+    except:
+        print("Erreur lors de la requête set_profil_artiste")
+
 def get_groupe_non_favoris(mail):
     try:
         liste = []
@@ -107,6 +153,7 @@ def get_profil_groupe(idGroupe):
     except:
         print("Erreur lors de la requête get_profil_groupe")
         return []
+
 
 def get_creneaux():
     try:

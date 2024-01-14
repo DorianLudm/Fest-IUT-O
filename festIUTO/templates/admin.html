@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <div class="container-all">
+        <a href="{{ url_for('groupeManagement') }}">
+            <div class="gerer-groupes">
+                <p>Gérer les groupes</p>
+            </div>
+        </a>
+        <a href="{{ url_for('artistesManagement') }}">
+            <div class="gerer-artistes">
+                <p>Gérer les artistes</p>
+            </div>
+        </a>
+        <a href="#">
+            <div class="gerer-spectateurs">
+                <p>Gérer les spectateurs</p>
+            </div>
+        </a>
+        <a href="#">
+            <div class="gerer-hebergement">
+                <p>Gérer les hébergements</p>
+            </div>
+        </a>
+        <a href="#">
+            <div class="gerer-concert">
+                <p>Gérer les concerts</p>
+            </div>
+        </a>
+    </div>
+    {% endblock %}
+</body>
+</html>

@@ -182,6 +182,10 @@
         </div>
       </div>
       {% endif %}
+
+      <!-- module admin -->
+      <a href="{{ url_for('admin') }}"><button class="admin-btn">Admin</button></a>
+
       <a class="deco-btn" href="{{ url_for('logout') }}"><button>Se déconnecter</button></a>
     </div>
     {% endif %}
