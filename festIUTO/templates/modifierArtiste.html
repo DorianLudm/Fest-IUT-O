@@ -26,6 +26,10 @@
                     <label class="" for="prenom">Prénom</label>
                     {{ form.prenom(size=50, class_="", id="prenom", value=artiste[2]) }}
                 </div>
+                <div class="user-box">
+                    <label class="" for="groupe">Groupe</label>
+                    {{ form.groupe(size=50, class_="", id="groupe", select=groupeAssocie[1]) }}
+                </div>
                 <div class="valid-container">
                     {{ form.submit(class_="valid-button")  }}
                 </div>

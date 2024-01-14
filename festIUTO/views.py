@@ -136,18 +136,20 @@ class AjouterGroupeForm(FlaskForm):
 class ModifierArtisteForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
     prenom = StringField('prenom', validators=[DataRequired()])
+    groupe = SelectField('groupe', choices=get_all_nom_groupe(), validators=[DataRequired()])
     submit = SubmitField('Modifier')
 
     def get_modifier_artiste(self):
-        return (self.nom.data, self.prenom.data)
+        return (self.nom.data, self.prenom.data, self.groupe.data)
 
 class AjouterArtisteForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
     prenom = StringField('prenom', validators=[DataRequired()])
+    groupe = SelectField('groupe', choices=get_all_nom_groupe(), validators=[DataRequired()])
     submit = SubmitField('Ajouter')
 
     def get_ajouter_artiste(self):
-        return (self.nom.data, self.prenom.data)
+        return (self.nom.data, self.prenom.data, self.groupe.data)
 
 class ModifierSpectateurForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
@@ -768,6 +770,7 @@ def ajouterGroupe():
 
 @app.route('/artistes-management', methods=("GET", "POST",))
 def artistesManagement():
+    print(get_all_artiste())
     form = RechercheForm()
     if form.validate_on_submit():
         recherche = form.get_recherche()
@@ -788,15 +791,19 @@ def artistesManagement():
 @app.route('/modifier-artiste/<int:id>', methods=("GET", "POST",))
 def modifierArtiste(id):
     form = ModifierArtisteForm()
+    groupeAssocie = get_groupe_artiste(cnx, id)
     if form.validate_on_submit():
         artiste = form.get_modifier_artiste()
-        set_profil_artiste(cnx, id, artiste[0], artiste[1])
+        idGroupe = get_id_groupe(cnx, artiste[2])
+        print(idGroupe)
+        set_profil_artiste(cnx, id, artiste[0], artiste[1], idGroupe)
         return redirect(url_for('modifierArtiste', id=id))
     return render_template(
         "modifierArtiste.html",
         title="Festiut'O | Admin",
         artiste=get_profil_artiste(id),
-        form=form
+        form=form,
+        groupeAssocie=groupeAssocie
     )
 
 @app.route('/ajouter-artiste', methods=("GET", "POST",))
@@ -804,7 +811,9 @@ def ajouterArtiste():
     form = AjouterArtisteForm()
     if form.validate_on_submit():
         artiste = form.get_ajouter_artiste()
-        ajouter_artiste(cnx, artiste[0], artiste[1])
+        idGroupe = get_id_groupe(cnx, artiste[2])
+        print(idGroupe)
+        ajouter_artiste(cnx, artiste[0], artiste[1], idGroupe)
         return redirect(url_for('artistesManagement'))
    
     return render_template(

@@ -23,9 +23,10 @@
         </div>
         <div class="container-all-artiste">
             {% for artiste in artistes %}
-            <a class="lien-container-artiste" href="{{ url_for('modifierArtiste', id=artiste[0]) }}">
+            <a class="lien-container-artiste" href="{{ url_for('modifierArtiste', id=artiste[1]) }}">
                 <div class="container-artiste">
-                    <p>{{ artiste[2] }} {{ artiste[1] }}</p>
+                    <p>{{ artiste[3] }} {{ artiste[2] }}</p>
+                    <p>{{ artiste[4] }}</p>
                 </div>
             </a>
             {% endfor %}

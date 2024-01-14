@@ -55,10 +55,21 @@ def get_all_groupe():
         print("Erreur lors de la requête get_all_groupe")
         return []
 
+def get_all_nom_groupe():
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT nomGroupe FROM GROUPE;"))
+        for row in res:
+            liste.append(row[0])
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_nom_groupe")
+        return []
+
 def get_all_artiste():
     try:
         liste = []
-        res = cnx.execute(text("SELECT * FROM ARTISTE;"))
+        res = cnx.execute(text("SELECT * FROM ARTISTE NATURAL JOIN GROUPEARTISTE NATURAL JOIN GROUPE;"))
         for row in res:
             liste.append(row)
         return liste
@@ -66,16 +77,23 @@ def get_all_artiste():
         print("Erreur lors de la requête get_all_artiste")
         return []
 
-def ajouter_artiste(cnx, nomArtiste, prenomArtiste):
+def ajouter_artiste(cnx, nomArtiste, prenomArtiste, idGroupe):
     try:
-        cnx.execute(text("INSERT INTO ARTISTE (nomArtiste, prenomArtiste) VALUES ('"+nomArtiste+"', '"+prenomArtiste+"');"))
-        cnx.commit()
-        print("Ajout réussi")
+        nbPersn = get_groupe_with_idGroupe(cnx, idGroupe)[0]
+        nbArtisteActuel = get_nombre_artiste_in_groupe(cnx, idGroupe)
+        if int(nbPersn) > int(nbArtisteActuel):  
+            cnx.execute(text("INSERT INTO ARTISTE (nomArtiste, prenomArtiste) VALUES ('"+nomArtiste+"', '"+prenomArtiste+"');"))
+            cnx.execute(text("INSERT INTO GROUPEARTISTE (idArtiste, idGroupe) VALUES ((SELECT MAX(idArtiste) FROM ARTISTE), "+str(idGroupe)+");"))
+            cnx.commit()
+            print("Ajout réussi")
+        print("Ajout échouer trop d'artiste dans le groupe")
     except:
         print("Erreur lors de la requête ajouter_artiste")
 
 def supprimer_artiste(cnx, idArtiste):
     try:
+        idGroupe = get_groupe_artiste(cnx, idArtiste)[0]
+        cnx.execute(text("DELETE FROM GROUPEARTISTE WHERE idArtiste = "+str(idArtiste)+";"))
         cnx.execute(text("DELETE FROM ARTISTE WHERE idArtiste = "+str(idArtiste)+";"))
         cnx.commit()
         print("Suppression réussie")
@@ -93,13 +111,43 @@ def get_profil_artiste(idArtiste):
         print("Erreur lors de la requête get_profil_artiste")
         return []
 
-def set_profil_artiste(cnx, idArtiste, nomArtiste, prenomArtiste):
+def set_profil_artiste(cnx, idArtiste, nomArtiste, prenomArtiste, idGroupe):
     try:
-        cnx.execute(text("UPDATE ARTISTE SET nomArtiste = '"+nomArtiste+"', prenomArtiste = '"+prenomArtiste+"' WHERE idArtiste = "+str(idArtiste)+";"))
-        cnx.commit()
-        print("Modification réussie")
+        nbPersn = get_groupe_with_idGroupe(cnx, idGroupe)[0]
+        print(nbPersn)
+        nbArtisteActuel = get_nombre_artiste_in_groupe(cnx, idGroupe)
+        if int(nbPersn) > int(nbArtisteActuel):  
+            cnx.execute(text("UPDATE GROUPEARTISTE SET idGroupe = "+str(idGroupe)+" WHERE idArtiste = "+str(idArtiste)+";"))
+            cnx.execute(text("UPDATE ARTISTE SET nomArtiste = '"+nomArtiste+"', prenomArtiste = '"+prenomArtiste+"' WHERE idArtiste = "+str(idArtiste)+";"))
+            cnx.commit()
+            print("Modification réussie")
+        print("Modification échouer trop d'artiste dans le groupe")
     except:
         print("Erreur lors de la requête set_profil_artiste")
+
+def get_groupe_with_idGroupe(cnx, idGroupe):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT nbPersn FROM GROUPE NATURAL JOIN PHOTOGROUPE WHERE idGroupe = "+str(idGroupe)+";"))
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_groupe_with_idGroupe")
+        return []
+
+
+def get_nombre_artiste_in_groupe(cnx, idGroupe):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT COUNT(idArtiste) FROM GROUPEARTISTE WHERE idGroupe = "+str(idGroupe)+";"))
+        for row in res:
+            liste.append(row)
+        print(liste[0][0])
+        return liste[0][0]
+    except:
+        print("Erreur lors de la requête get_nombre_artiste_in_groupe")
+        return []
 
 def get_groupe_non_favoris(mail):
     try:
@@ -325,7 +373,7 @@ def get_all_spectateur_with_search(cnx, recherche):
 def get_all_artistes_with_search(cnx, recherche):
     try:
         liste = []
-        res = cnx.execute(text("SELECT * FROM ARTISTE WHERE nomArtiste LIKE '%"+recherche+"%' OR prenomArtiste LIKE '%"+recherche+"%';"))
+        res = cnx.execute(text("SELECT * FROM ARTISTE NATURAL JOIN GROUPEARTISTE NATURAL JOIN GROUPE WHERE nomArtiste LIKE '%"+recherche+"%' OR prenomArtiste LIKE '%"+recherche+"%';"))
         for row in res:
             liste.append(row)
         return liste
@@ -366,3 +414,25 @@ def modifier_spectateur(cnx, nom, prenom, email, mdp):
         print("Modification réussie")
     except:
         print("Erreur lors de la requête modifier_spectateur")
+
+def get_groupe_artiste(cnx, idArtiste):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM GROUPEARTISTE natural join GROUPE WHERE idArtiste = "+str(idArtiste)+";"))
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_groupe_artiste")
+        return []
+
+def get_id_groupe(cnx, nomGroupe):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT idGroupe FROM GROUPE WHERE nomGroupe = '"+nomGroupe+"';"))
+        for row in res:
+            liste.append(row)
+        return liste[0][0]
+    except:
+        print("Erreur lors de la requête get_id_groupe")
+        return []
