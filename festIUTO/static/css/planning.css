@@ -21,6 +21,7 @@ nav {
 th {
     width: 10em;
 }
+
 .heure {
     height: 3vh;
     text-align: center;
@@ -34,10 +35,17 @@ th {
 .vide {
     background-color: white;
 }
+
 .plein {
     background-color: aquamarine;
     width: 10em;
 }
+.plein:hover {
+    background-color: #fff;
+}
+
+
+
 #element-a-cacher7 a {
     color: #2c45d3;
 }
