@@ -13,6 +13,40 @@ begin
 end |
 delimiter ;
 
+delimiter |
+create or replace TRIGGER update_nbpersn_insert after insert on GROUPEARTISTE for each row
+begin
+    declare totalartistes int;
+
+    select count(idArtiste) into totalartistes from GROUPEARTISTE where idGroupe = new.idGroupe;
+
+    update GROUPE set nbPersn = totalartistes where idGroupe = new.idGroupe;
+end |
+delimiter ;
+
+delimiter |
+create or replace TRIGGER update_nbpersn_update after update on GROUPEARTISTE for each row
+begin
+    declare totalartistes int;
+
+    select count(idArtiste) into totalartistes from GROUPEARTISTE where idGroupe = new.idGroupe;
+
+    update GROUPE set nbPersn = totalartistes where idGroupe = new.idGroupe;
+end |
+delimiter ;
+
+delimiter |
+create or replace TRIGGER update_nbpersn_delete before delete on GROUPEARTISTE for each row
+begin
+    declare totalartistes int;
+
+    select count(idArtiste) into totalartistes from GROUPEARTISTE where idGroupe = old.idGroupe;
+
+    update GROUPE set nbPersn = totalartistes where idGroupe = old.idGroupe;
+end |
+delimiter ;
+
+
 -- CE TRIGGER NE MARCHE PAS // Utilisez celui-ci comme exemple
 delimiter |
 create or replace TRIGGER verif_capacite_préinscription before insert on PREINSCRIRE for each row
