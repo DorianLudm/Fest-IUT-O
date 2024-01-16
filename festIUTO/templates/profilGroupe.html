@@ -54,6 +54,7 @@
             <img src={{Image}}>
         </aside>
     </section>
+    {% if suggestions != [] %}
     <h2 class="titre-suggestion element">Vous pourriez aussi aimer</h2>
     <div class="container-suggestion">
         {% for artiste in suggestions %}
@@ -66,6 +67,7 @@
         </a>
         {% endfor %}
     </div>
+    {% endif %}
     <script src="../static/js/musicPlayer.js"></script>
     {% endblock %}
 </body>

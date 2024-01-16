@@ -775,7 +775,7 @@ def ajouterGroupe():
         groupe = form.get_ajouter_groupe()
         print(groupe)
         ajouter_groupe(cnx, groupe[0], groupe[2], groupe[1], groupe[3])
-        return redirect(url_for('ajouterGroupe'))
+        return redirect(url_for('groupeManagement'))
    
     return render_template(
         "ajouterGroupe.html",
