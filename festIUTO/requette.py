@@ -46,7 +46,7 @@ def get_all_groupe():
     try:
         liste = []
         print("get_all_groupe")
-        res = cnx.execute(text("SELECT idGroupe, nomGroupe, nbPersn, idStyle, descGroupe FROM GROUPE;"))
+        res = cnx.execute(text("SELECT idGroupe, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe, nomImage FROM GROUPE NATURAL JOIN PHOTOGROUPE"))
         for row in res:
             print(row)
             liste.append(row)
@@ -325,7 +325,7 @@ def recherche_creneau(cnx, recherche):
 def get_artistes_avec_meme_style(cnx, idGroupe):
     try:
         liste = []
-        res = cnx.execute(text("SELECT idGroupe, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe, nomImage FROM GROUPE NATURAL JOIN PHOTOGROUPE WHERE idStyle = (SELECT idStyle FROM GROUPE WHERE idGroupe = "+str(idGroupe)+");"))
+        res = cnx.execute(text("SELECT idGroupe, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe, nomImage FROM GROUPE NATURAL JOIN PHOTOGROUPE WHERE idStyle = (SELECT idStyle FROM GROUPE WHERE idGroupe = "+str(idGroupe)+") and idGroupe != "+str(idGroupe)+";"))
         for row in res:
             print(row)
             liste.append(row)
@@ -484,6 +484,7 @@ def ajouter_groupe(cnx, nomGroupe, nbPersn, nomStyle, descGroupe):
     try:
         idStyle = get_id_style_musical(cnx, nomStyle)[0]
         cnx.execute(text("INSERT INTO GROUPE (nomGroupe, nbPersn, idStyle, descGroupe) VALUES ('"+nomGroupe+"', "+str(nbPersn)+", "+str(idStyle)+", '"+descGroupe+"');"))
+        cnx.execute(text("INSERT INTO PHOTOGROUPE (idGroupe, nomImage) VALUES ((SELECT MAX(idGroupe) FROM GROUPE), 'default.jpg');"))
         cnx.commit()
         print("Ajout réussi")
     except:
@@ -491,11 +492,13 @@ def ajouter_groupe(cnx, nomGroupe, nbPersn, nomStyle, descGroupe):
 
 def delete_groupe(cnx, idGroupe):
     try:
-        cnx.execute(text("DELETE FROM ARTISTE WHERE idArtiste IN (SELECT idArtiste FROM GROUPEARTISTE WHERE idGroupe = "+str(idGroupe)+");"))
+        # cnx.execute(text("DELETE FROM ARTISTE WHERE idArtiste IN (SELECT idArtiste FROM GROUPEARTISTE WHERE idGroupe = "+str(idGroupe)+");"))
         cnx.execute(text("DELETE FROM PHOTOGROUPE WHERE idGroupe = "+str(idGroupe)+";"))
-        cnx.execute(text("DELETE FROM FAVORIS WHERE idGroupe = "+str(idGroupe)+";"))
-        cnx.execute(text("DELETE FROM GROUPEARTISTE WHERE idGroupe = "+str(idGroupe)+";"))
+        print(text("DELETE FROM PHOTOGROUPE WHERE idGroupe = "+str(idGroupe)+";"))
+        # cnx.execute(text("DELETE FROM FAVORIS WHERE idGroupe = "+str(idGroupe)+";"))
+        # cnx.execute(text("DELETE FROM GROUPEARTISTE WHERE idGroupe = "+str(idGroupe)+";"))
         cnx.execute(text("DELETE FROM GROUPE WHERE idGroupe = "+str(idGroupe)+";"))
+        print("DELETE FROM GROUPE WHERE idGroupe = "+str(idGroupe)+";")
         print("Suppression réussie")
     except:
         print("Erreur lors de la requête delete_groupe")

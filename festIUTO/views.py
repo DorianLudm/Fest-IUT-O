@@ -118,6 +118,7 @@ class ModifierGroupeForm(FlaskForm):
     style = SelectField('style', choices=get_all_nom_style_musical(cnx), validators=[DataRequired()])
     nbPersn = IntegerField('nombre de personne', validators=[DataRequired()])
     descGroupe = StringField('description', validators=[DataRequired()])
+    photo = FileField('photo')
     submit = SubmitField('Modifier')
 
     def get_modifier_groupe(self):
@@ -128,6 +129,7 @@ class AjouterGroupeForm(FlaskForm):
     style = SelectField('style', choices=get_all_nom_style_musical(cnx), validators=[DataRequired()])
     nbPersn = IntegerField('nombre de personne', validators=[DataRequired()])
     descGroupe = StringField('description', validators=[DataRequired()])
+    photo = FileField('photo')
     submit = SubmitField('Ajouter')
 
     def get_ajouter_groupe(self):
