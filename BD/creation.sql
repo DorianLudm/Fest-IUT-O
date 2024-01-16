@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS RECHERCHEBILLET;
 DROP TABLE IF EXISTS PHOTOGROUPE ;
 DROP TABLE IF EXISTS IMAGE;
 DROP TABLE IF EXISTS FAVORIS;
@@ -14,6 +15,7 @@ DROP TABLE IF EXISTS INSTRUMENT ;
 DROP TABLE IF EXISTS ARTISTE ;
 DROP TABLE IF EXISTS GROUPE;
 DROP TABLE IF EXISTS ACHETEUR;
+DROP TABLE IF EXISTS ROLEACHETEUR;
 DROP TABLE IF EXISTS RESEAUXSOCIAUX ;
 DROP TABLE IF EXISTS LIAISONMUSICALE;
 DROP TABLE IF EXISTS STYLEMUSICAL;
@@ -22,7 +24,7 @@ DROP TABLE IF EXISTS LIEUSDUFESTIVAL;
 DROP TABLE IF EXISTS LIEU;
 DROP TABLE IF EXISTS BILLETSPARJOUR;
 DROP TABLE IF EXISTS FESTIVAL;
-
+DROP TABLE IF EXISTS RECHERCHEBILLET;
 
 CREATE TABLE FESTIVAL(
     idFestival int NOT NULL auto_increment,
@@ -125,7 +127,6 @@ CREATE TABLE RESEAUXGROUPE(
     PRIMARY KEY(idReseau, idGroupe)
 );
 
---idHebergement int NOT NULL REFERENCES HEBERGEMENT check (placesdisponibles(idHebergement, idGroupe) > 0),
 CREATE TABLE ORGANISATIONGROUPE(
     idGroupe int NOT NULL REFERENCES GROUPE,
     idFestival int NOT NULL REFERENCES FESTIVAL,
@@ -136,8 +137,6 @@ CREATE TABLE ORGANISATIONGROUPE(
     tempsDemontage time NOT NULL,
     PRIMARY KEY(idGroupe, idFestival)
 );
-
---reprise ici
 
 CREATE TABLE EVENTTYPE(
     idEvent int NOT NULL auto_increment,
@@ -152,7 +151,7 @@ CREATE TABLE CRENEAU(
     idGroupe int NOT NULL REFERENCES GROUPE,
     idEvent int NOT NULL REFERENCES EVENTTYPE,
     heureDebut datetime NOT NULL check(HOUR(heureDebut) between 4 and 14),
-    duree TIME NOT NULL check ((HOUR(heureDebut) + HOUR(duree) + MINUTE(duree) + SECOND(duree)) between 4 and 14 AND duree > 0),
+    duree TIME NOT NULL,
     descriptionEvenement varchar(255) NOT NULL,
     preinscriptionPossible boolean NOT NULL,
     gratuit boolean NOT NULL,
@@ -160,11 +159,19 @@ CREATE TABLE CRENEAU(
     PRIMARY KEY(idCreneau)
 );
 
+CREATE TABLE ROLEACHETEUR(
+    idRoleAcheteur int NOT NULL auto_increment,
+    nomRoleAcheteur varchar(30) NOT NULL,
+    UNIQUE(nomRoleAcheteur),
+    PRIMARY KEY(idRoleAcheteur)
+);
+
 CREATE TABLE ACHETEUR(
     mailAcheteur varchar(100) NOT NULL,
     prenom varchar(30) NOT NULL,
     nom varchar(30) NOT NULL,
     mdp varchar(30) NOT NULL,
+    idRoleAcheteur int NOT NULL REFERENCES ROLEACHETEUR,
     PRIMARY KEY(mailAcheteur)
 );
 
@@ -203,3 +210,11 @@ CREATE TABLE PHOTOGROUPE(
     nomImage varchar(800) NOT NULL,
     PRIMARY KEY(idImage)
 );
+
+CREATE TABLE RECHERCHEBILLET(
+    idRechercheBillet int NOT NULL auto_increment,
+    idType int NOT NULL REFERENCES TYPEBILLET,
+    jourUn datetime,
+    jourDeux datetime,
+    PRIMARY KEY(idRechercheBillet)
+)
