@@ -391,9 +391,9 @@ def get_profil_spectateur(cnx, mail):
     except:
         print("Erreur lors de la requête get_profils_spectateur")
 
-def ajouter_spectateur(cnx, nom, prenom, email, mdp):
+def ajouter_spectateur(cnx, nom, prenom, email, mdp, idRole):
     try:
-        cnx.execute(text("INSERT INTO ACHETEUR (mailAcheteur, mdp, nom, prenom) VALUES ('"+email+"', '"+mdp+"', '"+nom+"', '"+prenom+"');"))
+        cnx.execute(text("INSERT INTO ACHETEUR (mailAcheteur, mdp, nom, prenom, idRoleAcheteur) VALUES ('"+email+"', '"+mdp+"', '"+nom+"', '"+prenom+"', '"+str(idRole)+"');"))
         cnx.commit()
         print("Ajout réussi")
     except:
@@ -407,9 +407,9 @@ def supprimer_spectateur(cnx, email):
     except:
         print("Erreur lors de la requête supprimer_spectateur")
 
-def modifier_spectateur(cnx, nom, prenom, email, mdp):
+def modifier_spectateur(cnx, nom, prenom, email, mdp, idRole):
     try:
-        cnx.execute(text("UPDATE ACHETEUR SET nom = '"+nom+"', prenom = '"+prenom+"', mdp = '"+mdp+"' WHERE mailAcheteur = '"+email+"';"))
+        cnx.execute(text("UPDATE ACHETEUR SET nom = '"+nom+"', prenom = '"+prenom+"', mdp = '"+mdp+"', idRoleAcheteur = '"+str(idRole)+"' WHERE mailAcheteur = '"+email+"';"))
         cnx.commit()
         print("Modification réussie")
     except:

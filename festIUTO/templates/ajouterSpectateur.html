@@ -37,6 +37,10 @@
                     <label class="" for="style">Confirmer le mot de passe</label>
                     {{ form.confirmerMdp(size=50, class_="", id="confirmerMdp") }}
                 </div>
+                <div class="user-box">
+                    <label class="" for="style">Role du compte</label>
+                    {{ form.role(size=50, class_="", id="role") }}
+                </div>
                 <div class="valid-container">
                     {{ form.submit(class_="valid-button")  }}
                 </div>

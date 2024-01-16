@@ -151,10 +151,11 @@ class ModifierSpectateurForm(FlaskForm):
     mail = StringField('email', validators=[DataRequired()])
     mdp = PasswordField('Password', validators=[DataRequired()])
     confirmerMdp = PasswordField('Confirmer Password', validators=[DataRequired()])
+    role = SelectField('role', choices=[("2", "Spectateur"), ("1", "Admin")], validators=[DataRequired()])
     submit = SubmitField('Modifier')
 
     def get_modifier_spectateur(self):
-        return (self.nom.data, self.prenom.data, self.mail.data, self.mdp.data, self.confirmerMdp.data)
+        return (self.nom.data, self.prenom.data, self.mail.data, self.mdp.data, self.confirmerMdp.data, self.role.data)
 
 class AjouterSpectateurForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
@@ -162,10 +163,11 @@ class AjouterSpectateurForm(FlaskForm):
     mail = StringField('email', validators=[DataRequired()])
     mdp = PasswordField('Password', validators=[DataRequired()])
     confirmerMdp = PasswordField('Confirmer Password', validators=[DataRequired()])
+    role = SelectField('role', choices=[("2", "Spectateur"), ("1", "Admin")], validators=[DataRequired()])
     submit = SubmitField('Ajouter')
 
     def get_ajouter_spectateur(self):
-        return (self.nom.data, self.prenom.data, self.mail.data, self.mdp.data, self.confirmerMdp.data)
+        return (self.nom.data, self.prenom.data, self.mail.data, self.mdp.data, self.confirmerMdp.data, self.role.data)
 
 
 def les_jours_sont_valide(liste_jours):
@@ -870,7 +872,7 @@ def modifierSpectateur(mail):
     if form.validate_on_submit():
         spectateur = form.get_modifier_spectateur()
         print(spectateur)
-        modifier_spectateur(cnx, spectateur[0], spectateur[1], spectateur[2], spectateur[3])
+        modifier_spectateur(cnx, spectateur[0], spectateur[1], spectateur[2], spectateur[3], spectateur[5])
         return redirect(url_for('modifierSpectateur', mail=mail))
     return render_template(
         "modifierSpectateur.html",
@@ -892,7 +894,7 @@ def ajouterSpectateur():
     if form.validate_on_submit():
         spectateur = form.get_ajouter_spectateur()
         if spectateur[3] == spectateur[4]:
-            ajouter_spectateur(cnx, spectateur[0], spectateur[1], spectateur[2], spectateur[3])
+            ajouter_spectateur(cnx, spectateur[0], spectateur[1], spectateur[2], spectateur[3], spectateur[5])
             return redirect(url_for('spectateurManagement'))
     return render_template(
         "ajouterSpectateur.html",
