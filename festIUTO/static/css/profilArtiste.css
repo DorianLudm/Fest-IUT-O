@@ -72,7 +72,6 @@ nav {
     color: #fff;
     font-size: 30px;
     font-weight: 700;
-
 }
 
 .container-suggestion {
@@ -81,7 +80,7 @@ nav {
     margin-top: 7vh;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; 
+    justify-content: space-evenly; 
     align-items: center; 
 }
 
@@ -92,9 +91,9 @@ nav {
 }
 
 .suggestion {
+    margin-top: 3vh;
     background-color: #fff;
     border-radius: 20px;
-    /* padding: 10px; */
 }
 
 .suggestion img {
@@ -104,6 +103,7 @@ nav {
 }
 
 .suggestion p {
+    padding-bottom: 20px;
     margin: 10px;
     font-weight: 700;
     font-size: 20px;
