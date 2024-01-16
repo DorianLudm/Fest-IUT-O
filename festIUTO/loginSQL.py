@@ -2,7 +2,7 @@
 login = "335676" # pip install pymysql
 passwd = "annafestiuto"
 serveur= "mysql-annalallier.alwaysdata.net"
-bd = "annalallier_festiuto3bis"
+bd = "annalallier_festiuto4"
 
 #Version MariaDB
 # login = "ludmann" # pip install pymysql

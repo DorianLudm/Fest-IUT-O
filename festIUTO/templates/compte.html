@@ -182,9 +182,11 @@
         </div>
       </div>
       {% endif %}
-
+    
       <!-- module admin -->
-      <a href="{{ url_for('admin') }}"><button class="admin-btn">Admin</button></a>
+      {% if session['utilisateur'][3] == 1 %}
+      <a class="admin-btn" href="{{ url_for('admin') }}"><button>Admin</button></a>
+      {% endif %}
 
       <a class="deco-btn" href="{{ url_for('logout') }}"><button>Se déconnecter</button></a>
     </div>

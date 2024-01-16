@@ -11,9 +11,9 @@ def get_cnx():
 
 def get_nom_and_email(cnx, email):
     try :
-        res = cnx.execute(text("SELECT nom, prenom, mailAcheteur FROM ACHETEUR WHERE mailAcheteur = '"+email+"';"))
+        res = cnx.execute(text("SELECT nom, prenom, mailAcheteur, idRoleAcheteur FROM ACHETEUR WHERE mailAcheteur = '"+email+"';"))
         for row in res:
-            return row[0], row[1], row[2]
+            return row[0], row[1], row[2], row[3]
     except:
         print("Erreur lors de la requête get_nom_and_email")
 

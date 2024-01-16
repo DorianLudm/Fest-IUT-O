@@ -27,14 +27,6 @@ class LoginForm(FlaskForm):
         print(user)
         return user if passwd == mdp else None
 
-
-        # mdp = get_password_with_email(cnx, self.email.data)
-        # if user is None:
-        #     return None
-        # passwd = hasher_mdp(self.password.data)
-        # print(str(mdp)+" == "+str(passwd))
-        # return user if passwd == mdp else None
-
 class InscriptionForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
     prenom = StringField('prenom', validators=[DataRequired()])
