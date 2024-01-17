@@ -15,9 +15,9 @@
     <section class="container-profil element">
         <div class="info-artiste-container">
             {% if favoris %}
-            <p id="nom-groupe">{{ Groupe[2] }} - {{ Groupe[6] }}  <a href="{{ url_for('supprimerFavoris', id=Groupe[0]) }}"><img class="img-fav" src="../static/img/coeur-plein.png" alt="favoris"></a></p>
+            <p id="nom-groupe">{{ Groupe[2] }} - {{ Groupe[6] }}  <a href="{{ url_for('supprimerFavoris', id=Groupe[1]) }}"><img class="img-fav" src="../static/img/coeur-plein.png" alt="favoris"></a></p>
             {% else %}
-            <p id="nom-groupe">{{ Groupe[2] }} - {{ Groupe[6] }}  <a href="{{ url_for('ajouterFavoris', id=Groupe[0]) }}"><img class="img-fav" src="../static/img/coeur-vide.png" alt="favoris"></a></p>
+            <p id="nom-groupe">{{ Groupe[2] }} - {{ Groupe[6] }}  <a href="{{ url_for('ajouterFavoris', id=Groupe[1]) }}"><img class="img-fav" src="../static/img/coeur-vide.png" alt="favoris"></a></p>
             {% endif %}
             <p id="desc-Artiste">{{ Groupe[4] }}</p>
             <div class="music-container" id="music-container">
