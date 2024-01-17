@@ -502,3 +502,14 @@ def delete_groupe(cnx, idGroupe):
         print("Suppression réussie")
     except:
         print("Erreur lors de la requête delete_groupe")
+
+def get_all_name_hebergement(cnx):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT nomHebergement FROM HEBERGEMENT;"))
+        for row in res:
+            liste.append(row[0])
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_name_hebergement")
+        return []

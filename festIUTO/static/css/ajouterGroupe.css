@@ -152,6 +152,16 @@ label {
     padding: 5px;
 }
 
+#hebergement {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 30px;
+    outline: none;
+    border-radius: 5px;
+    padding: 5px;
+}
+
 #photo {
     color: #fff;
     margin-top: 10px;
