@@ -179,6 +179,22 @@ class AjouterSpectateurForm(FlaskForm):
     def get_ajouter_spectateur(self):
         return (self.nom.data, self.prenom.data, self.mail.data, self.mdp.data, self.confirmerMdp.data, self.role.data)
 
+class ModifierHebergementForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    nbPlace = IntegerField('nombre de place', validators=[DataRequired()])
+    submit = SubmitField('Modifier')
+
+    def get_modifier_hebergement(self):
+        return (self.nom.data, self.nbPlace.data)
+
+class AjouterHebergementForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    nbPlace = IntegerField('nombre de place', validators=[DataRequired()])
+    submit = SubmitField('Ajouter')
+
+    def get_ajouter_hebergement(self):
+        return (self.nom.data, self.nbPlace.data)
+
 
 def les_jours_sont_valide(liste_jours):
     if liste_jours.count(True) != 1:
@@ -918,3 +934,56 @@ def ajouterSpectateur():
 def supprimerSpectateur(mail):
     supprimer_spectateur(cnx, mail)
     return redirect(url_for('spectateurManagement'))
+
+
+@app.route('/hebergement-management', methods=("GET", "POST",))
+def hebergementManagement():
+    form = RechercheForm()
+    if form.validate_on_submit():
+        recherche = form.get_recherche()
+        if recherche != None:
+            return render_template(
+                "hebergementManagement.html",
+                title="Festiut'O | Admin",
+                hebergements=get_all_hebergement_with_search(cnx, recherche),
+                form=form
+            )
+    return render_template(
+        "hebergementManagement.html",
+        title="Festiut'O | Admin",
+        hebergements=get_all_hebergement(),
+        form=form
+    )
+
+@app.route('/modifier-hebergement/<int:id>', methods=("GET", "POST",))
+def modifierHebergement(id):
+    form = ModifierHebergementForm()
+    if form.validate_on_submit():
+        hebergement = form.get_modifier_hebergement()
+        print(hebergement)
+        modifier_hebergement(cnx, hebergement[0], hebergement[1], id)
+        return redirect(url_for('modifierHebergement', id=id))
+    return render_template(
+        "modifierHebergement.html",
+        title="Festiut'O | Admin",
+        hebergement=get_profil_hebergement(id),
+        form=form
+    )
+
+@app.route('/ajouter-hebergement', methods=("GET", "POST",))
+def ajouterHebergement():
+    form = AjouterHebergementForm()
+    if form.validate_on_submit():
+        hebergement = form.get_ajouter_hebergement()
+        ajouter_hebergement(cnx, hebergement[0], hebergement[1])
+        return redirect(url_for('hebergementManagement'))
+    return render_template(
+        "ajouterHebergement.html",
+        title="Festiut'O | Admin",
+        form=form
+    )
+
+@app.route('/supprimer-hebergement/<int:id>', methods=("GET",))
+def supprimerHebergement(id):
+    supprimer_hebergement(cnx, id)
+    return redirect(url_for('hebergementManagement'))

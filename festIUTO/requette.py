@@ -558,3 +558,63 @@ def insert_groupe_hebergement(cnx, idGroupe, nomHebergement, dateArrivee, dateDe
         print("Ajout réussi")
     except:
         print("Erreur lors de la requête insert_groupe_hebergement")
+
+
+# gérer les hébergements
+
+def get_all_hebergement():
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM HEBERGEMENT;"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_hebergement")
+        return []
+
+def get_all_hebergement_with_search(cnx, recherche):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM HEBERGEMENT WHERE nomHebergement LIKE '%"+recherche+"%';"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_hebergement_with_search")
+        return []
+
+def ajouter_hebergement(cnx, nomHebergement, nombreDePlaces):
+    try:
+        cnx.execute(text("INSERT INTO HEBERGEMENT (nomHebergement, nombreDePlaces) VALUES ('"+nomHebergement+"', "+str(nombreDePlaces)+");"))
+        cnx.commit()
+        print("Ajout réussi")
+    except:
+        print("Erreur lors de la requête ajouter_hebergement")
+
+def supprimer_hebergement(cnx, idHebergement):
+    try:
+        cnx.execute(text("DELETE FROM ORGANISATIONGROUPE WHERE idHebergement = "+str(idHebergement)+";"))
+        cnx.execute(text("DELETE FROM HEBERGEMENT WHERE idHebergement = "+str(idHebergement)+";"))
+        cnx.commit()
+        print("Suppression réussie")
+    except:
+        print("Erreur lors de la requête supprimer_hebergement")
+
+def modifier_hebergement(cnx, nomHebergement, nombreDePlaces, idHebergement):
+    try:
+        cnx.execute(text("UPDATE HEBERGEMENT SET nomHebergement = '"+nomHebergement+"', nombreDePlaces = "+str(nombreDePlaces)+" WHERE idHebergement = "+str(idHebergement)+";"))
+        cnx.commit()
+        print("Modification réussie")
+    except:
+        print("Erreur lors de la requête modifier_hebergement")
+
+def get_profil_hebergement(idHebergement):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM HEBERGEMENT WHERE idHebergement = "+str(idHebergement)+";"))
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_profil_hebergement")
