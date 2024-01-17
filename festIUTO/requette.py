@@ -48,7 +48,6 @@ def get_all_groupe():
         print("get_all_groupe")
         res = cnx.execute(text("SELECT idGroupe, nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe, nomImage FROM GROUPE NATURAL JOIN PHOTOGROUPE"))
         for row in res:
-            print(row)
             liste.append(row)
         return liste
     except:
@@ -480,11 +479,13 @@ def get_id_style_musical(cnx, nomStyle):
         print("Erreur lors de la requête get_id_style_musical")
         return []
 
-def ajouter_groupe(cnx, nomGroupe, nbPersn, nomStyle, descGroupe):
+def ajouter_groupe(cnx, nomGroupe, nbPersn, nomStyle, descGroupe, nomHebergement, dateArrivee, dateDepart, tempsMontage, tempsDemontage):
     try:
         idStyle = get_id_style_musical(cnx, nomStyle)[0]
         cnx.execute(text("INSERT INTO GROUPE (nomGroupe, nbPersn, idStyle, descGroupe) VALUES ('"+nomGroupe+"', "+str(nbPersn)+", "+str(idStyle)+", '"+descGroupe+"');"))
         cnx.execute(text("INSERT INTO PHOTOGROUPE (idGroupe, nomImage) VALUES ((SELECT MAX(idGroupe) FROM GROUPE), 'default.jpg');"))
+        idGroupe = get_id_groupe(cnx, nomGroupe)
+        insert_groupe_hebergement(cnx, idGroupe, nomHebergement, dateArrivee, dateDepart, tempsMontage, tempsDemontage)
         cnx.commit()
         print("Ajout réussi")
     except:
@@ -494,10 +495,11 @@ def delete_groupe(cnx, idGroupe):
     try:
         # cnx.execute(text("DELETE FROM ARTISTE WHERE idArtiste IN (SELECT idArtiste FROM GROUPEARTISTE WHERE idGroupe = "+str(idGroupe)+");"))
         cnx.execute(text("DELETE FROM PHOTOGROUPE WHERE idGroupe = "+str(idGroupe)+";"))
-        print(text("DELETE FROM PHOTOGROUPE WHERE idGroupe = "+str(idGroupe)+";"))
-        # cnx.execute(text("DELETE FROM FAVORIS WHERE idGroupe = "+str(idGroupe)+";"))
-        # cnx.execute(text("DELETE FROM GROUPEARTISTE WHERE idGroupe = "+str(idGroupe)+";"))
+        cnx.execute(text("DELETE FROM FAVORIS WHERE idGroupe = "+str(idGroupe)+";"))
+        cnx.execute(text("DELETE FROM GROUPEARTISTE WHERE idGroupe = "+str(idGroupe)+";"))
+        cnx.execute(text("DELETE FROM ORGANISATIONGROUPE WHERE idGroupe = "+str(idGroupe)+";"))
         cnx.execute(text("DELETE FROM GROUPE WHERE idGroupe = "+str(idGroupe)+";"))
+        cnx.commit()
         print("DELETE FROM GROUPE WHERE idGroupe = "+str(idGroupe)+";")
         print("Suppression réussie")
     except:
@@ -525,9 +527,33 @@ def get_nbPlace_hebergement(cnx, nomHebergement):
         print("Erreur lors de la requête get_nbPlace_hebergement")
         return []
 
-def insert_groupe_hebergement(cnx, idGroupe, idFestival, idHebergement, dateArrivee, dateDepart, tempsMontage, tempsDemontage):
+def get_nbPlacePrise_herbergement(cnx, nomHebergement):
     try:
-        cnx.execute(text("INSERT INTO ORGANISATIONGROUPE (idGroupe, idFestival, idHebergement, dateArrivee, dateDepart, tempsMontage, tempsDemontage) VALUES ("+str(idGroupe)+", "+str(idFestival)+", '"+str(idHebergement)+", "+dateArrivee+"', '"+dateDepart+"', '"+tempsMontage+"', '"+tempsDemontage+"');"))
+        liste = []
+        res = cnx.execute(text("SELECT COUNT(idHebergement) FROM ORGANISATIONGROUPE WHERE idHebergement = (SELECT idHebergement FROM HEBERGEMENT WHERE nomHebergement = '"+nomHebergement+"');"))
+        for row in res:
+            liste.append(row)
+        return liste[0][0]
+    except:
+        print("Erreur lors de la requête get_nbPlacePrise_herbergement")
+        return []
+
+def get_id_hebergement(cnx, nomHebergement):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT idHebergement FROM HEBERGEMENT WHERE nomHebergement = '"+nomHebergement+"';"))
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_id_hebergement")
+        return []
+
+def insert_groupe_hebergement(cnx, idGroupe, nomHebergement, dateArrivee, dateDepart, tempsMontage, tempsDemontage):
+    try:
+        idHebergement = get_id_hebergement(cnx, nomHebergement)[0]
+        print(idHebergement)
+        cnx.execute(text("INSERT INTO ORGANISATIONGROUPE (idGroupe, idFestival, idHebergement, dateArrivee, dateDepart) VALUES ("+str(idGroupe)+", 1, '"+str(idHebergement)+", "+"2024-01-17 15:00:00"+"', '"+"2024-01-17 15:00:00"+"');"))
         cnx.commit()
         print("Ajout réussi")
     except:

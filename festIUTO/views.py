@@ -110,24 +110,32 @@ class ModifierGroupeForm(FlaskForm):
     style = SelectField('style', choices=get_all_nom_style_musical(cnx), validators=[DataRequired()])
     nbPersn = IntegerField('nombre de personne', validators=[DataRequired()])
     descGroupe = StringField('description', validators=[DataRequired()])
-    hebergement = SelectField('hebergement', choices=get_all_name_hebergement(cnx))
+    hebergement = SelectField('hebergement', choices=get_all_name_hebergement(cnx), validators=[DataRequired()])
+    dateArrivee = DateField("date d'arrivée", validators=[DataRequired()])
+    dateDepart = DateField("date de départ", validators=[DataRequired()])
+    tempsMontage = IntegerField('temps de montage', validators=[DataRequired()])
+    tempsDemontage = IntegerField('temps de démontage', validators=[DataRequired()])
     photo = FileField('photo')
     submit = SubmitField('Modifier')
 
     def get_modifier_groupe(self):
-        return (self.nom.data, self.style.data, self.nbPersn.data, self.descGroupe.data)
+        return (self.nom.data, self.style.data, self.nbPersn.data, self.descGroupe.data, self.hebergement.data, self.dateArrivee.data, self.dateDepart.data, self.tempsMontage.data, self.tempsDemontage.data, self.photo.data)
 
 class AjouterGroupeForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
     style = SelectField('style', choices=get_all_nom_style_musical(cnx), validators=[DataRequired()])
     nbPersn = IntegerField('nombre de personne', validators=[DataRequired()])
     descGroupe = StringField('description', validators=[DataRequired()])
-    hebergement = SelectField('hebergement', choices=get_all_name_hebergement(cnx))
+    hebergement = SelectField('hebergement', choices=get_all_name_hebergement(cnx) , validators=[DataRequired()])
+    dateArrivee = DateField("date d'arrivée", validators=[DataRequired()])
+    dateDepart = DateField("date de départ", validators=[DataRequired()])
+    tempsMontage = IntegerField('temps de montage', validators=[DataRequired()])
+    tempsDemontage = IntegerField('temps de démontage', validators=[DataRequired()])
     photo = FileField('photo')
     submit = SubmitField('Ajouter')
 
     def get_ajouter_groupe(self):
-        return (self.nom.data, self.style.data, self.nbPersn.data, self.descGroupe.data)
+        return (self.nom.data, self.style.data, self.nbPersn.data, self.descGroupe.data, self.hebergement.data, self.dateArrivee.data, self.dateDepart.data, self.tempsMontage.data, self.tempsDemontage.data, self.photo.data)
 
 class ModifierArtisteForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
@@ -770,7 +778,9 @@ def ajouterGroupe():
     if form.validate_on_submit():
         groupe = form.get_ajouter_groupe()
         print(groupe)
-        ajouter_groupe(cnx, groupe[0], groupe[2], groupe[1], groupe[3])
+        # nbPlaceDispoHebergement = get_nbPlace_hebergement(cnx, groupe[4]) - get_nbPlacePrise_herbergement(cnx, groupe[4])
+        # if nbPlaceDispoHebergement < groupe[2]:
+        ajouter_groupe(cnx, groupe[0], groupe[2], groupe[1], groupe[3], groupe[4], groupe[5], groupe[6], groupe[7], groupe[8])
         return redirect(url_for('groupeManagement'))
    
     return render_template(
