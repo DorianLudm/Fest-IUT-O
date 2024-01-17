@@ -322,7 +322,8 @@ def billeterie():
 def boutique():
     return render_template(
         "boutique.html",
-        title="Festiut'O | Boutique"
+        title="Festiut'O | ",
+        articles = get_articles()
     )
 
 @app.route('/condition-de-service')
