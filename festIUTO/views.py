@@ -195,6 +195,31 @@ class AjouterHebergementForm(FlaskForm):
     def get_ajouter_hebergement(self):
         return (self.nom.data, self.nbPlace.data)
 
+class ModifierEvenementForm(FlaskForm):
+    lieu = SelectField('lieu', choices=get_all_nom_lieu(cnx), validators=[DataRequired()])
+    groupe = SelectField('groupe', choices=get_all_nom_groupe(), validators=[DataRequired()])
+    typeEvent = SelectField('typeEvent', choices=get_all_type_evenement(), validators=[DataRequired()])
+    dateDebut = DateField("date de début", validators=[DataRequired()])
+    duree = IntegerField('durée', validators=[DataRequired()])
+    descEvenement = StringField('description', validators=[DataRequired()])
+    gratuit = BooleanField('gratuit', validators=[Optional()])
+    submit = SubmitField('Modifier')
+
+    def get_modifier_evenement(self):
+        return (self.lieu.data, self.groupe.data, self.typeEvent.data, self.dateDebut.data, self.duree.data, self.descEvenement.data, self.gratuit.data)
+
+class AjouterEvenementForm(FlaskForm):
+    lieu = SelectField('lieu', choices=get_all_nom_lieu(cnx), validators=[DataRequired()])
+    groupe = SelectField('groupe', choices=get_all_nom_groupe(), validators=[DataRequired()])
+    typeEvent = SelectField('typeEvent', choices=get_all_type_evenement(), validators=[DataRequired()])
+    dateDebut = DateField("date de début", validators=[DataRequired()])
+    duree = IntegerField('durée', validators=[DataRequired()])
+    descEvenement = StringField('description', validators=[DataRequired()])
+    gratuit = BooleanField('gratuit', validators=[Optional()])
+    submit = SubmitField('Ajouter')
+
+    def get_ajouter_evenement(self):
+        return (self.lieu.data, self.groupe.data, self.typeEvent.data, self.dateDebut.data, self.duree.data, self.descEvenement.data, self.gratuit.data)
 
 def les_jours_sont_valide(liste_jours):
     if liste_jours.count(True) != 1:
@@ -992,3 +1017,66 @@ def ajouterHebergement():
 def supprimerHebergement(id):
     supprimer_hebergement(cnx, id)
     return redirect(url_for('hebergementManagement'))
+
+
+# gerer les evenements
+@app.route('/evenement-management', methods=("GET", "POST",))
+def evenementManagement():
+    form = RechercheForm()
+    if form.validate_on_submit():
+        recherche = form.get_recherche()
+        if recherche != None:
+            return render_template(
+                "evenementManagement.html",
+                title="Festiut'O | Admin",
+                evenements=get_all_evenement_with_search(cnx, recherche),
+                form=form
+            )
+    return render_template(
+        "evenementManagement.html",
+        title="Festiut'O | Admin",
+        evenements=get_all_evenement(),
+        form=form
+    )
+
+@app.route('/modifier-evenement/<int:id>', methods=("GET", "POST",))
+def modifierEvenement(id):
+    form = ModifierEvenementForm()
+    if form.validate_on_submit():
+        evenement = form.get_modifier_evenement()
+        print(evenement)
+        gratuit = False
+        if evenement[6] == True:
+            gratuit = True
+        idGroupe = get_id_groupe(cnx, evenement[1])
+        idLieu = get_id_lieu(cnx, evenement[0])
+        modifier_evenement(cnx, idLieu, idGroupe, evenement[3], evenement[4], evenement[5], gratuit, id)
+        return redirect(url_for('modifierEvenement', id=id))
+    return render_template(
+        "modifierEvenement.html",
+        title="Festiut'O | Admin",
+        evenement=get_profil_evenement(id),
+        form=form
+    )
+
+@app.route('/ajouter-evenement', methods=("GET", "POST",))
+def ajouterEvenement():
+    form = AjouterEvenementForm()
+    if form.validate_on_submit():
+        evenement = form.get_ajouter_evenement()
+        gratuit = False
+        if evenement[5] == True:
+            gratuit = True
+        idGroupe = get_id_groupe(cnx, evenement[1])
+        idLieu = get_id_lieu(cnx, evenement[0])
+        print(evenement)
+        if gratuit:
+            ajouter_evenement(cnx, idLieu, idGroupe, evenement[3], evenement[4], evenement[5], 1)
+        else:
+            ajouter_evenement(cnx, idLieu, idGroupe, evenement[3], evenement[4], evenement[5], 0)
+        return redirect(url_for('evenementManagement'))
+    return render_template(
+        "ajouterEvenement.html",
+        title="Festiut'O | Admin",
+        form=form
+    )

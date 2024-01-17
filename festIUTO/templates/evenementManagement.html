@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/evenementManagement.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <div class="container-all">
+        <div class="recherche-evenement">
+            <a href="{{ url_for('admin') }}" class="btn-retour"><img src="../static/img/bouton-retour.png" alt="bouton retour"></a>
+            <form method="post" action="{{ url_for('evenementManagement') }}" class="form-search" id="form-search">
+                {{ form.hidden_tag() }}
+                <div class="form-box">
+                    {{ form.recherche(size=50, id="recherche-barre", class="recherche-barre", placeholder="Nom d'un hôtel...") }}
+                    {{ form.submit(size=50, class="btn-recherche") }}
+                </div>
+            </form>
+            <a href="{{ url_for('ajouterEvenement') }}" class="ajouter-user"><img src="../static/img/ajouter-un-utilisateur.png" alt="ajouter un utilisateur"></a>
+        </div>
+        <div class="container-all-evenement">
+            {% for evenement in evenements %}
+            <a class="lien-container-evenement" href="{{ url_for('modifierEvenement', id=evenement[0]) }}">
+                <div class="container-evenement">
+                    <p>{{ evenement[4] }} - {{ evenement[2] }}</p>
+                    {% if evenement[9] == 1 %}
+                    <p>Gratuit</p>
+                    {% else %}
+                    <p>Payant</p>
+                    {% endif %}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

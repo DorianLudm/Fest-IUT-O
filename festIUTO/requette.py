@@ -623,3 +623,94 @@ def get_profil_hebergement(idHebergement):
         return liste[0]
     except:
         print("Erreur lors de la requête get_profil_hebergement")
+
+
+# gerer les evenement (creneau)
+def get_all_evenement():
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT idCreneau, idLieu, nomLieu, idGroupe, nomGroupe, idEvent, heureDebut, duree, descriptionEvenement, gratuit  FROM CRENEAU NATURAL JOIN GROUPE NATURAL JOIN LIEU NATURAL JOIN EVENTTYPE;"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_evenement")
+        return []
+
+def get_all_evenement_with_search(cnx, recherche):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT idCreneau, idLieu, nomLieu, idGroupe, nomGroupe, idEvent, heureDebut, duree, descriptionEvenement, gratuit  FROM CRENEAU NATURAL JOIN GROUPE NATURAL JOIN LIEU NATURAL JOIN EVENTTYPE WHERE descriptionEvenement LIKE '%"+recherche+"%' or nomGroupe LIKE '%"+recherche+"%' or nomLieu LIKE '%"+recherche+"%';"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_evenement_with_search")
+        return []
+
+def ajouter_evenement(cnx, idLieu, idGroupe, heureDebut, duree, descriptionEvenement, gratuit):
+    try:
+        cnx.execute(text("INSERT INTO CRENEAU (idLieu, idGroupe, heureDebut, duree, descriptionEvenement, gratuit) VALUES ("+str(idLieu)+", "+str(idGroupe)+", '"+heureDebut+"', '"+duree+"', '"+descriptionEvenement+"', "+str(gratuit)+");"))
+        cnx.commit()
+        print("Ajout réussi")
+    except:
+        print("Erreur lors de la requête ajouter_evenement")
+
+def supprimer_evenement(cnx, idCreneau):
+    try:
+        cnx.execute(text("DELETE FROM CRENEAU WHERE idCreneau = "+str(idCreneau)+";"))
+        cnx.commit()
+        print("Suppression réussie")
+    except:
+        print("Erreur lors de la requête supprimer_evenement")
+
+def modifier_evenement(cnx, idLieu, idGroupe, heureDebut, duree, descriptionEvenement, gratuit, idCreneau):
+    try:
+        cnx.execute(text("UPDATE CRENEAU SET idLieu = "+str(idLieu)+", idGroupe = "+str(idGroupe)+", heureDebut = '"+heureDebut+"', duree = '"+duree+"', descriptionEvenement = '"+descriptionEvenement+"', gratuit = "+str(gratuit)+" WHERE idCreneau = "+str(idCreneau)+";"))
+        cnx.commit()
+        print("Modification réussie")
+    except:
+        print("Erreur lors de la requête modifier_evenement")
+
+def get_profil_evenement(idCreneau):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT idCreneau, idLieu, nomLieu, idGroupe, nomGroupe, idEvent, nom, heureDebut, duree, descriptionEvenement, gratuit  FROM CRENEAU NATURAL JOIN GROUPE NATURAL JOIN LIEU NATURAL JOIN EVENTTYPE WHERE idCreneau = "+str(idCreneau)+";"))
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_profil_evenement")
+
+def get_all_nom_lieu(cnx):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT nomLieu FROM LIEU;"))
+        for row in res:
+            liste.append(row[0])
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_nom_lieu")
+        return []
+
+def get_all_type_evenement():
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT nom FROM EVENTTYPE;"))
+        for row in res:
+            liste.append(row[0])
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_type_evenement")
+        return []
+
+def get_id_lieu(cnx, nomLieu):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT idLieu FROM LIEU WHERE nomLieu = '"+nomLieu+"';"))
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_id_lieu")
+        return []
