@@ -8,8 +8,8 @@ from wtforms import PasswordField
 from hashlib import sha256
 from .models import *
 import time
-import datetime
 from .requette import *
+from datetime import datetime
 
 
 class LoginForm(FlaskForm):
@@ -793,10 +793,15 @@ def ajouterGroupe():
     form = AjouterGroupeForm()
     if form.validate_on_submit():
         groupe = form.get_ajouter_groupe()
-        print(groupe)
-        # nbPlaceDispoHebergement = get_nbPlace_hebergement(cnx, groupe[4]) - get_nbPlacePrise_herbergement(cnx, groupe[4])
-        # if nbPlaceDispoHebergement < groupe[2]:
+        #print(groupe)
+        # Check if groupe[5] and groupe[6] are strings before conversion
+        if isinstance(groupe[5], str):
+            groupe[5] = datetime.strptime(groupe[5], '%Y-%m-%d')
+        if isinstance(groupe[6], str):
+            groupe[6] = datetime.strptime(groupe[6], '%Y-%m-%d')
         ajouter_groupe(cnx, groupe[0], groupe[2], groupe[1], groupe[3], groupe[4], groupe[5], groupe[6], groupe[7], groupe[8])
+        print("date")
+        print(groupe[6])
         return redirect(url_for('groupeManagement'))
    
     return render_template(

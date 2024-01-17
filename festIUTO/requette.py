@@ -482,8 +482,12 @@ def get_id_style_musical(cnx, nomStyle):
 def ajouter_groupe(cnx, nomGroupe, nbPersn, nomStyle, descGroupe, nomHebergement, dateArrivee, dateDepart, tempsMontage, tempsDemontage):
     try:
         idStyle = get_id_style_musical(cnx, nomStyle)[0]
-        cnx.execute(text("INSERT INTO GROUPE (nomGroupe, nbPersn, idStyle, descGroupe) VALUES ('"+nomGroupe+"', "+str(nbPersn)+", "+str(idStyle)+", '"+descGroupe+"');"))
+
+        cnx.execute(text("INSERT INTO GROUPE (nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe) VALUES ('"+nomGroupe+"', "+str(nbPersn)+", "+str(idStyle)+", '"+descGroupe+"', 'lien_video');"))
+        
         cnx.execute(text("INSERT INTO PHOTOGROUPE (idGroupe, nomImage) VALUES ((SELECT MAX(idGroupe) FROM GROUPE), 'default.jpg');"))
+        
+        
         idGroupe = get_id_groupe(cnx, nomGroupe)
         insert_groupe_hebergement(cnx, idGroupe, nomHebergement, dateArrivee, dateDepart, tempsMontage, tempsDemontage)
         cnx.commit()
@@ -553,7 +557,8 @@ def insert_groupe_hebergement(cnx, idGroupe, nomHebergement, dateArrivee, dateDe
     try:
         idHebergement = get_id_hebergement(cnx, nomHebergement)[0]
         print(idHebergement)
-        cnx.execute(text("INSERT INTO ORGANISATIONGROUPE (idGroupe, idFestival, idHebergement, dateArrivee, dateDepart) VALUES ("+str(idGroupe)+", 1, '"+str(idHebergement)+", "+"2024-01-17 15:00:00"+"', '"+"2024-01-17 15:00:00"+"');"))
+        print(text("INSERT INTO ORGANISATIONGROUPE (idGroupe, idFestival, idHebergement, arrivee, depart, tempsMontage, tempsDemontage) VALUES ("+str(idGroupe)+", 1, "+str(idHebergement)+",' "+ str(dateArrivee) +"', '"+ str(dateDepart)+"', '01:30:00', '01:30:00');"))
+        cnx.execute(text("INSERT INTO ORGANISATIONGROUPE (idGroupe, idFestival, idHebergement, arrivee, depart, tempsMontage, tempsDemontage) VALUES ("+str(idGroupe)+", 1, "+str(idHebergement)+",' "+ str(dateArrivee) +"', '"+ str(dateDepart)+"', '01:30:00', '01:30:00');"))
         cnx.commit()
         print("Ajout réussi")
     except:
