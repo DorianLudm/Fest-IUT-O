@@ -1,0 +1,140 @@
+body {
+    font-family: Montserrat;
+    background: #1f242d;
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    background-color: transparent !important;
+  }
+
+#element-a-cacher7 a {
+    color: #2c45d3;
+}
+
+.footer {
+    margin-top: 10vh;
+} 
+
+/* debut prog */
+
+.container-all {
+    margin-top: 20vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.recherche-artiste {
+    width: 50%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-between;
+}
+
+.form-box {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+
+.recherche-barre {
+    flex-basis: 80%;
+    height: 30px;
+    outline: none;
+}
+
+.recherche-barre:hover {
+    outline: none;
+    border: 3px solid #2c45d3;
+    border-radius: 5px;
+}
+
+.btn-recherche {
+    all: unset;
+    text-align: center;
+    flex-basis: 20%;
+    height: 40px;
+    color: white;
+    background-color: #2c45d3;
+    border-radius: 5px;
+    transition: 0.2s;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.btn-recherche:hover {
+    cursor: pointer;
+    background-color: #1f242d;
+    border: 3px solid #2c45d3;
+    border-radius: 5px;
+    transition: 0.2 s;
+}
+
+.ajouter-user, .btn-retour {
+    all: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    padding: 15px;
+    transition: 0.5s;
+}
+
+.ajouter-user img, .btn-retour img {
+    width: 40px;
+}
+
+.ajouter-user:hover, .btn-retour:hover { 
+    background-color: #2c45d3;
+    transition: 0.5s;
+}
+
+.lien-container-artiste {
+    text-decoration: none;
+}
+
+.container-all-artiste {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+.container-artiste {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    border: 3px solid #2c45d3;
+    border-radius: 5px;
+    padding: 10px;
+    transition: 0.5s;
+}
+
+.container-artiste:hover {
+    cursor: pointer;
+    background-color: #2c45d3;
+    transition: 0.5s;
+}
+
+.container-artiste p  {
+    color: white;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; /* Ajoute des points de suspension (...) pour indiquer que le texte est coupé */
+    max-width: 25vw; 
+}

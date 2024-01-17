@@ -71,6 +71,7 @@ input[type="text"]::placeholder {
     text-decoration: none;
     color: white;
     font-size: 20px;
+    transition: 0.5s;
 }
 
 .liste-nav li a.active,
@@ -207,6 +208,7 @@ input[type="text"]::placeholder {
     border-radius: 50%;
     padding: 10px;
     margin-left: 10vh;
+    transition: 0.5s;
 }
 
 #icon-loupe-white:hover {
@@ -225,6 +227,7 @@ input[type="text"]::placeholder {
     border-radius: 50%;
     padding: 10px;
     margin-right: 0em;
+    transition: 0.5s;
 }
 
 #icon-user:hover {

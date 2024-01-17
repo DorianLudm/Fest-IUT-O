@@ -171,13 +171,23 @@
             </div>
             <img class="" src="../static/img/qrcode.png" alt="qr code">
             <a class="repro-btn" href="#"><button>Télécharger le billet</button></a>
-            <a class="repro-btn" href="#"><button>Reprogrammer</button></a>
+            {% if billet[5] == 1 %}
+            <a class="repro-btn" href="/pass-1-jour?idBillet={{ billet[1] }}"><button>Reprogrammer</button></a>
+            {% elif billet[5] == 2 %}
+            <a class="repro-btn" href="/pass-2-jours?idBillet={{ billet[1] }}"><button>Reprogrammer</button></a>
+            {% endif %}
             <a class="deco-btn" href="{{ url_for('deleteBillet', id=billet[1]) }}"><button>Vendre un billet</button></a>
           </div>
           {% endfor %}
         </div>
       </div>
       {% endif %}
+    
+      <!-- module admin -->
+      {% if session['utilisateur'][3] == 1 %}
+      <a class="admin-btn" href="{{ url_for('admin') }}"><button>Admin</button></a>
+      {% endif %}
+
       <a class="deco-btn" href="{{ url_for('logout') }}"><button>Se déconnecter</button></a>
     </div>
     {% endif %}

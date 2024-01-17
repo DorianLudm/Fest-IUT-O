@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ajouterSpectateur.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <div class="container-all">
+        <div class="top">
+            <a class="btn-retour" href="{{ url_for('spectateurManagement')}}"><img src="../static/img/bouton-retour.png" alt="bouton retour"></a>
+            <h1>Ajouter un spectateur</h1>
+        </div>
+        <div class="container-form">
+            <form role="form" method="POST" action ="{{ url_for('ajouterSpectateur') }}">
+                {{ form.hidden_tag() }}
+                <div class="user-box">
+                    <label class="" for="nom">Nom</label>
+                    {{ form.nom(size=50, class_="", id="nom") }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="style">Prénom</label>
+                    {{ form.prenom(size=50, class_="", id="prenom") }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="style">Email</label>
+                    {{ form.mail(size=50, class_="", id="mail") }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="style">Mot de passe</label>
+                    {{ form.mdp(size=50, class_="", id="mdp") }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="style">Confirmer le mot de passe</label>
+                    {{ form.confirmerMdp(size=50, class_="", id="confirmerMdp") }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="style">Role du compte</label>
+                    {{ form.role(size=50, class_="", id="role") }}
+                </div>
+                <div class="valid-container">
+                    {{ form.submit(class_="valid-button")  }}
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

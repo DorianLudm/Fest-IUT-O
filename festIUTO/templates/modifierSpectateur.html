@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modifierSpectateur.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <div class="container-all">
+        <div class="top">
+            <a class="btn-retour" href="{{ url_for('spectateurManagement')}}"><img src="../static/img/bouton-retour.png" alt="bouton retour"></a>
+            <h1>Modifier le spectateur "{{ spectateur[1] }}  {{ spectateur[2] }}"</h1>
+            <a class="btn-supprimer" href="{{ url_for('supprimerSpectateur', mail=spectateur[0]) }}"><img src="../static/img/supprimer-lutilisateur.png" alt="bouton supprimer"></a>
+        </div>
+        <div class="container-form">
+            <form role="form" method="POST" action ="{{ url_for('modifierSpectateur', mail=spectateur[0]) }}">
+                {{ form.hidden_tag() }}
+                <div class="user-box">
+                    <label class="" for="nom">Nom</label>
+                    {{ form.nom(size=50, class_="", id="nom", value=spectateur[2]) }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="prenom">Prénom</label>
+                    {{ form.prenom(size=50, class_="", id="prenom", value=spectateur[1]) }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="mail">Email</label>
+                    {{ form.mail(size=50, class_="", id="mail", value=spectateur[0]) }} 
+                </div>
+                <div class="user-box">
+                    <label class="" for="mdp">Mot de passe</label>
+                    {{ form.mdp(size=50, class_="", id="mdp", value=spectateur[3]) }} 
+                </div>
+                <div class="user-box">
+                    <label class="" for="confirmerMdp">Confirmer le mot de passe</label>
+                    {{ form.confirmerMdp(size=50, class_="", id="confirmerMdp") }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="style">Role du compte</label>
+                    {{ form.role(size=50, class_="", id="role") }}
+                </div>
+                <div class="valid-container">
+                    {{ form.submit(class_="valid-button")  }}
+                </div>
+            </form>
+
+            <!-- billet -->
+            {% if yaDesBillets == True %}
+            <div class="container-right">
+                <h2 class="element">Les billets achetées de "{{ spectateur[1] }} {{ spectateur[2] }}"</h2>
+                <div class="container-billet">
+                {% for billet in billets %}
+                <div class="billet">
+                    <img class="" src="../static/img/icon-logo.png" alt="logo festiuto">
+                    <div class="container-nom">
+                    <!-- type de pass -->
+                    {% if billet[5] == 1 %}
+                    <h3 class="">Pass 1 jour</h3>
+                    
+                    <!-- afficher les jours -->
+                    {% if billet[3] == ILundi %}
+                    <h4 class="">Lundi 17 Mai</h4>
+                    {% elif billet[3] == IMardi %}
+                    <h4 class="">Mardi 18 Mai</h4>
+                    {% elif billet[3] == IMercredi %}
+                    <h4 class="">Mercredi 19 Mai</h4>
+                    {% elif billet[3] == IJeudi %}
+                    <h4 class="">Jeudi 20 Mai</h4>
+                    {% elif billet[3] == IVendredi %}
+                    <h4 class="">Vendredi 21 Mai</h4>
+                    {% elif billet[3] == ISamedi %}
+                    <h4 class="">Samedi 22 Mai</h4>
+                    {% else %}
+                    <h4 class="">{{ billet[3] }}</h4>
+                    {% endif %}
+
+                    {% elif billet[5] == 2 %}
+                    <h3 class="">Pass 2 jours
+
+                    <!-- afficher les jours -->
+                    {% if billet[3] == ILundi %}
+                    <h4 class="">Lundi 17 Mai</h4>
+                    {% elif billet[3] == IMardi %}
+                    <h4 class="">Mardi 18 Mai</h4>
+                    {% elif billet[3] == IMercredi %}
+                    <h4 class="">Mercredi 19 Mai</h3>
+                    {% elif billet[3] == IJeudi %}
+                    <h4 class="">Jeudi 20 Mai</h4>
+                    {% elif billet[3] == IVendredi %}
+                    <h4 class="">Vendredi 21 Mai</h4>
+                    {% elif billet[3] == ISamedi %}
+                    <h4 class="">Samedi 22 Mai</h4>
+                    {% else %}
+                    <h4 class="">{{ billet[3] }}</h4>
+                    {% endif %}
+
+                    <!-- afficher les jours deux -->
+                    {% if billet[4] == ILundi %}
+                    <h4 class="">Lundi 17 Mai</h4>
+                    {% elif billet[4] == IMardi %}
+                    <h4 class="">Mardi 18 Mai</h4>
+                    {% elif billet[4] == IMercredi %}
+                    <h4 class="">Mercredi 19 Mai</h3>
+                    {% elif billet[4] == IJeudi %}
+                    <h4 class="">Jeudi 20 Mai</h4>
+                    {% elif billet[4] == IVendredi %}
+                    <h4 class="">Vendredi 21 Mai</h4>
+                    {% elif billet[4] == ISamedi %}
+                    <h4 class="">Samedi 22 Mai</h4>
+                    {% else %}
+                    <h4 class="">{{ billet[4] }}</h4>
+                    {% endif %}
+
+                    {% else %}
+                    <h3 class="">Pass semaine</h3>
+                    <h4 class="">Du Lundi 17 Mai <br> au <br> Samedi 22 Mai</h4>
+                    {% endif %}
+
+                    <p class="">{{ billet[6] }} {{ billet[7] }}</p>
+                    </div>
+                    <img class="" src="../static/img/qrcode.png" alt="qr code">
+                    <a href="#"><button class="valid-button">Télécharger le billet</button></a>
+                    <a href="/delete-billet/{{ billet[1] }}?redirect=admin&mail={{ spectateur[0] }}"><button class="vendre-tout">Vendre un billet</button></a>
+                </div>
+                {% endfor %}
+                </div>
+                <a class="lien-vendre-tout" href="{{ url_for('supprimerTousLesBillets', mail=spectateur[0]) }}"><button class="vendre-tout">Vendre tous les billets</button></a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
