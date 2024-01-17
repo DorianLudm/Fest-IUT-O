@@ -8,8 +8,8 @@ from wtforms import PasswordField
 from hashlib import sha256
 from .models import *
 import time
+import datetime
 from .requette import *
-from datetime import datetime
 
 
 class LoginForm(FlaskForm):
