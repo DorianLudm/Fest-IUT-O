@@ -485,7 +485,7 @@ def ajouter_groupe(cnx, nomGroupe, nbPersn, nomStyle, descGroupe, nomHebergement
 
         cnx.execute(text("INSERT INTO GROUPE (nomGroupe, nbPersn, idStyle, descGroupe, videoGroupe) VALUES ('"+nomGroupe+"', "+str(nbPersn)+", "+str(idStyle)+", '"+descGroupe+"', 'lien_video');"))
         
-        cnx.execute(text("INSERT INTO PHOTOGROUPE (idGroupe, nomImage) VALUES ((SELECT MAX(idGroupe) FROM GROUPE), 'default.jpg');"))
+        cnx.execute(text("INSERT INTO PHOTOGROUPE (idGroupe, nomImage) VALUES ((SELECT MAX(idGroupe) FROM GROUPE), 'default.png');"))
         
         
         idGroupe = get_id_groupe(cnx, nomGroupe)
