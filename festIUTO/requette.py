@@ -513,3 +513,22 @@ def get_all_name_hebergement(cnx):
     except:
         print("Erreur lors de la requête get_all_name_hebergement")
         return []
+
+def get_nbPlace_hebergement(cnx, nomHebergement):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT nombreDePlaces FROM HEBERGEMENT WHERE nomHebergement = '"+nomHebergement+"';"))
+        for row in res:
+            liste.append(row)
+        return liste[0][0]
+    except:
+        print("Erreur lors de la requête get_nbPlace_hebergement")
+        return []
+
+def insert_groupe_hebergement(cnx, idGroupe, idFestival, idHebergement, dateArrivee, dateDepart, tempsMontage, tempsDemontage):
+    try:
+        cnx.execute(text("INSERT INTO ORGANISATIONGROUPE (idGroupe, idFestival, idHebergement, dateArrivee, dateDepart, tempsMontage, tempsDemontage) VALUES ("+str(idGroupe)+", "+str(idFestival)+", '"+str(idHebergement)+", "+dateArrivee+"', '"+dateDepart+"', '"+tempsMontage+"', '"+tempsDemontage+"');"))
+        cnx.commit()
+        print("Ajout réussi")
+    except:
+        print("Erreur lors de la requête insert_groupe_hebergement")
