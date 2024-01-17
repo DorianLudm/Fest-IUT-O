@@ -19,7 +19,7 @@
                     {{ form.submit(size=50, class="btn-recherche") }}
                 </div>
             </form>
-            <a href="#" class="ajouter-user"><img src="../static/img/ajouter-un-utilisateur.png" alt="ajouter un utilisateur"></a>
+            <a href="{{ url_for('ajouterHebergement') }}" class="ajouter-user"><img src="../static/img/ajouter-un-utilisateur.png" alt="ajouter un utilisateur"></a>
         </div>
         <div class="container-all-hebergement">
             {% for hebergement in hebergements %}
