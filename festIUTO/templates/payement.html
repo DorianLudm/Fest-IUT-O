@@ -13,7 +13,7 @@
     {% if 'utilisateur' in session %}
         <h1 class="element">Informations de payement</h1>
         <div class="container-payement">
-            <form action="#" method="POST">
+            <form action="/payement?passe=1jour&jour=lundi" method="POST">
                 <div class="container-payement-left">
                     {{ formPayement.hidden_tag() }}
                     <div class="container-payement-left-input">
