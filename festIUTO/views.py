@@ -1069,12 +1069,16 @@ def ajouterEvenement():
         if evenement[5] == True:
             gratuit = True
         idGroupe = get_id_groupe(cnx, evenement[1])
-        idLieu = get_id_lieu(cnx, evenement[0])
-        print(evenement)
+        idLieu = get_id_lieu(cnx, evenement[0])[0]
+        idEvent = get_id_event(cnx, evenement[2])[0]
+        print(evenement[3])
+        if isinstance(evenement[3], str):
+            evenement[3] = datetime.strptime(evenement[3], '%Y-%m-%d')
+        print(evenement[3])
         if gratuit:
-            ajouter_evenement(cnx, idLieu, idGroupe, evenement[3], evenement[4], evenement[5], 1)
+            ajouter_evenement(cnx, idEvent, idLieu, idGroupe, evenement[3], evenement[4], evenement[5], 1)
         else:
-            ajouter_evenement(cnx, idLieu, idGroupe, evenement[3], evenement[4], evenement[5], 0)
+            ajouter_evenement(cnx, idEvent, idLieu, idGroupe, evenement[3], evenement[4], evenement[5], 0)
         return redirect(url_for('evenementManagement'))
     return render_template(
         "ajouterEvenement.html",

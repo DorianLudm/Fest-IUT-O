@@ -648,13 +648,14 @@ def get_all_evenement_with_search(cnx, recherche):
         print("Erreur lors de la requête get_all_evenement_with_search")
         return []
 
-def ajouter_evenement(cnx, idLieu, idGroupe, heureDebut, duree, descriptionEvenement, gratuit):
+def ajouter_evenement(cnx, idEvent, idLieu, idGroupe, heureDebut, duree, descriptionEvenement, gratuit):
     try:
-        cnx.execute(text("INSERT INTO CRENEAU (idLieu, idGroupe, heureDebut, duree, descriptionEvenement, gratuit) VALUES ("+str(idLieu)+", "+str(idGroupe)+", '"+heureDebut+"', '"+duree+"', '"+descriptionEvenement+"', "+str(gratuit)+");"))
+        print(f"INSERT INTO CRENEAU (idLieu, idEvent, idGroupe, heureDebut, duree, descriptionEvenement, gratuit, preinscriptionPossible, visibleAuPublic) VALUES ({idLieu}, {idGroupe}, {idEvent}, '{heureDebut}', {int(duree)}, '{descriptionEvenement}', {gratuit}, {0}, {1});")
+        cnx.execute(text(f"INSERT INTO CRENEAU (idLieu, idEvent, idGroupe, heureDebut, duree, descriptionEvenement, gratuit, preinscriptionPossible, visibleAuPublic) VALUES ({idLieu}, {idGroupe}, {idEvent}, '{heureDebut}', {int(duree)}, '{descriptionEvenement}', {gratuit}, {0}, {1});"))
         cnx.commit()
         print("Ajout réussi")
     except:
-        print("Erreur lors de la requête ajouter_evenement")
+        print("Erreur lors de la requête ajouter_evenementui")
 
 def supprimer_evenement(cnx, idCreneau):
     try:
@@ -713,4 +714,16 @@ def get_id_lieu(cnx, nomLieu):
         return liste[0]
     except:
         print("Erreur lors de la requête get_id_lieu")
+        return []
+    
+def get_id_event(cnx, nomEvenement):
+    try:
+        liste = []
+        print(text("SELECT idEvent FROM EVENTTYPE WHERE nom = '"+nomEvenement+"';"))
+        res = cnx.execute(text("SELECT idEvent FROM EVENTTYPE WHERE nom = '"+nomEvenement+"';"))
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_id_event")
         return []
