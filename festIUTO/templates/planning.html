@@ -31,16 +31,16 @@
                         {% for j in range(7) %}
                             {% if pla[heure, j] %}
                                 {% if pla[heure, j]|length > 1 %}
-                                    <td>
-                                        <table class="concerts">
+                                    <td class="multi">
+                                        <div class="concerts">
                                             {% for concert in pla[heure, j] %}
                                                 {% if concertChoisit == concert[0] %}
-                                                    <td class="plein" style="border: solid 1px red;"><a href="{{ url_for('concert', id = concert[1]) }}">{{ concert[0] }}</a></td>
+                                                    <div class="plein" style="border: solid 1px red;"><a href="{{ url_for('concert', id = concert[1]) }}">{{ concert[0] }}</a></div>
                                                 {% else %}
-                                                    <td class="plein"><a href="{{ url_for('concert', id = concert[1]) }}">{{ concert[0] }}</a></td>
+                                                    <div class="plein"><a href="{{ url_for('concert', id = concert[1]) }}">{{ concert[0] }}</a></div>
                                                 {% endif %}
                                             {% endfor %}
-                                        </table>
+                                        </div>
                                     </td>
                                 {% else %}
                                     {% if concertChoisit == pla[heure, j][0][0] %}

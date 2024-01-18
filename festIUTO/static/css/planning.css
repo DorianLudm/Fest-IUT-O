@@ -6,7 +6,7 @@ body {
 }
 
 nav {
-    background-color: transparent !important;
+    background-color: rgba(31, 35, 41, 1) !important;
   }
 
 
@@ -17,9 +17,18 @@ nav {
     margin-top: 10em;
 }
 
+.concerts {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
 table {
     border-spacing: 0;
     border-collapse: collapse;
+}
+
+.multi {
+    padding: 0;
 }
 
 td, th{
@@ -46,6 +55,11 @@ td, th{
 }
 .plein:hover {
     background-color: #fff;
+}
+
+.plein>a {
+    text-decoration: none;
+    color:#1f242d;
 }
 
 #element-a-cacher7 a {
