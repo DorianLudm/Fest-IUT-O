@@ -9,6 +9,17 @@ cnx = ouvrir_connexion()
 def get_cnx():
     return cnx
 
+def get_concert(idCreneau):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM CRENEAU NATURAL JOIN GROUPE NATURAL JOIN LIEU NATURAL JOIN PHOTOGROUPE WHERE idCreneau = "+str(idCreneau)+";"))
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_concert")
+        return []
+
 def get_nom_and_email(cnx, email):
     try :
         res = cnx.execute(text("SELECT nom, prenom, mailAcheteur, idRoleAcheteur FROM ACHETEUR WHERE mailAcheteur = '"+email+"';"))

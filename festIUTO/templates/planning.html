@@ -31,22 +31,22 @@
                         {% for j in range(7) %}
                             {% if pla[heure, j] %}
                                 {% if pla[heure, j]|length > 1 %}
-                                    <td>
-                                        <table>
+                                    <td class="multi">
+                                        <div class="concerts">
                                             {% for concert in pla[heure, j] %}
-                                                {% if concertChoisit == concert %}
-                                                    <td class="plein" style="border: solid 1px red;">{{ concert }}</td>
+                                                {% if concertChoisit == concert[0] %}
+                                                    <div class="plein" style="border: solid 1px red;"><a href="{{ url_for('concert', id = concert[1]) }}">{{ concert[0] }}</a></div>
                                                 {% else %}
-                                                    <td class="plein">{{ concert }}</td>
+                                                    <div class="plein"><a href="{{ url_for('concert', id = concert[1]) }}">{{ concert[0] }}</a></div>
                                                 {% endif %}
                                             {% endfor %}
-                                        </table>
+                                        </div>
                                     </td>
                                 {% else %}
-                                    {% if concertChoisit == pla[heure, j] %}
-                                    <td class="plein" style="border: solid 1px red;">{{ pla[heure, j] }}</td>
+                                    {% if concertChoisit == pla[heure, j][0][0] %}
+                                    <td class="plein" style="border: solid 1px red;"><a href="{{ url_for('concert', id = pla[heure, j][0][1]) }}">{{ pla[heure, j][0][0] }}</a></td>
                                     {% else %}
-                                    <td class="plein">{{ pla[heure, j][0] }}</td>
+                                    <td class="plein"><a href="{{ url_for('concert', id = pla[heure, j][0][1]) }}">{{ pla[heure, j][0][0] }}</a></td>
                                     {% endif %}
                                 {% endif %}
                             {% else %}
