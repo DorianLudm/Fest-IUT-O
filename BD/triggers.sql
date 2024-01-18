@@ -46,23 +46,6 @@ begin
 end |
 delimiter ;
 
-
--- CE TRIGGER NE MARCHE PAS // Utilisez celui-ci comme exemple
-delimiter |
-create or replace TRIGGER verif_capacite_préinscription before insert on PREINSCRIRE for each row
-begin
-    declare cap int;
-    declare nb_inscrit int;
-    declare mes varchar(255);
-    select IFNULL(nbPlacesLieu,0) into cap from PREINSCRIRE NATURAL JOIN CRENEAU NATURAL JOIN LIEU  where idCreneau = new.idCreneau and mailAcheteur = new.mailAcheteur;
-    select IFNULL(count(mailAcheteur),0) into nb_inscrit from PREINSCRIRE NATURAL JOIN CRENEAU NATURAL JOIN LIEU where idCreneau = new.idCreneau; 
-    if(cap <= nb_inscrit) then
-        set mes = "Préinscription impossible, le lieu est complet";
-    end if;
-    signal SQLSTATE '45000' set MESSAGE_TEXT = mes;
-end |
-delimiter ;
-
 delimiter |
 create or replace TRIGGER verif_horaires_creneau_dans_dates_festival before insert on CRENEAU for each row
 begin
@@ -82,40 +65,4 @@ begin
         set fini = true;
     end if;
     end |
-delimiter ;
-
-
-delimiter |
-create or replace TRIGGER modificationStockLaboInsert after insert on BONCOMMANDE for each row
-BEGIN
-    declare idM int ;
-    declare qte int ;
-    declare prixIndividuel float;
-    declare fini boolean default false ;
-    declare etat int ;
-    declare stock int ;
-       
-    declare produits cursor for 
-        SELECT idMateriel, quantite FROM AJOUTERMATERIEL WHERE idDemande = new.idDemande;
-
-    declare continue handler for not found set fini = true ;
-
-    SELECT idEtat INTO etat FROM BONCOMMANDE WHERE idBonCommande = new.idBonCommande ;
-
-    if etat = 3 then 
-        open produits ;
-        while not fini do
-            fetch produits into idM, qte ;
-            if not fini then
-                SELECT recupereStockLabo(idM) into stock ;
-                if stock is null then
-                    INSERT INTO STOCKLABORATOIRE VALUES (idM, qte) ;
-                else 
-                    UPDATE STOCKLABORATOIRE set quantiteLaboratoire = stock + qte WHERE idMateriel = idM ;
-                end if ;
-            end if ;
-        end while ;
-        close produits ;
-    end if;
-end |
 delimiter ;
