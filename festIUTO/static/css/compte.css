@@ -183,7 +183,8 @@ body {
 
   /* quand on est co */
 
-.deco-btn {
+.deco-btn, .admin-btn {
+  margin-top: 7vh;
   flex-basis: 100%;
   text-align: center;
 }
@@ -199,12 +200,13 @@ body {
   transition: .5s;
 }
 
-.deco-btn button:hover {
+
+.deco-btn button:hover  {
   box-shadow: 0 0 15px #d21e1e;
   transition: .5s;
 }
 
-.repro-btn button {
+.repro-btn button, .admin-btn button {
   background-color: #2c45d3;
   border-radius: 5px;
   border: 0;
@@ -215,7 +217,7 @@ body {
   transition: .5s;
 }
 
-.repro-btn button:hover {
+.repro-btn button:hover, .admin-btn button:hover {
   box-shadow: 0 0 15px #2c45d3;
   transition: .5s;
 }
@@ -334,5 +336,9 @@ h2 {
 .billet a {
   flex-basis: 33%;
   flex-grow: 1;
+  text-align: center;
+}
+
+.billet h3, .billet p, .billet h4 {
   text-align: center;
 }

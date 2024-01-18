@@ -21,25 +21,38 @@
                     <th class="jour">Jeudi</th>
                     <th class="jour">Vendredi</th>
                     <th class="jour">Samedi</th>
+                    <th class="jour">Dimanche</th>
                 </tr>
             </thead>
             <tbody>
                 {% for heure in range(24) %}
                     <tr>
                         <td class="heure">{{heure}} H</td>
-                        {% set concert = false %}
-                        {% for j in range(6) %}
-                            {% for c in creneaux  %}
-                                {% if heure == c[4].strftime("%H")|int and c[4].weekday() == j %}
-                                    {% set concert = true %}    
-                                    <td rowspan="1" class="plein">{{c[6]}}</td>
+                        {% for j in range(7) %}
+                            {% if pla[heure, j] %}
+                                {% if pla[heure, j]|length > 1 %}
+                                    <td>
+                                        <table>
+                                            {% for concert in pla[heure, j] %}
+                                                {% if concertChoisit == concert %}
+                                                    <td class="plein" style="border: solid 1px red;">{{ concert }}</td>
+                                                {% else %}
+                                                    <td class="plein">{{ concert }}</td>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                {% else %}
+                                    {% if concertChoisit == pla[heure, j] %}
+                                    <td class="plein" style="border: solid 1px red;">{{ pla[heure, j] }}</td>
+                                    {% else %}
+                                    <td class="plein">{{ pla[heure, j][0] }}</td>
+                                    {% endif %}
                                 {% endif %}
-                            {% endfor %}
-                            {% if not concert %}
-                                <td class="vide">Pas de concert</td>
+                            {% else %}
+                                <td class="vide"></td>
                             {% endif %}
                         {% endfor %}
-                        {% set concert = false %}
                     </tr>
                 {% endfor %}
             </tbody>

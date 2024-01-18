@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modifierArtiste.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <div class="container-all">
+        <div class="top">
+            <a class="btn-retour" href="{{ url_for('artistesManagement')}}"><img src="../static/img/bouton-retour.png" alt="bouton retour"></a>
+            <h1>Modifier l'artiste "{{ artiste[2] }}  {{ artiste[1] }}"</h1>
+            <a class="btn-supprimer" href="{{ url_for('supprimerArtiste', id=artiste[0]) }}"><img src="../static/img/supprimer-lutilisateur.png" alt="bouton supprimer"></a>
+        </div>
+        <div class="container-form">
+            <form role="form" method="POST" action ="{{ url_for('modifierArtiste', id=artiste[0]) }}">
+                {{ form.hidden_tag() }}
+                <div class="user-box">
+                    <label class="" for="nom">Nom</label>
+                    {{ form.nom(size=50, class_="", id="nom", value=artiste[1]) }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="prenom">Prénom</label>
+                    {{ form.prenom(size=50, class_="", id="prenom", value=artiste[2]) }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="groupe">Groupe</label>
+                    {{ form.groupe(size=50, class_="", id="groupe", select=groupeAssocie[1]) }}
+                </div>
+                <div class="valid-container">
+                    {{ form.submit(class_="valid-button")  }}
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

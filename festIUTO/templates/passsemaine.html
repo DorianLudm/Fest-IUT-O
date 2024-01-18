@@ -19,7 +19,11 @@
                     <p class="acces-festival">Accès au festival tout les jours de la semaine <span class="dimanche">excepter le dimanche</span></p>
                     <p class="acces-festival">Lundi 17 Mai, Mardi 18 Mai, Mercredi 19 Mai, Jeudi 20 Mai, Vendredi 21 Mai, Samedi 22 Mai</p>
                 </div>
-                <form class="form-semaine" method="post" action="{{ url_for('passSemaineValid') }}">
+                <form class="form-semaine" method="post" action="{{ url_for('passSemaine') }}">
+                    {{ form.hidden_tag() }}
+                    <div class="container-qte">
+                        {{ form.nombreBillet(size=50, class_="element", placeholder="Quantité", min="1", value="1") }}
+                    </div>
                     <div class="buy">
                         <input type="submit" class="particip-btn" value="Participer">
                     </div>

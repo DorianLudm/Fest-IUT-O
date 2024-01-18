@@ -29,7 +29,7 @@
                     </div>
                 </a>
             {% elif contenu[0] == "2" %}
-                <a class="lien-contenu" href="{{ url_for('planning') }}"> 
+                <a class="lien-contenu" href="/planning?concert={{ contenu[7] }}"> 
                     <div class="container-recherche-element">
                         <h2>{{ contenu[7] }}</h2>
                         <p>{{ contenu[5] }}</p>

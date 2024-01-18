@@ -27,14 +27,6 @@ class LoginForm(FlaskForm):
         print(user)
         return user if passwd == mdp else None
 
-
-        # mdp = get_password_with_email(cnx, self.email.data)
-        # if user is None:
-        #     return None
-        # passwd = hasher_mdp(self.password.data)
-        # print(str(mdp)+" == "+str(passwd))
-        # return user if passwd == mdp else None
-
 class InscriptionForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
     prenom = StringField('prenom', validators=[DataRequired()])
@@ -100,10 +92,11 @@ class SelectJourForm(FlaskForm):
     jeudi = BooleanField('Jeudi 20 mai', validators=[Optional()])
     vendredi = BooleanField('Vendredi 21 mai', validators=[Optional()])
     samedi = BooleanField('Samedi 22 mai', validators=[Optional()])
+    nombreBillet = IntegerField('Quantité de billets', validators=[DataRequired()])
     submit = SubmitField('Participer')
 
     def get_jour(self):
-        return [self.lundi.data, self.mardi.data, self.mercredi.data, self.jeudi.data, self.vendredi.data, self.samedi.data]
+        return [self.lundi.data, self.mardi.data, self.mercredi.data, self.jeudi.data, self.vendredi.data, self.samedi.data, self.nombreBillet.data]
 
 class RechercheForm(FlaskForm):
     recherche = StringField('recherche', validators=[DataRequired()])
@@ -112,6 +105,121 @@ class RechercheForm(FlaskForm):
     def get_recherche(self):
         return self.recherche.data
 
+class ModifierGroupeForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    style = SelectField('style', choices=get_all_nom_style_musical(cnx), validators=[DataRequired()])
+    nbPersn = IntegerField('nombre de personne', validators=[DataRequired()])
+    descGroupe = StringField('description', validators=[DataRequired()])
+    hebergement = SelectField('hebergement', choices=get_all_name_hebergement(cnx), validators=[DataRequired()])
+    dateArrivee = DateField("date d'arrivée", validators=[DataRequired()])
+    dateDepart = DateField("date de départ", validators=[DataRequired()])
+    tempsMontage = IntegerField('temps de montage', validators=[DataRequired()])
+    tempsDemontage = IntegerField('temps de démontage', validators=[DataRequired()])
+    photo = FileField('photo')
+    submit = SubmitField('Modifier')
+
+    def get_modifier_groupe(self):
+        return (self.nom.data, self.style.data, self.nbPersn.data, self.descGroupe.data, self.hebergement.data, self.dateArrivee.data, self.dateDepart.data, self.tempsMontage.data, self.tempsDemontage.data, self.photo.data)
+
+class AjouterGroupeForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    style = SelectField('style', choices=get_all_nom_style_musical(cnx), validators=[DataRequired()])
+    nbPersn = IntegerField('nombre de personne', validators=[DataRequired()])
+    descGroupe = StringField('description', validators=[DataRequired()])
+    hebergement = SelectField('hebergement', choices=get_all_name_hebergement(cnx) , validators=[DataRequired()])
+    dateArrivee = DateField("date d'arrivée", validators=[DataRequired()])
+    dateDepart = DateField("date de départ", validators=[DataRequired()])
+    tempsMontage = IntegerField('temps de montage', validators=[DataRequired()])
+    tempsDemontage = IntegerField('temps de démontage', validators=[DataRequired()])
+    photo = FileField('photo')
+    submit = SubmitField('Ajouter')
+
+    def get_ajouter_groupe(self):
+        return (self.nom.data, self.style.data, self.nbPersn.data, self.descGroupe.data, self.hebergement.data, self.dateArrivee.data, self.dateDepart.data, self.tempsMontage.data, self.tempsDemontage.data, self.photo.data)
+
+class ModifierArtisteForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    groupe = SelectField('groupe', choices=get_all_nom_groupe(), validators=[DataRequired()])
+    submit = SubmitField('Modifier')
+
+    def get_modifier_artiste(self):
+        return (self.nom.data, self.prenom.data, self.groupe.data)
+
+class AjouterArtisteForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    groupe = SelectField('groupe', choices=get_all_nom_groupe(), validators=[DataRequired()])
+    submit = SubmitField('Ajouter')
+
+    def get_ajouter_artiste(self):
+        return (self.nom.data, self.prenom.data, self.groupe.data)
+
+class ModifierSpectateurForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    mail = StringField('email', validators=[DataRequired()])
+    mdp = PasswordField('Password', validators=[DataRequired()])
+    confirmerMdp = PasswordField('Confirmer Password', validators=[DataRequired()])
+    role = SelectField('role', choices=[("2", "Spectateur"), ("1", "Admin")], validators=[DataRequired()])
+    submit = SubmitField('Modifier')
+
+    def get_modifier_spectateur(self):
+        return (self.nom.data, self.prenom.data, self.mail.data, self.mdp.data, self.confirmerMdp.data, self.role.data)
+
+class AjouterSpectateurForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    mail = StringField('email', validators=[DataRequired()])
+    mdp = PasswordField('Password', validators=[DataRequired()])
+    confirmerMdp = PasswordField('Confirmer Password', validators=[DataRequired()])
+    role = SelectField('role', choices=[("2", "Spectateur"), ("1", "Admin")], validators=[DataRequired()])
+    submit = SubmitField('Ajouter')
+
+    def get_ajouter_spectateur(self):
+        return (self.nom.data, self.prenom.data, self.mail.data, self.mdp.data, self.confirmerMdp.data, self.role.data)
+
+class ModifierHebergementForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    nbPlace = IntegerField('nombre de place', validators=[DataRequired()])
+    submit = SubmitField('Modifier')
+
+    def get_modifier_hebergement(self):
+        return (self.nom.data, self.nbPlace.data)
+
+class AjouterHebergementForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    nbPlace = IntegerField('nombre de place', validators=[DataRequired()])
+    submit = SubmitField('Ajouter')
+
+    def get_ajouter_hebergement(self):
+        return (self.nom.data, self.nbPlace.data)
+
+class ModifierEvenementForm(FlaskForm):
+    lieu = SelectField('lieu', choices=get_all_nom_lieu(cnx), validators=[DataRequired()])
+    groupe = SelectField('groupe', choices=get_all_nom_groupe(), validators=[DataRequired()])
+    typeEvent = SelectField('typeEvent', choices=get_all_type_evenement(), validators=[DataRequired()])
+    dateDebut = DateField("date de début", validators=[DataRequired()])
+    duree = IntegerField('durée', validators=[DataRequired()])
+    descEvenement = StringField('description', validators=[DataRequired()])
+    gratuit = BooleanField('gratuit', validators=[Optional()])
+    submit = SubmitField('Modifier')
+
+    def get_modifier_evenement(self):
+        return (self.lieu.data, self.groupe.data, self.typeEvent.data, self.dateDebut.data, self.duree.data, self.descEvenement.data, self.gratuit.data)
+
+class AjouterEvenementForm(FlaskForm):
+    lieu = SelectField('lieu', choices=get_all_nom_lieu(cnx), validators=[DataRequired()])
+    groupe = SelectField('groupe', choices=get_all_nom_groupe(), validators=[DataRequired()])
+    typeEvent = SelectField('typeEvent', choices=get_all_type_evenement(), validators=[DataRequired()])
+    dateDebut = DateField("date de début", validators=[DataRequired()])
+    duree = IntegerField('durée', validators=[DataRequired()])
+    descEvenement = StringField('description', validators=[DataRequired()])
+    gratuit = BooleanField('gratuit', validators=[Optional()])
+    submit = SubmitField('Ajouter')
+
+    def get_ajouter_evenement(self):
+        return (self.lieu.data, self.groupe.data, self.typeEvent.data, self.dateDebut.data, self.duree.data, self.descEvenement.data, self.gratuit.data)
 
 def les_jours_sont_valide(liste_jours):
     if liste_jours.count(True) != 1:
@@ -156,8 +264,32 @@ def search():
 @csrf.exempt
 def pass1jour():
     check = request.args.get('check')
+    idBillet = request.args.get('idBillet')
+    idBilletReprog = request.args.get('idBilletReprog')
+    erreurRequest = request.args.get('erreur')
+    idBilletConst = idBillet
+    if idBillet != None:
+        billet = get_billet(cnx, idBillet)
+        print(billet)
     f = SelectJourForm()
+
     erreur = ""
+    if erreurRequest != None:
+        erreur = erreurRequest
+
+    if idBillet != None:
+        if billet[3] == datetime.date(2024, 5, 17):
+            f.lundi.data = True
+        elif billet[3] == datetime.date(2024, 5, 18):
+            f.mardi.data = True
+        elif billet[3] == datetime.date(2024, 5, 19):
+            f.mercredi.data = True
+        elif billet[3] == datetime.date(2024, 5, 20):
+            f.jeudi.data = True
+        elif billet[3] == datetime.date(2024, 5, 21):
+            f.vendredi.data = True
+        elif billet[3] == datetime.date(2024, 5, 22):
+            f.samedi.data = True
     
     if check != None:
         if check == "lundi":
@@ -175,8 +307,9 @@ def pass1jour():
         
     if f.validate_on_submit():
         jours = f.get_jour()
+        nombreJour = jours[6]
+        jours = jours[:5]
         if les_jours_sont_valide(jours) == True:
-            print("test2")
             jour = f.get_jour()
             jourChoisit = ""
             if jour[0]:
@@ -191,24 +324,82 @@ def pass1jour():
                 jourChoisit = "vendredi"
             elif jour[5]:
                 jourChoisit = "samedi"
-            return redirect("/payement?pass=1jour&jour="+jourChoisit+"")
+
+            if idBilletReprog != None:
+                print("idBilletReprog != None")
+                if jourChoisit == "lundi":
+                    jourChoisit = "2024-05-17"
+                elif jourChoisit == "mardi":
+                    jourChoisit = "2024-05-18"
+                elif jourChoisit == "mercredi":
+                    jourChoisit = "2024-05-19"
+                elif jourChoisit == "jeudi":
+                    jourChoisit = "2024-05-20"
+                elif jourChoisit == "vendredi":
+                    jourChoisit = "2024-05-21"
+                elif jourChoisit == "samedi":
+                    jourChoisit = "2024-05-22"
+                print(jourChoisit)
+                
+                set_billet(cnx, idBilletReprog, jourChoisit)
+                return redirect(url_for('compte'))
+
+            return redirect("/payement?pass=1jour&jour="+jourChoisit+"&nbJour="+str(jour[6])+"")
         else:
             print("erreur")
             erreur = "Veuillez choisir seulement un jour"
+            if idBilletReprog != None:
+                return redirect('/pass-1-jour?idBillet='+str(idBilletReprog)+"&erreur=Veuillez choisir seulement un jour")
+
+    if idBillet == None:
+        idBillet = True
+    else:
+        idBillet = False
     return render_template(
         "pass1jour.html",
         title="Festiut'O | Pass",
         form=f,
-        erreur=erreur
+        erreur=erreur,
+        idBillet=idBillet,
+        idBilletConst=idBilletConst
     )
 
 @app.route('/pass-2-jours', methods=("GET","POST",))
 @csrf.exempt
 def pass2jours():
+    nbJour = request.args.get('nbJour')
+    idBillet = request.args.get('idBillet')
+    idBilletReprog = request.args.get('idBilletReprog')
+    erreurRequest = request.args.get('erreur')
+    idBilletConst = idBillet
+
+    if idBillet != None:
+        billet = get_billet(cnx, idBillet)
+        print(billet)
     f = SelectJourForm()
+    
     erreur = ""
+    if erreurRequest != None:
+        erreur = erreurRequest
+
+    if idBillet != None:
+        if billet[3] == datetime.date(2024, 5, 17) or billet[4] == datetime.date(2024, 5, 17):
+            f.lundi.data = True
+        if billet[3] == datetime.date(2024, 5, 18) or billet[4] == datetime.date(2024, 5, 18):
+            f.mardi.data = True
+        if billet[3] == datetime.date(2024, 5, 19) or billet[4] == datetime.date(2024, 5, 19):
+            f.mercredi.data = True
+        if billet[3] == datetime.date(2024, 5, 20) or billet[4] == datetime.date(2024, 5, 20):
+            f.jeudi.data = True
+        if billet[3] == datetime.date(2024, 5, 21) or billet[4] == datetime.date(2024, 5, 21):
+            f.vendredi.data = True
+        if billet[3] == datetime.date(2024, 5, 22) or billet[4] == datetime.date(2024, 5, 22):
+            f.samedi.data = True
+
     if f.validate_on_submit():
         jours = f.get_jour()
+        nombreJour = jours[6]
+        jours = jours[:6]
         if les_jours_sont_valide_2jours(jours) == True:
             jourChoisit = []
             if jours[0]:
@@ -223,29 +414,77 @@ def pass2jours():
                 jourChoisit.append("vendredi")
             if jours[5]:
                 jourChoisit.append("samedi")
-            return redirect("/payement?pass=2jours&jour1="+jourChoisit[0]+"&jour2="+jourChoisit[1]+"")
+            
+            if idBilletReprog != None:
+                jourChoisit1 = ""
+                jourChoisit2 = ""
+                print("idBilletReprog != None")
+                if jourChoisit[0] == "lundi":
+                    jourChoisit1 = "2024-05-17"
+                elif jourChoisit[0] == "mardi":
+                    jourChoisit1 = "2024-05-18"
+                elif jourChoisit[0] == "mercredi":
+                    jourChoisit1 = "2024-05-19"
+                elif jourChoisit[0] == "jeudi":
+                    jourChoisit1 = "2024-05-20"
+                elif jourChoisit[0] == "vendredi":
+                    jourChoisit1 = "2024-05-21"
+                elif jourChoisit[0] == "samedi":
+                    jourChoisit1 = "2024-05-22"
+                
+                if jourChoisit[1] == "lundi":
+                    jourChoisit2 = "2024-05-17"
+                elif jourChoisit[1] == "mardi":
+                    jourChoisit2 = "2024-05-18"
+                elif jourChoisit[1] == "mercredi":
+                    jourChoisit2 = "2024-05-19"
+                elif jourChoisit[1] == "jeudi":
+                    jourChoisit2 = "2024-05-20"
+                elif jourChoisit[1] == "vendredi":
+                    jourChoisit2 = "2024-05-21"
+                elif jourChoisit[1] == "samedi":
+                    jourChoisit2 = "2024-05-22"
+                
+                set_billet(cnx, idBilletReprog, jourChoisit1, jourChoisit2)
+                return redirect(url_for('compte'))
+
+            return redirect("/payement?pass=2jours&jour1="+jourChoisit[0]+"&jour2="+jourChoisit[1]+"&nbJour="+str(nombreJour)+"")
         else:
             print("erreur")
             erreur = "Veuillez choisir deux jours"
+            if idBilletReprog != None:
+                return redirect('/pass-2-jours?idBillet='+str(idBilletReprog)+"&erreur=Veuillez choisir deux jours")
+    
+    if idBillet == None:
+        idBillet = True
+    else:
+        idBillet = False
     return render_template(
         "pass2jours.html",
         title="Festiut'O | Pass",
         form=f,
-        erreur=erreur
+        erreur=erreur,
+        idBillet=idBillet,
+        idBilletConst=idBilletConst
     )
 
 @app.route('/pass-semaine', methods=("GET","POST",))
 @csrf.exempt
 def passSemaine():
+    form = SelectJourForm()
+    if form.validate_on_submit():
+        jours = form.get_jour()
+        return redirect("/payement?pass=semaine&nbJour="+str(jours[6])+"")
     return render_template(
         "passsemaine.html",
         title="Festiut'O | Pass",
+        form=form
     )
 
 @app.route('/pass-semaine-valid', methods=("GET","POST",))
 @csrf.exempt
 def passSemaineValid():
-    create_billet(cnx, session['utilisateur'][2], "semaine")
+    create_billet(cnx, session['utilisateur'][2], "semaine", 3)
     return redirect(url_for('compte'))
 
 
@@ -295,10 +534,20 @@ def artistes():
     
 @app.route('/planning')
 def planning():
+    concertChoisit = request.args.get('concert')
+    if concertChoisit != None:
+        return render_template(
+        "planning.html",
+        title="Festiut'O | Planning",
+        creneaux = get_creneaux(),
+        pla = get_planning(),
+        concertChoisit=concertChoisit
+        )
     return render_template(
         "planning.html",
         title="Festiut'O | Planning",
         creneaux = get_creneaux(),
+        pla = get_planning(),
     )
 
 @app.route('/billeterie')
@@ -312,7 +561,8 @@ def billeterie():
 def boutique():
     return render_template(
         "boutique.html",
-        title="Festiut'O | Boutique"
+        title="Festiut'O | ",
+        articles = get_articles()
     )
 
 @app.route('/condition-de-service')
@@ -369,7 +619,13 @@ def compte():
             formModif = modifForm,
             formInscription=f2,
             billets = billets,
-            yaDesBillets = yaDesBillets
+            yaDesBillets = yaDesBillets,
+            ILundi = datetime.date(2024, 5, 17),
+            IMardi = datetime.date(2024, 5, 18),
+            IMercredi = datetime.date(2024, 5, 19),
+            IJeudi = datetime.date(2024, 5, 20),
+            IVendredi = datetime.date(2024, 5, 21),
+            ISamedi = datetime.date(2024, 5, 22)
             )
     if modifForm.validate_on_submit():
         modif = modifForm.get_modifier_user()
@@ -403,12 +659,9 @@ def profilGroupe(id):
         "profilGroupe.html",
         title="Festiut'O | profilGroupe",
         Groupe=get_profil_groupe(id),
-        Image="../static/img/" + get_image_groupe(id)[0]
-
-        # nomGroupe=nomGroupe,
-        # idGroupe=idGroupe,
-        # descArtiste=descArtiste,
-        # nomStyle=nomStyle
+        Image="../static/img/" + get_image_groupe(id)[0],
+        suggestions=get_artistes_avec_meme_style(cnx, id),
+        favoris=artiste_favoris_acheteur(cnx, session['utilisateur'][2], id)
     )
 
 @app.route("/ajouter-fav/<int:id>", methods=("GET",))
@@ -421,6 +674,16 @@ def supprimerFav(id):
     delete_groupe_favoris(session['utilisateur'][2], id)
     return redirect(url_for('artistes'))
 
+@app.route("/ajouter-favoris/<int:id>", methods=("GET",))
+def ajouterFavoris(id):
+    add_groupe_favoris(session['utilisateur'][2], id)
+    return redirect(url_for('profilGroupe', id=id))
+
+@app.route("/supprimer-favoris/<int:id>", methods=("GET",))
+def supprimerFavoris(id):
+    delete_groupe_favoris(session['utilisateur'][2], id)
+    return redirect(url_for('profilGroupe', id=id))
+
 @app.route("/logout/")
 def logout():
     session.pop('utilisateur', None)
@@ -430,6 +693,7 @@ def logout():
 @csrf.exempt
 def payement():
     passe = request.args.get('pass')
+    nbJour = request.args.get('nbJour')
     f = PayementForm()
    # if f.validate_on_submit():
     if passe == "1jour":
@@ -448,7 +712,8 @@ def payement():
             case "samedi":
                 jour = "2024-05-22"
         print(jour)
-        create_billet(cnx, session['utilisateur'][2], jour)
+        for i in range(int(nbJour)):
+            create_billet(cnx, session['utilisateur'][2], jour, 1)
     elif passe == "2jours":
         jour1 = request.args.get('jour1')
         jour2 = request.args.get('jour2')
@@ -482,9 +747,11 @@ def payement():
                 jour2 = "2024-05-22"
         print(jour1)
         print(jour2)
-        create_billet(cnx, session['utilisateur'][2], jour1)
+        for i in range(int(nbJour)):
+            create_billet(cnx, session['utilisateur'][2], jour1, 2, jour2)
     elif passe == "semaine":
-        create_billet(cnx, session['utilisateur'][2], "2024-05-17")
+        for i in range(int(nbJour)):
+            create_billet(cnx, session['utilisateur'][2], "2024-05-17", 3)
 
     return redirect(url_for('compte'))
     
@@ -497,5 +764,320 @@ def payement():
 
 @app.route("/delete-billet/<int:id>", methods=("GET",))
 def deleteBillet(id):
+    redirect_url = request.args.get('redirect')
+    Mail = request.args.get('mail')
+    print(Mail)
     delete_billet(cnx, id)
+    if redirect_url == "admin":
+        return redirect(url_for('modifierSpectateur', mail=Mail))
     return redirect(url_for('compte'))
+
+
+@app.route("/admin")
+def admin():
+    return render_template(
+        "admin.html",
+        title="Festiut'O | Admin",
+    )
+
+@app.route("/groupes-management", methods=("GET", "POST",))
+def groupeManagement():
+    form = RechercheForm()
+    if form.validate_on_submit():
+        recherche = form.get_recherche()
+        if recherche != None:
+            return render_template(
+                "groupeManagement.html",
+                title="Festiut'O | Admin",
+                groupes=get_all_groupe_with_search(cnx, recherche),
+                form=form
+            )
+    return render_template(
+        "groupeManagement.html",
+        title="Festiut'O | Admin",
+        groupes=get_all_groupe(),
+        form=form
+    )
+
+@app.route("/modifier-groupe/<int:id>", methods=("GET", "POST",))
+def modifierGroupe(id):
+    form = ModifierGroupeForm()
+    if form.validate_on_submit():
+        groupe = form.get_modifier_groupe()
+        print(groupe)
+        modifier_groupe(cnx, groupe[0], groupe[2], groupe[1], groupe[3], id)
+        return redirect(url_for('modifierGroupe', id=id))
+    return render_template(
+        "modifierGroupe.html",
+        title="Festiut'O | Admin",
+        groupes=get_profil_groupe(id),
+        form=form
+    )
+
+@app.route('/ajouter-groupe', methods=("GET", "POST",))
+def ajouterGroupe():
+    form = AjouterGroupeForm()
+    if form.validate_on_submit():
+        groupe = form.get_ajouter_groupe()
+        #print(groupe)
+        # Check if groupe[5] and groupe[6] are strings before conversion
+        if isinstance(groupe[5], str):
+            groupe[5] = datetime.strptime(groupe[5], '%Y-%m-%d')
+        if isinstance(groupe[6], str):
+            groupe[6] = datetime.strptime(groupe[6], '%Y-%m-%d')
+        ajouter_groupe(cnx, groupe[0], groupe[2], groupe[1], groupe[3], groupe[4], groupe[5], groupe[6], groupe[7], groupe[8])
+        print("date")
+        print(groupe[6])
+        return redirect(url_for('groupeManagement'))
+   
+    return render_template(
+        "ajouterGroupe.html",
+        title="Festiut'O | Admin",
+        form=form
+    )
+
+@app.route('/supprimer-groupe/<int:id>', methods=("GET",))
+def supprimerGroupe(id):
+    delete_groupe(cnx, id)
+    return redirect(url_for('groupeManagement'))
+
+@app.route('/artistes-management', methods=("GET", "POST",))
+def artistesManagement():
+    print(get_all_artiste())
+    form = RechercheForm()
+    if form.validate_on_submit():
+        recherche = form.get_recherche()
+        if recherche != None:
+            return render_template(
+                "artisteManagement.html",
+                title="Festiut'O | Admin",
+                artistes=get_all_artistes_with_search(cnx, recherche),
+                form=form
+            )
+    return render_template(
+        "artisteManagement.html",
+        title="Festiut'O | Admin",
+        artistes=get_all_artiste(),
+        form=form
+    )
+
+@app.route('/modifier-artiste/<int:id>', methods=("GET", "POST",))
+def modifierArtiste(id):
+    form = ModifierArtisteForm()
+    groupeAssocie = get_groupe_artiste(cnx, id)
+    if form.validate_on_submit():
+        artiste = form.get_modifier_artiste()
+        idGroupe = get_id_groupe(cnx, artiste[2])
+        print(idGroupe)
+        set_profil_artiste(cnx, id, artiste[0], artiste[1], idGroupe)
+        return redirect(url_for('modifierArtiste', id=id))
+    return render_template(
+        "modifierArtiste.html",
+        title="Festiut'O | Admin",
+        artiste=get_profil_artiste(id),
+        form=form,
+        groupeAssocie=groupeAssocie
+    )
+
+@app.route('/ajouter-artiste', methods=("GET", "POST",))
+def ajouterArtiste():
+    form = AjouterArtisteForm()
+    if form.validate_on_submit():
+        artiste = form.get_ajouter_artiste()
+        idGroupe = get_id_groupe(cnx, artiste[2])
+        print(idGroupe)
+        ajouter_artiste(cnx, artiste[0], artiste[1], idGroupe)
+        return redirect(url_for('artistesManagement'))
+   
+    return render_template(
+        "ajouterArtiste.html",
+        title="Festiut'O | Admin",
+        form=form
+    )
+
+@app.route('/supprimer-artiste/<int:id>', methods=("GET",))
+def supprimerArtiste(id):
+    supprimer_artiste(cnx, id)
+    return redirect(url_for('artistesManagement'))
+
+@app.route('/spectateurs-management', methods=("GET", "POST",))
+def spectateurManagement():
+    form = RechercheForm()
+    if form.validate_on_submit():
+        recherche = form.get_recherche()
+        if recherche != None:
+            return render_template(
+                "spectateurManagement.html",
+                title="Festiut'O | Admin",
+                spectateurs=get_all_spectateur_with_search(cnx, recherche),
+                form=form
+            )
+    return render_template(
+        "spectateurManagement.html",
+        title="Festiut'O | Admin",
+        spectateurs=get_all_spectateur(),
+        form=form
+    )
+
+@app.route('/modifier-spectateur/<string:mail>', methods=("GET", "POST",))
+def modifierSpectateur(mail):
+    form = ModifierSpectateurForm()
+    billets = get_billet_acheteur(cnx, mail)
+    yaDesBillets = False
+    if billets != []:
+        yaDesBillets = True
+    print(yaDesBillets)
+    print(billets)
+    if form.validate_on_submit():
+        spectateur = form.get_modifier_spectateur()
+        print(spectateur)
+        modifier_spectateur(cnx, spectateur[0], spectateur[1], spectateur[2], spectateur[3], spectateur[5])
+        return redirect(url_for('modifierSpectateur', mail=mail))
+    return render_template(
+        "modifierSpectateur.html",
+        title="Festiut'O | Admin",
+        spectateur=get_profil_spectateur(cnx, mail),
+        form=form,
+        billets=billets,
+        yaDesBillets=yaDesBillets
+    )
+
+@app.route('/supprimer-tous-les-billets/<string:mail>', methods=("GET",))
+def supprimerTousLesBillets(mail):
+    supprimer_all_billet_acheteur(cnx, mail)
+    return redirect(url_for('modifierSpectateur', mail=mail))
+
+@app.route('/ajouter-spectateur', methods=("GET", "POST",))
+def ajouterSpectateur():
+    form = AjouterSpectateurForm()
+    if form.validate_on_submit():
+        spectateur = form.get_ajouter_spectateur()
+        if spectateur[3] == spectateur[4]:
+            ajouter_spectateur(cnx, spectateur[0], spectateur[1], spectateur[2], spectateur[3], spectateur[5])
+            return redirect(url_for('spectateurManagement'))
+    return render_template(
+        "ajouterSpectateur.html",
+        title="Festiut'O | Admin",
+        form=form
+    )
+
+@app.route('/supprimer-spectateur/<string:mail>', methods=("GET",))
+def supprimerSpectateur(mail):
+    supprimer_spectateur(cnx, mail)
+    return redirect(url_for('spectateurManagement'))
+
+
+@app.route('/hebergement-management', methods=("GET", "POST",))
+def hebergementManagement():
+    form = RechercheForm()
+    if form.validate_on_submit():
+        recherche = form.get_recherche()
+        if recherche != None:
+            return render_template(
+                "hebergementManagement.html",
+                title="Festiut'O | Admin",
+                hebergements=get_all_hebergement_with_search(cnx, recherche),
+                form=form
+            )
+    return render_template(
+        "hebergementManagement.html",
+        title="Festiut'O | Admin",
+        hebergements=get_all_hebergement(),
+        form=form
+    )
+
+@app.route('/modifier-hebergement/<int:id>', methods=("GET", "POST",))
+def modifierHebergement(id):
+    form = ModifierHebergementForm()
+    if form.validate_on_submit():
+        hebergement = form.get_modifier_hebergement()
+        print(hebergement)
+        modifier_hebergement(cnx, hebergement[0], hebergement[1], id)
+        return redirect(url_for('modifierHebergement', id=id))
+    return render_template(
+        "modifierHebergement.html",
+        title="Festiut'O | Admin",
+        hebergement=get_profil_hebergement(id),
+        form=form
+    )
+
+@app.route('/ajouter-hebergement', methods=("GET", "POST",))
+def ajouterHebergement():
+    form = AjouterHebergementForm()
+    if form.validate_on_submit():
+        hebergement = form.get_ajouter_hebergement()
+        ajouter_hebergement(cnx, hebergement[0], hebergement[1])
+        return redirect(url_for('hebergementManagement'))
+    return render_template(
+        "ajouterHebergement.html",
+        title="Festiut'O | Admin",
+        form=form
+    )
+
+@app.route('/supprimer-hebergement/<int:id>', methods=("GET",))
+def supprimerHebergement(id):
+    supprimer_hebergement(cnx, id)
+    return redirect(url_for('hebergementManagement'))
+
+
+# gerer les evenements
+@app.route('/evenement-management', methods=("GET", "POST",))
+def evenementManagement():
+    form = RechercheForm()
+    if form.validate_on_submit():
+        recherche = form.get_recherche()
+        if recherche != None:
+            return render_template(
+                "evenementManagement.html",
+                title="Festiut'O | Admin",
+                evenements=get_all_evenement_with_search(cnx, recherche),
+                form=form
+            )
+    return render_template(
+        "evenementManagement.html",
+        title="Festiut'O | Admin",
+        evenements=get_all_evenement(),
+        form=form
+    )
+
+@app.route('/modifier-evenement/<int:id>', methods=("GET", "POST",))
+def modifierEvenement(id):
+    form = ModifierEvenementForm()
+    if form.validate_on_submit():
+        evenement = form.get_modifier_evenement()
+        print(evenement)
+        gratuit = False
+        if evenement[6] == True:
+            gratuit = True
+        idGroupe = get_id_groupe(cnx, evenement[1])
+        idLieu = get_id_lieu(cnx, evenement[0])
+        modifier_evenement(cnx, idLieu, idGroupe, evenement[3], evenement[4], evenement[5], gratuit, id)
+        return redirect(url_for('modifierEvenement', id=id))
+    return render_template(
+        "modifierEvenement.html",
+        title="Festiut'O | Admin",
+        evenement=get_profil_evenement(id),
+        form=form
+    )
+
+@app.route('/ajouter-evenement', methods=("GET", "POST",))
+def ajouterEvenement():
+    form = AjouterEvenementForm()
+    if form.validate_on_submit():
+        evenement = form.get_ajouter_evenement()
+        gratuit = False
+        if evenement[5] == True:
+            gratuit = True
+        idGroupe = get_id_groupe(cnx, evenement[1])
+        idLieu = get_id_lieu(cnx, evenement[0])
+        print(evenement)
+        if gratuit:
+            ajouter_evenement(cnx, idLieu, idGroupe, evenement[3], evenement[4], evenement[5], 1)
+        else:
+            ajouter_evenement(cnx, idLieu, idGroupe, evenement[3], evenement[4], evenement[5], 0)
+        return redirect(url_for('evenementManagement'))
+    return render_template(
+        "ajouterEvenement.html",
+        title="Festiut'O | Admin",
+        form=form
+    )

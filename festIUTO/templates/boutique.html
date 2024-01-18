@@ -11,6 +11,17 @@
 <body>
     {% extends "base.html" %}
     {% block base %}
+    <h1>Boutique</h1>
+    <div class="products-container">
+    {% for article in articles %}
+        <div class="article">
+            <img src="{{ article['image'] }}" alt="Image de l'article: ">
+            <h2>{{ article['name'] }}</h2>
+            <p>{{ article['description'] }}</p>
+            <p>{{ article['price'] }}€</p>
+        </div>
+    {% endfor %}
+    </div>
     {% endblock %}
 </body>
 </html>

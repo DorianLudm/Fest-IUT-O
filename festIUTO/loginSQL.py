@@ -1,7 +1,15 @@
-login = "lallier" # pip install pymysql
-passwd = "Humpt1Dumpt1"
-serveur= "servinfo-maria"
-bd = "DBlallier"
+#Version BD en ligne
+login = "335676" # pip install pymysql
+passwd = "annafestiuto"
+serveur= "mysql-annalallier.alwaysdata.net"
+bd = "annalallier_festiuto5"
+
+
+#Version MariaDB
+# login = "ludmann" # pip install pymysql
+# passwd = "ludmann"
+# serveur= "servinfo-maria"
+# bd = "DBludmann"
 
 def getLogin():
     return login
