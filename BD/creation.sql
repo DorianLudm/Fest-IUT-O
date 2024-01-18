@@ -150,7 +150,7 @@ CREATE TABLE CRENEAU(
     idLieu int NOT NULL REFERENCES LIEU,
     idGroupe int NOT NULL REFERENCES GROUPE,
     idEvent int NOT NULL REFERENCES EVENTTYPE,
-    heureDebut datetime NOT NULL check(HOUR(heureDebut) between 4 and 14),
+    heureDebut datetime NOT NULL,
     duree TIME NOT NULL,
     descriptionEvenement varchar(255) NOT NULL,
     preinscriptionPossible boolean NOT NULL,
@@ -217,4 +217,4 @@ CREATE TABLE RECHERCHEBILLET(
     jourUn datetime,
     jourDeux datetime,
     PRIMARY KEY(idRechercheBillet)
-)
+);

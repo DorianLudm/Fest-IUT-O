@@ -650,8 +650,7 @@ def get_all_evenement_with_search(cnx, recherche):
 
 def ajouter_evenement(cnx, idEvent, idLieu, idGroupe, heureDebut, duree, descriptionEvenement, gratuit):
     try:
-        print(f"INSERT INTO CRENEAU (idLieu, idEvent, idGroupe, heureDebut, duree, descriptionEvenement, gratuit, preinscriptionPossible, visibleAuPublic) VALUES ({idLieu}, {idGroupe}, {idEvent}, '{heureDebut}', {int(duree)}, '{descriptionEvenement}', {gratuit}, {0}, {1});")
-        cnx.execute(text(f"INSERT INTO CRENEAU (idLieu, idEvent, idGroupe, heureDebut, duree, descriptionEvenement, gratuit, preinscriptionPossible, visibleAuPublic) VALUES ({idLieu}, {idGroupe}, {idEvent}, '{heureDebut}', {int(duree)}, '{descriptionEvenement}', {gratuit}, {0}, {1});"))
+        cnx.execute(text(f"INSERT INTO CRENEAU (idLieu, idEvent, idGroupe, heureDebut, duree, descriptionEvenement, gratuit, preinscriptionPossible, visibleAuPublic) VALUES ({idLieu}, {3}, {1}, '{heureDebut}', {int(duree)}, '{descriptionEvenement}', {gratuit}, {0}, {1});"))
         cnx.commit()
         print("Ajout réussi")
     except:
