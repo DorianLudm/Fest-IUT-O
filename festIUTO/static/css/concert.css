@@ -9,26 +9,42 @@ nav {
     background-color: transparent !important;
   }
 
-#element-a-cacher7 a {
-    color: #2c45d3;
-}
 
 /* debut prog */    
-.liste-artiste {
+.container-profil {
+    margin-top: 20vh;
     display: flex;
-    flex-wrap: wrap;   
-    justify-content: space-around;
+    flex-wrap: nowrap;   
+    justify-content: space-between;
 }
 
-.section-artiste {
-    background-color: #1f242d;
-    border-radius: 1em;
-    padding: 1em;
-    margin: 2em;
+.aside {
+    margin-right: 8vh;
 }
 
-.section-artiste li {
+.aside img {
+    width: 100vh;
+    height: 70vh;
+    border-radius: 2em;
+}
+
+.info-artiste-container {
+    margin-left: 20vh;
+    margin-right: 8vh;
+    justify-content: center;
+    align-items: center; 
+}
+
+.info-artiste-container p {
+    font-weight: 400;
     color: #fff;
+    font-size: 30px;
+    text-align: center;
+}
+
+.info-artiste-container p:nth-child(1) {
+    margin-top: 2vh;
+    padding-top: 0vh;
 }
 
 .footer {

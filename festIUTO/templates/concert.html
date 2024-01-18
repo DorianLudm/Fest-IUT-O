@@ -7,10 +7,48 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
 </head>
 <body>
     {% extends "base.html" %}
     {% block base %}
+    <section class="container-profil">
+        <div class="info-artiste-container">
+            <p id="desc-Artiste">{{ concert[6] }}</p>
+            <p id="desc-Artiste">Groupe animant ce concert : {{ concert[10] }}</p>
+            <p id="desc-Artiste">Lieu du concert : {{ concert[-6] }}</p>
+            <p id="desc-Artiste">Date du concert : {{ dateConcert }}</p>
+            <p id="desc-Artiste">Heure de début du concert : {{ heureDebut }}</p>
+            <p id="desc-Artiste">Durée : {{ concert[5] }}</p>
+            <div class="music-container" id="music-container">
+                <div class="music-info">
+                <h4 class="title" id="title"></h4>
+                <div class="progress-container" id="progress-container">
+                <div class="progress" id="progress"></div>
+                </div>
+                </div>
+                <audio src="./music/happyrock.mp3" id="audio"></audio>
+                <div class="img-container">
+                <img src="./images/happyrock.jpg" alt="music-cover" id="cover" />
+                </div>
+                <div class="navigation">
+                <button id="prev" class="action-btn">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+                </button>
+                <button id="play" class="action-btn action-btn-big">
+                <i class="fa fa-play" aria-hidden="true"></i>
+                </button>
+                <button id="next" class="action-btn">
+                <i class="fa fa-forward" aria-hidden="true"></i>
+                </button>
+                </div>
+            </div>
+        </div>
+        <aside class="aside">
+            <img src={{Image}}>
+        </aside>
+    </section>
+    <script src="../static/js/musicPlayer.js"></script>
     {% endblock %}
 </body>
 </html>

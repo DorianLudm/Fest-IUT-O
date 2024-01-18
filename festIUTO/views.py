@@ -414,11 +414,6 @@ def profilGroupe(id):
         title="Festiut'O | profilGroupe",
         Groupe=get_profil_groupe(id),
         Image="../static/img/" + get_image_groupe(id)[0]
-
-        # nomGroupe=nomGroupe,
-        # idGroupe=idGroupe,
-        # descArtiste=descArtiste,
-        # nomStyle=nomStyle
     )
 
 @app.route("/ajouter-fav/<int:id>", methods=("GET",))
@@ -512,8 +507,14 @@ def deleteBillet(id):
 
 @app.route("/concert/<int:id>", methods=("GET",))
 def concert(id):
+    concertChoisit = get_concert(id)
+    dateConcert = concertChoisit[4].strftime("%D")
+    heureDebut = concertChoisit[4].strftime("%H:%M")
     return render_template(
         "concert.html",
         title="jsp",
-        # concert = ?
+        concert = concertChoisit,
+        dateConcert = dateConcert,
+        heureDebut = heureDebut,
+        Image="../static/img/" + concertChoisit[-1]
     )
