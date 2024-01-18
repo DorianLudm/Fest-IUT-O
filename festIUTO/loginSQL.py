@@ -4,6 +4,7 @@ passwd = "annafestiuto"
 serveur= "mysql-annalallier.alwaysdata.net"
 bd = "annalallier_festiuto5"
 
+
 #Version MariaDB
 # login = "ludmann" # pip install pymysql
 # passwd = "ludmann"
