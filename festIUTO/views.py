@@ -497,7 +497,7 @@ def payement():
         create_billet(cnx, session['utilisateur'][2], "2024-05-17")
 
     return redirect(url_for('compte'))
-    
+
     return render_template(
             "payement.html",
             title="Festiut'O | Payement",
@@ -509,3 +509,11 @@ def payement():
 def deleteBillet(id):
     delete_billet(cnx, id)
     return redirect(url_for('compte'))
+
+@app.route("/concert/<int:id>", methods=("GET",))
+def concert(id):
+    return render_template(
+        "concert.html",
+        title="jsp",
+        # concert = ?
+    )

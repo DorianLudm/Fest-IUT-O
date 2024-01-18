@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/planning.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='cs s/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -32,21 +32,21 @@
                             {% if pla[heure, j] %}
                                 {% if pla[heure, j]|length > 1 %}
                                     <td>
-                                        <table>
+                                        <table class="concerts">
                                             {% for concert in pla[heure, j] %}
-                                                {% if concertChoisit == concert %}
-                                                    <td class="plein" style="border: solid 1px red;">{{ concert }}</td>
+                                                {% if concertChoisit == concert[0] %}
+                                                    <td class="plein" style="border: solid 1px red;"><a href="{{ url_for('concert', id = concert[1]) }}">{{ concert[0] }}</a></td>
                                                 {% else %}
-                                                    <td class="plein">{{ concert }}</td>
+                                                    <td class="plein"><a href="{{ url_for('concert', id = concert[1]) }}">{{ concert[0] }}</a></td>
                                                 {% endif %}
                                             {% endfor %}
                                         </table>
                                     </td>
                                 {% else %}
-                                    {% if concertChoisit == pla[heure, j] %}
-                                    <td class="plein" style="border: solid 1px red;">{{ pla[heure, j] }}</td>
+                                    {% if concertChoisit == pla[heure, j][0][0] %}
+                                    <td class="plein" style="border: solid 1px red;"><a href="{{ url_for('concert', id = pla[heure, j][0][1]) }}">{{ pla[heure, j][0][0] }}</a></td>
                                     {% else %}
-                                    <td class="plein">{{ pla[heure, j][0] }}</td>
+                                    <td class="plein"><a href="{{ url_for('concert', id = pla[heure, j][0][1]) }}">{{ pla[heure, j][0][0] }}</a></td>
                                     {% endif %}
                                 {% endif %}
                             {% else %}
