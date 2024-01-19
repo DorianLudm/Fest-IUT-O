@@ -125,7 +125,7 @@ CREATE TABLE CRENEAU(
     idLieu int NOT NULL REFERENCES LIEU,
     idGroupe int NOT NULL REFERENCES GROUPE,
     idEvent int NOT NULL REFERENCES EVENTTYPE,
-    heureDebut datetime NOT NULL check(HOUR(heureDebut) between 4 and 14),
+    heureDebut datetime NOT NULL check((HOUR(heureDebut) between 14 and 23 or (HOUR(heureDebut) between 0 and 4))),
     duree TIME NOT NULL,
     descriptionEvenement varchar(255) NOT NULL,
     preinscriptionPossible boolean NOT NULL,
