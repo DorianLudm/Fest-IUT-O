@@ -1039,19 +1039,26 @@ def evenementManagement():
         evenements=get_all_evenement(),
         form=form
     )
+from datetime import datetime, time
+
 
 @app.route('/modifier-evenement/<int:id>', methods=("GET", "POST",))
 def modifierEvenement(id):
     form = ModifierEvenementForm()
     if form.validate_on_submit():
         evenement = form.get_modifier_evenement()
-        print(evenement)
         gratuit = False
         if evenement[6] == True:
             gratuit = True
         idGroupe = get_id_groupe(cnx, evenement[1])
         idLieu = get_id_lieu(cnx, evenement[0])
-        modifier_evenement(cnx, idLieu, idGroupe, evenement[3], evenement[4], evenement[5], gratuit, id)
+        # Check if evenement[3] is a string before conversion
+        if isinstance(evenement[3], str):
+            evenement[3] = datetime.strptime(evenement[3], '%Y-%m-%d')
+        # Set the time to 14:00
+        # evenement[3] = datetime.combine(evenement[3], time(14, 0))
+        print(evenement)
+        modifier_evenement(cnx, idLieu[0], idGroupe, evenement[3], evenement[4], evenement[5], gratuit, id)
         return redirect(url_for('modifierEvenement', id=id))
     return render_template(
         "modifierEvenement.html",

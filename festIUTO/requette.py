@@ -650,7 +650,7 @@ def get_all_evenement_with_search(cnx, recherche):
 
 def ajouter_evenement(cnx, idEvent, idLieu, idGroupe, heureDebut, duree, descriptionEvenement, gratuit):
     try:
-        cnx.execute(text(f"INSERT INTO CRENEAU (idLieu, idEvent, idGroupe, heureDebut, duree, descriptionEvenement, gratuit, preinscriptionPossible, visibleAuPublic) VALUES ({idLieu}, {3}, {1}, '{heureDebut}', {int(duree)}, '{descriptionEvenement}', {gratuit}, {0}, {1});"))
+        cnx.execute(text(f"INSERT INTO CRENEAU (idLieu, idEvent, idGroupe, heureDebut, duree, descriptionEvenement, gratuit, preinscriptionPossible, visibleAuPublic) VALUES ({idLieu}, {idEvent}, {idGroupe}, '{heureDebut}', {int(duree)}, '{descriptionEvenement}', {gratuit}, {0}, {1});"))
         cnx.commit()
         print("Ajout réussi")
     except:
@@ -666,7 +666,8 @@ def supprimer_evenement(cnx, idCreneau):
 
 def modifier_evenement(cnx, idLieu, idGroupe, heureDebut, duree, descriptionEvenement, gratuit, idCreneau):
     try:
-        cnx.execute(text("UPDATE CRENEAU SET idLieu = "+str(idLieu)+", idGroupe = "+str(idGroupe)+", heureDebut = '"+heureDebut+"', duree = '"+duree+"', descriptionEvenement = '"+descriptionEvenement+"', gratuit = "+str(gratuit)+" WHERE idCreneau = "+str(idCreneau)+";"))
+        print(f"UPDATE CRENEAU SET idLieu = {idLieu}, idGroupe = {idGroupe}, heureDebut = '{heureDebut}', duree = {int(duree)}, descriptionEvenement = '{descriptionEvenement}', gratuit = {gratuit} WHERE idCreneau = {idCreneau};")
+        cnx.execute(text(f"UPDATE CRENEAU SET idLieu = {idLieu}, idGroupe = {idGroupe}, heureDebut = '{heureDebut}', duree = {int(duree)}, descriptionEvenement = '{descriptionEvenement}', gratuit = {gratuit} WHERE idCreneau = {idCreneau};"))
         cnx.commit()
         print("Modification réussie")
     except:
