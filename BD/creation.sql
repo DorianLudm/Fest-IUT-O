@@ -210,11 +210,3 @@ CREATE TABLE PHOTOGROUPE(
     nomImage varchar(800) NOT NULL,
     PRIMARY KEY(idImage)
 );
-
-CREATE TABLE RECHERCHEBILLET(
-    idRechercheBillet int NOT NULL auto_increment,
-    idType int NOT NULL REFERENCES TYPEBILLET,
-    jourUn datetime,
-    jourDeux datetime,
-    PRIMARY KEY(idRechercheBillet)
-);

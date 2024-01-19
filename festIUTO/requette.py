@@ -659,13 +659,13 @@ def get_all_evenement_with_search(cnx, recherche):
         print("Erreur lors de la requête get_all_evenement_with_search")
         return []
 
-def ajouter_evenement(cnx, idLieu, idGroupe, heureDebut, duree, descriptionEvenement, gratuit):
+def ajouter_evenement(cnx, idEvent, idLieu, idGroupe, heureDebut, duree, descriptionEvenement, gratuit):
     try:
-        cnx.execute(text("INSERT INTO CRENEAU (idLieu, idGroupe, heureDebut, duree, descriptionEvenement, gratuit) VALUES ("+str(idLieu)+", "+str(idGroupe)+", '"+heureDebut+"', '"+duree+"', '"+descriptionEvenement+"', "+str(gratuit)+");"))
+        cnx.execute(text(f"INSERT INTO CRENEAU (idLieu, idEvent, idGroupe, heureDebut, duree, descriptionEvenement, gratuit, preinscriptionPossible, visibleAuPublic) VALUES ({idLieu}, {idEvent}, {idGroupe}, '{heureDebut}', {int(duree)}, '{descriptionEvenement}', {gratuit}, {0}, {1});"))
         cnx.commit()
         print("Ajout réussi")
     except:
-        print("Erreur lors de la requête ajouter_evenement")
+        print("Erreur lors de la requête ajouter_evenementui")
 
 def supprimer_evenement(cnx, idCreneau):
     try:
@@ -677,7 +677,8 @@ def supprimer_evenement(cnx, idCreneau):
 
 def modifier_evenement(cnx, idLieu, idGroupe, heureDebut, duree, descriptionEvenement, gratuit, idCreneau):
     try:
-        cnx.execute(text("UPDATE CRENEAU SET idLieu = "+str(idLieu)+", idGroupe = "+str(idGroupe)+", heureDebut = '"+heureDebut+"', duree = '"+duree+"', descriptionEvenement = '"+descriptionEvenement+"', gratuit = "+str(gratuit)+" WHERE idCreneau = "+str(idCreneau)+";"))
+        print(f"UPDATE CRENEAU SET idLieu = {idLieu}, idGroupe = {idGroupe}, heureDebut = '{heureDebut}', duree = {int(duree)}, descriptionEvenement = '{descriptionEvenement}', gratuit = {gratuit} WHERE idCreneau = {idCreneau};")
+        cnx.execute(text(f"UPDATE CRENEAU SET idLieu = {idLieu}, idGroupe = {idGroupe}, heureDebut = '{heureDebut}', duree = {int(duree)}, descriptionEvenement = '{descriptionEvenement}', gratuit = {gratuit} WHERE idCreneau = {idCreneau};"))
         cnx.commit()
         print("Modification réussie")
     except:
@@ -724,4 +725,16 @@ def get_id_lieu(cnx, nomLieu):
         return liste[0]
     except:
         print("Erreur lors de la requête get_id_lieu")
+        return []
+    
+def get_id_event(cnx, nomEvenement):
+    try:
+        liste = []
+        print(text("SELECT idEvent FROM EVENTTYPE WHERE nom = '"+nomEvenement+"';"))
+        res = cnx.execute(text("SELECT idEvent FROM EVENTTYPE WHERE nom = '"+nomEvenement+"';"))
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_id_event")
         return []
