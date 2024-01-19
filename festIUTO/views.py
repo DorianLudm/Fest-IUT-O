@@ -754,7 +754,7 @@ def payement():
             create_billet(cnx, session['utilisateur'][2], "2024-05-17", 3)
 
     return redirect(url_for('compte'))
-    
+
     return render_template(
             "payement.html",
             title="Festiut'O | Payement",
@@ -771,6 +771,21 @@ def deleteBillet(id):
     if redirect_url == "admin":
         return redirect(url_for('modifierSpectateur', mail=Mail))
     return redirect(url_for('compte'))
+
+@app.route("/concert/<int:id>", methods=("GET",))
+def concert(id):
+    concertChoisit = get_concert(id)
+    dateConcert = concertChoisit[4].strftime("%D")
+    heureDebut = concertChoisit[4].strftime("%H:%M")
+    return render_template(
+        "concert.html",
+        title="jsp",
+        concert = concertChoisit,
+        dateConcert = dateConcert,
+        heureDebut = heureDebut,
+        Image="../static/img/" + concertChoisit[-1]
+    )
+    
 
 
 @app.route("/admin")
@@ -1092,3 +1107,4 @@ def ajouterEvenement():
         title="Festiut'O | Admin",
         form=form
     )
+

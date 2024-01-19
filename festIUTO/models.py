@@ -22,7 +22,7 @@ def get_planning():
     planning = dict()
     for c in creneaux:
         if (int(c[4].strftime("%H")), c[4].weekday()) in planning.keys():
-            planning[int(c[4].strftime("%H")), c[4].weekday()].append(c[6])
+            planning[int(c[4].strftime("%H")), c[4].weekday()].append((c[6], c[0]))
         else:
-            planning[int(c[4].strftime("%H")), c[4].weekday()] = [c[6]]
+            planning[int(c[4].strftime("%H")), c[4].weekday()] = [(c[6], c[0])]
     return planning
