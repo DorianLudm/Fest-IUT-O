@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/artistes.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/musicPlayer.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    {% if 'utilisateur' in session %}
+        {% if yaFavoris  %}
+        <div class="artiste-prog">
+            <h2 class="titre-artiste element">Vos artistes favoris</h2>
+            <ul class="liste-artiste">
+                {% for i in artiste_fav %}
+                <section class="section-artiste element">
+                    <a href="{{ url_for('profilGroupe', id=i[0]) }}"><img src="{{artiste_images_favs[i[0]]}}"></a>
+                    <div class="info-artiste-container">
+                        <div class="nom-groupe-container">
+                            <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
+                            <a href="{{ url_for('supprimerFav', id=i[0]) }}"><button id="bouton-fav"><img src="../static/img/coeur-plein.png"></button></a>
+                        </div>
+                    </div>
+                </section>
+                {% endfor %}
+            </ul>
+            {% if not yaQueDesFavoris %}
+            <h2 class="titre-artiste element">Autres artistes</h2>
+            {% endif %}
+            <ul class="liste-artiste">
+                {% for i in artiste%}
+                <section class="section-artiste element">
+                    <a href="{{ url_for('profilGroupe', id=i[0]) }}"><img src="{{artiste_images[i[0]]}}"></a>
+                    <div class="info-artiste-container">
+                        <div class="nom-groupe-container">
+                            <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
+                            <a href="{{ url_for('ajouterFav', id=i[0]) }}"><button id="bouton-fav"><img src="../static/img/coeur-vide.png"></button></a>
+                        </div>
+                    </div>
+                </section>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <div class="artiste-prog">
+            <h2 class="titre-artiste element">Tout les artistes</h2>
+            <ul class="liste-artiste">
+                {% for i in artiste%}
+                <section class="section-artiste element">
+                    <a href="{{ url_for('profilGroupe', id=i[0]) }}"><img src="{{artiste_images[i[0]]}}"></a>
+                    <div class="info-artiste-container">
+                        <div class="nom-groupe-container">
+                            <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
+                            <a href="{{ url_for('ajouterFav', id=i[0]) }}"><button id="bouton-fav"><img src="../static/img/coeur-vide.png"></button></a>
+                        </div>
+                    </div>
+                </section>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    {% else %}
+    <div class="artiste-prog">
+        <h2 class="titre-artiste element">Tout les artistes</h2>
+        <ul class="liste-artiste">
+            {% for i in artiste%}
+            <section class="section-artiste element">
+                <a href="{{ url_for('profilGroupe', id=i[0]) }}"><img src="{{artiste_images[i[0]]}}"></a>
+                <div class="info-artiste-container">
+                    <div class="nom-groupe-container">
+                        <li id="nom-groupe">{{ i['nomGroupe'] }}</li>
+                    </div>
+                </div>
+            </section>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    {% endblock %}
+</body>
+</html>

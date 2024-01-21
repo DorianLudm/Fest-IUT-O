@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ajouterLieu.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <div class="container-all">
+        <div class="top">
+            <a class="btn-retour" href="{{ url_for('lieuManagement')}}"><img src="../static/img/bouton-retour.png" alt="bouton retour"></a>
+            <h1>Ajouter un lieu</h1>
+        </div>
+        <div class="container-form">
+            <form role="form" method="POST" action ="{{ url_for('ajouterLieu') }}">
+                {{ form.hidden_tag() }}
+                <div class="user-box">
+                    <label class="" for="nom">Nom</label>
+                    {{ form.nom(size=50, class_="", id="nom") }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="adresse">Adresse</label>
+                    {{ form.adresse(size=50, class_="", id="adresse") }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="nbPlace">Nombre de places</label>
+                    {{ form.nbPlace(size=50, class_="", id="nbPlace") }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="dispo">Disponible ?</label>
+                    {{ form.dispo(size=50, class_="", id="dispo") }}
+                </div>
+                <div class="valid-container">
+                    {{ form.submit(class_="valid-button") }}
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

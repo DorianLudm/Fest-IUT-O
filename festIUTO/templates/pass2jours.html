@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pass.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    {% if 'utilisateur' in session %}
+    <div class="container">
+        <div class="content">
+            <div class="details">
+                <div class="center">
+                    <h1>Pass 2 jour - 35€</h1>
+                    <p class="acces-festival">Accès au festival les 2 jours de votre choix</p>
+                </div>
+                {% if idBillet %}
+                <form class="form-2jours" method="post" action="{{ url_for('pass2jours') }}">
+                    {{ form.hidden_tag() }}
+                    <ul class="liste-jour">
+                        <li>
+                            <p class="element">Lundi 17 Mai</p>
+                            {{ form.lundi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Mardi 18 Mai</p>
+                            {{ form.mardi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Mercredi 19 Mai</p>
+                            {{ form.mercredi(size=50, class_="element") }} 
+                        <li>
+                            <p class="element">Jeudi 20 Mai</p>
+                            {{ form.jeudi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Vendredi 21 Mai</p>
+                            {{ form.vendredi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Samedi 22 Mai</p>
+                            {{ form.samedi(size=50, class_="element") }} 
+                        </li>
+                    </ul>
+                    <div class="container-qte">
+                        {{ form.nombreBillet(size=50, class_="element", placeholder="Quantité", min="1", value="1") }}
+                    </div>
+                    <p class="erreur">{{ erreur }}</p>
+                    <div class="buy">
+                        {{ form.submit(size=50, class_="element particip-btn") }} 
+                    </div>
+                </form>
+                {% else %}
+                <form class="form-2jours" method="post" action="/pass-2-jours?idBilletReprog={{idBilletConst}}">
+                    {{ form.hidden_tag() }}
+                    <ul class="liste-jour">
+                        <li>
+                            <p class="element">Lundi 17 Mai</p>
+                            {{ form.lundi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Mardi 18 Mai</p>
+                            {{ form.mardi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Mercredi 19 Mai</p>
+                            {{ form.mercredi(size=50, class_="element") }} 
+                        <li>
+                            <p class="element">Jeudi 20 Mai</p>
+                            {{ form.jeudi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Vendredi 21 Mai</p>
+                            {{ form.vendredi(size=50, class_="element") }} 
+                        </li>
+                        <li>
+                            <p class="element">Samedi 22 Mai</p>
+                            {{ form.samedi(size=50, class_="element") }} 
+                        </li>
+                    </ul>
+                    <div class="container-qte" style="display: none;">
+                        {{ form.nombreBillet(size=50, class_="element", placeholder="Quantité", min="1", value="1") }}
+                    </div>
+                    <p class="erreur">{{ erreur }}</p>
+                    <div class="buy">
+                        {{ form.submit(size=50, class_="element particip-btn") }} 
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>  
+    {% else %}
+    <h1 class="element pas-co">Vous devez être connecté pour voir cette page</h1>
+    {% endif %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/boutique.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/musicPlayer.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <h1>Boutique</h1>
+    <div class="products-container">
+    {% for article in articles %}
+        <div class="article">
+            <img src="{{ article['image'] }}" alt="Image de l'article: ">
+            <h2>{{ article['name'] }}</h2>
+            <p>{{ article['description'] }}</p>
+            <p>{{ article['price'] }}€</p>
+        </div>
+    {% endfor %}
+    </div>
+    {% endblock %}
+</body>
+</html>

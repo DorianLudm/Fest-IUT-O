@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/compte.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <!-- quand on est pas co -->
+    {% if 'utilisateur' not in session %}
+    <div id="login-container">
+    <div id="login-box">
+        <h2 class="element">Connexion</h2>
+        <form role="form" method="POST" action ="{{ url_for('compte') }}"> 
+          {{ formConnexion.hidden_tag() }}
+          <div class="user-box">
+            {{ formConnexion.email(size=50, class_="form-control element", id="username") }}
+            <label class="element" for="email">Email</label>
+          </div>
+          <div class="user-box">
+            {{ formConnexion.password(size=50, class_="form-control element", id="password") }}
+            <label class="element" for="password">Mot de passe</label>
+          </div>
+          <div class="valid-container">
+            <input type="submit" value="Se Connecter" class="element">
+            <a href="#" id="boutonlogin" class="element">S'inscrire</a>
+          </div>
+        </form>
+    </div>
+    <div id="signup-box">
+      <h2 class="element">S'inscrire</h2>
+      <form role="form" method="POST" action ="{{ url_for('compte') }}">
+        {{ formInscription.hidden_tag() }}
+        <div class="user-box">
+          {{ formInscription.email(size=50, class_="form-control element", id="email") }}
+          <label class="element" for="email">Email</label>
+        </div>
+        <div class="user-box">
+          {{ formInscription.nom(size=50, class_="form-control element", id="nom") }}
+          <label class="element" for="nom">Nom</label>
+        </div>
+        <div class="user-box">
+          {{ formInscription.prenom(size=50, class_="form-control element", id="prenom") }} 
+          <label class="element" for="prenom">Prénom</label>
+        </div>
+        <div class="user-box">
+          {{ formInscription.password(size=50, class_="form-control element", id="passwordj") }} 
+          <label class="element" for="password">Mot de passe</label>
+        </div>
+        <div class="valid-container">
+          <input type="submit" value="S'inscrire" class="element">
+          <a href="#" id="boutonsignup" class="element">Se Connecter</a>
+        </div>
+      </form>
+    </div>
+    </div>
+    {% else %}
+    <!-- quand on est co -->
+    <div class="container-all">
+      <!-- profil -->
+      {% if yaDesBillets == False %}
+        <div class="container-left-no-billet">
+      {% else %}
+        <div class="container-left">
+      {% endif %}
+        <h2 class="element">Modifier votre compte {{ session['utilisateur'][1] }}</h2>
+        <form role="form" method="POST" action ="{{ url_for('compte') }}">
+          {{ formModif.hidden_tag() }}
+          <div class="user-box">
+            {{ formModif.mail(size=50, class_="form-control element", id="email") }}
+            <label class="element" for="email">Email</label>
+          </div>
+          <div class="user-box">
+            {{ formModif.nom(size=50, class_="form-control element", id="nom") }}
+            <label class="element" for="nom">Nom</label>
+          </div>
+          <div class="user-box">
+            {{ formModif.prenom(size=50, class_="form-control element", id="prenom") }} 
+            <label class="element" for="prenom">Prénom</label>
+          </div>
+          <div class="user-box">
+            {{ formModif.mdp(size=50, class_="form-control element", id="password") }} 
+            <label class="element" for="password">Mot de passe</label>
+          </div>
+          <div class="user-box">
+            {{ formModif.confirmerMdp(sizàe=50, class_="form-control element", id="ConfirmPassword") }} 
+            <label class="element" for="password">Confirmer mot de passe</label>
+          </div>
+          <div class="valid-container">
+            <input type="submit" value="Modifier" class="element">
+          </div>
+        </form>
+      </div>
+
+      <!-- billet -->
+      {% if yaDesBillets == True %}
+      <div class="container-right">
+        <h2 class="element">Vos billets</h2>
+        <div class="container-billet">
+          {% for billet in billets %}
+          <div class="billet">
+            <img class="" src="../static/img/icon-logo.png" alt="logo festiuto">
+            <div class="container-nom">
+              <!-- type de pass -->
+              {% if billet[5] == 1 %}
+              <h3 class="">Pass 1 jour</h3>
+              
+              <!-- afficher les jours -->
+              {% if billet[3] == ILundi %}
+              <h4 class="">Lundi 17 Mai</h4>
+              {% elif billet[3] == IMardi %}
+              <h4 class="">Mardi 18 Mai</h4>
+              {% elif billet[3] == IMercredi %}
+              <h4 class="">Mercredi 19 Mai</h4>
+              {% elif billet[3] == IJeudi %}
+              <h4 class="">Jeudi 20 Mai</h4>
+              {% elif billet[3] == IVendredi %}
+              <h4 class="">Vendredi 21 Mai</h4>
+              {% elif billet[3] == ISamedi %}
+              <h4 class="">Samedi 22 Mai</h4>
+              {% else %}
+              <h4 class="">{{ billet[3] }}</h4>
+              {% endif %}
+
+              {% elif billet[5] == 2 %}
+              <h3 class="">Pass 2 jours
+
+              <!-- afficher les jours -->
+              {% if billet[3] == ILundi %}
+              <h4 class="">Lundi 17 Mai</h4>
+              {% elif billet[3] == IMardi %}
+              <h4 class="">Mardi 18 Mai</h4>
+              {% elif billet[3] == IMercredi %}
+              <h4 class="">Mercredi 19 Mai</h3>
+              {% elif billet[3] == IJeudi %}
+              <h4 class="">Jeudi 20 Mai</h4>
+              {% elif billet[3] == IVendredi %}
+              <h4 class="">Vendredi 21 Mai</h4>
+              {% elif billet[3] == ISamedi %}
+              <h4 class="">Samedi 22 Mai</h4>
+              {% else %}
+              <h4 class="">{{ billet[3] }}</h4>
+              {% endif %}
+
+              <!-- afficher les jours deux -->
+              {% if billet[4] == ILundi %}
+              <h4 class="">Lundi 17 Mai</h4>
+              {% elif billet[4] == IMardi %}
+              <h4 class="">Mardi 18 Mai</h4>
+              {% elif billet[4] == IMercredi %}
+              <h4 class="">Mercredi 19 Mai</h3>
+              {% elif billet[4] == IJeudi %}
+              <h4 class="">Jeudi 20 Mai</h4>
+              {% elif billet[4] == IVendredi %}
+              <h4 class="">Vendredi 21 Mai</h4>
+              {% elif billet[4] == ISamedi %}
+              <h4 class="">Samedi 22 Mai</h4>
+              {% else %}
+              <h4 class="">{{ billet[4] }}</h4>
+              {% endif %}
+
+              {% else %}
+              <h3 class="">Pass semaine</h3>
+              <h4 class="">Du Lundi 17 Mai <br> au <br> Samedi 22 Mai</h4>
+              {% endif %}
+
+              <p class="">{{ billet[6] }} {{ billet[7] }}</p>
+            </div>
+            <img class="" src="../static/img/qrcode.png" alt="qr code">
+            <a class="repro-btn" href="#"><button>Télécharger le billet</button></a>
+            {% if billet[5] == 1 %}
+            <a class="repro-btn" href="/pass-1-jour?idBillet={{ billet[1] }}"><button>Reprogrammer</button></a>
+            {% elif billet[5] == 2 %}
+            <a class="repro-btn" href="/pass-2-jours?idBillet={{ billet[1] }}"><button>Reprogrammer</button></a>
+            {% endif %}
+            <a class="deco-btn" href="{{ url_for('deleteBillet', id=billet[1]) }}"><button>Vendre un billet</button></a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    
+      <!-- module admin -->
+      {% if session['utilisateur'][3] == 1 %}
+      <a class="admin-btn" href="{{ url_for('admin') }}"><button>Admin</button></a>
+      {% endif %}
+
+      <a class="deco-btn" href="{{ url_for('logout') }}"><button>Se déconnecter</button></a>
+    </div>
+    {% endif %}
+</body>
+    <script src="../static/js/signup-login.js"></script>
+    {% endblock %}
+</html>

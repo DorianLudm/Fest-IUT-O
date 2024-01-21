@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/musicPlayer.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <form method="post" action="{{ url_for('search') }}" class="form-search" id="form-search">
+        {{ form.hidden_tag() }}
+        <div class="form-box">
+            {{ form.recherche(size=50, class_="", id="recherche", placeholder="Artiste, concerts, billets...") }}
+            {{ form.submit(size=50, class="", id="input-recherche") }}
+        </div>
+    </form>
+    <div class="container-all-recherche" id="container-all-recherche">
+        <div class="container-recherche">
+        {% for contenu in recherche %} 
+            {% if contenu[0] == "1" %}
+                <a class="lien-contenu" href="{{ url_for('profilGroupe', id=contenu[1]) }}"> 
+                    <div class="container-recherche-element">
+                        <h2>{{ contenu[2] }}</h2>
+                        <p>{{ contenu[5] }}</p>
+                    </div>
+                </a>
+            {% elif contenu[0] == "2" %}
+                <a class="lien-contenu" href="/planning?concert={{ contenu[7] }}"> 
+                    <div class="container-recherche-element">
+                        <h2>{{ contenu[7] }}</h2>
+                        <p>{{ contenu[5] }}</p>
+                        <p>{{ contenu[6] }}</p>
+                    </div>
+                </a>
+            {% elif contenu[0] == "3" %}
+                <a class="lien-contenu" href="/pass-1-jour?check={{ contenu[2] }}"> 
+                    <div class="container-recherche-element">
+                        <h2>{{ contenu[1] }}</h2>
+                        <p>{{ contenu[2] }}</p>
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

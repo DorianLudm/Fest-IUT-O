@@ -1,0 +1,148 @@
+body {
+    font-family: Montserrat;
+    background: #1f242d;
+    /* Pour une compatibilité maximale avec les navigateurs */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0%;
+}
+
+nav {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.header {
+    display: flex;
+    justify-content: center !important;
+    align-content: center;
+}
+
+.liste-nav li {
+    display: flex; /* Activer le modèle de boîte flexible */
+    align-items: center; /* Centrer verticalement le contenu dans le li */
+    height: 50px; /* Ajustez la hauteur selon vos besoins */
+}
+
+#barre-recherche {
+    display: flex; /* Activer le modèle de boîte flexible */
+    align-items: center !important; /* Centrer verticalement le contenu dans le li */
+    display: none;
+    height: 50px;
+}
+
+/* Style du champ de texte */
+#recherche {
+    font-size: 24px;
+    width: 40em;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #fff; /* Ajoute une ligne en bas pour créer la "barre" */
+    outline:#2c45d3; /* Supprime la mise en évidence lors du clic */
+}
+
+#recherche::placeholder {
+    color: #fff;
+}
+
+input[type="text"]::placeholder {
+    color: white; /* Couleur du texte du placeholder en blanc */
+}
+
+.titre {
+    margin-top: 20vh;
+    color: #fff !important;
+    text-align: center;
+    font-size: 70px !important;
+    font-weight: 700; 
+}
+
+.date-festival-right {
+    display: block;
+    position: absolute;
+    right: 0; /* Aligné à gauche de la page */
+    top: 0; /* Aligné en haut de la page */
+    width: 30px; /* Largeur du conteneur vertical */
+    height: 100%; /* Hauteur du conteneur vertical pour occuper toute la hauteur de la page */
+    color: #fff; /* Couleur du texte */
+    writing-mode: vertical-rl; /* Orientation verticale du texte */
+    text-orientation: mixed; /* Orientation verticale */
+    text-align: center; /* Centre le texte vertical */
+}
+
+.date-festival-left {
+    display: block;
+    position: absolute;
+    left: 0; /* Aligné à gauche de la page */
+    top: 0; /* Aligné en haut de la page */
+    width: 30px; /* Largeur du conteneur vertical */
+    height: 100%; /* Hauteur du conteneur vertical pour occuper toute la hauteur de la page */
+    color: #fff; /* Couleur du texte */
+    writing-mode: vertical-rl; /* Orientation verticale du texte */
+    text-orientation: mixed; /* Orientation verticale */
+    text-align: center; /* Centre le texte vertical */
+    rotate: 180deg;
+}
+
+
+.section-info {
+    margin: 5em;
+}
+
+.titre-info {
+    color: #091417;
+}
+
+.icon-logo {
+    margin-right: 10em !important;
+    margin-top: 0;
+}
+
+.icon-logo img {
+    width: 150px;
+}
+
+#icon-loupe-white {
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    margin-left: 10em;
+}
+
+#icon-loupe-white:hover {
+    cursor: pointer;
+    background-color: #2c45d3;
+    transition: 0.5s;
+}
+
+#icon-loupe-white img {
+    width: 40px;
+}
+
+.section-info p {
+    color: #fff ;
+    font-weight: 400;
+}
+
+
+/* media */
+/* @media screen and (max-width: 678px) {
+    .home-img img {
+        max-width: 250px;
+        max-height: 250px;
+      }
+}
+
+@media screen and (max-width: 678px) {
+    .home-img img {
+        display: none;
+      }
+
+} */
+
+@media screen and (max-width: 492px) {
+    .video-container {
+        height: 120vh; /* Hauteur de la fenêtre visible */
+      }
+}

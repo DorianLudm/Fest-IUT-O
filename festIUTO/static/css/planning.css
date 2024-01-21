@@ -1,0 +1,89 @@
+body {
+    font-family: Montserrat;
+    background: #1f242d;
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    background-color: rgba(31, 35, 41, 1) !important;
+  }
+
+
+.planning {
+    display: flex;
+    flex-wrap: wrap;   
+    justify-content: center;
+    margin-top: 10em;
+}
+
+.concerts {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.multi {
+    padding: 0;
+}
+
+td, th{
+    border: 1px solid black;
+    width: 10em;
+}
+
+.heure {
+    height: 3vh;
+    text-align: center;
+    background-color: aqua;
+}
+
+.jour {
+    background-color: antiquewhite;
+}
+
+.vide {
+    background-color: white;
+}
+
+.plein {
+    background-color: aquamarine;
+}
+.plein:hover {
+    background-color: antiquewhite;
+}
+
+.plein>a {
+    text-decoration: none;
+    color:#1f242d;
+}
+
+#element-a-cacher7 a {
+    color: #2c45d3;
+}
+
+/* debut prog */    
+.liste-artiste {
+    display: flex;
+    flex-wrap: wrap;   
+    justify-content: space-around;
+}
+
+.section-artiste {
+    background-color: #1f242d;
+    border-radius: 1em;
+    padding: 1em;
+    margin: 2em;
+}
+
+.section-artiste li {
+    color: #fff;
+}
+
+.footer {
+    margin-top: 30vh;
+}

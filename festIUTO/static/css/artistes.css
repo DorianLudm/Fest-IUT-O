@@ -1,0 +1,101 @@
+body {
+    font-family: Montserrat;
+    background: #1f242d;
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    background-color: transparent !important;
+  }
+
+#element-a-cacher2 a {
+    color: #2c45d3;
+}
+
+/* debut prog */    
+.liste-artiste {
+    display: flex;
+    flex-wrap: wrap;   
+    justify-content: center;
+}
+
+.titre-artiste {
+    color: #faf6e7;
+    font-size: 50px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.info-artiste-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    flex-grow: 1;
+}
+
+.nom-groupe-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.section-artiste {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #faf6e7;
+    border-radius: 1em;
+    margin: 1.5em;
+    max-width: 40vh;
+}
+
+.section-artiste > a > img {
+    width: 100%; 
+    /* height: 300px; */
+    aspect-ratio: 1/1;
+    /* max-height: 200px; */
+    border-radius: 1em 1em 0 0;; 
+}
+
+.section-artiste li {
+    color: #1f242d;
+}
+
+.artiste-prog {
+    margin-top: 10em;
+}
+
+#nom-groupe {
+    font-size: 1.5em;
+    font-weight: bold;
+    font-size: 22px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+#desc-Artiste {
+    font-size: 1.2em;
+    font-weight: 400;
+    margin-top: 1em;
+    text-align: center;
+}
+
+#bouton-fav {
+    align-items: center;
+    justify-content: center;
+    margin-left: 1em;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+#bouton-fav img {
+    width: 24px;
+}
+
+
+   

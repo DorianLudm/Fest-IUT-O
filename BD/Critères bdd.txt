@@ -1,0 +1,28 @@
+Une association 
+proposer une application web qui permette de g´erer la programmation du festival et de proposer la vente de billets. 
+
+Les spectateurs qui souhaiteront assister au festival pourront
+ -acheter diff´erents types de billets (`a la journ´ee, deux jours, totalit´e du festival, . . .) / ou gratuits
+ -les organisateurs souhaitent pouvoir éventuellement pouvoir demander aux spectateurs de se pr´e-inscrire si ils souhaitent y assister
+ -permettre de consulter la programmation par journée (une journ´ee peut commencer `a 14h et se terminer `a 4h00 du matin) et par lieux, par artiste, . . . 
+ -chaque groupe programmé devra proposer un certain nombre d’informations (description, photos, liens r´eseaux sociaux, liens video, membres du groupes et instruments jou´es, . . .) 
+et ´egalement leur style musicale. Ainsi,
+l’application pourra proposer une recherche de groupe par style. L’association souhaiterait
+que lorsqu’on cherche un groupe qui fait de la musique ´electronique par exemple, l’applica-
+tion propose ceux qui ont le style techno, jungle, idm, . . . 
+
+De plus, les spectateurs doivent pouvoir g´erer leurs groupes favoris et ainsi commencer `a organiser leurs journ´ees durant le festival. 
+
+Afin de faire d´ecouvrir un maximum de groupes au public, l’application proposera
+´egalement lors de la consultation d’un groupe une liste de groupes qui pourraient plaire.
+
+L’application doit ´egalement aider l’association pour son organisation du festival. Pour
+chaque groupe programm´e, l’association doit pouvoir retrouv´e son jour et heure d’arriv´ee et
+de d´epart, la dur´ee de son concert, le temps de montage et de d´emontage, lui affecter un
+h´ebergement avec le nombre de places n´ecessaires (un h´ebergement a un nombre de places
+limit´ees par jour). Grˆace `a ces informations, l’association pourra ainsi v´erifier qu’il n’y a
+pas de probl`eme dans sa programmation (un groupe qui joue plusieurs fois a suffisamment
+de temps entre chaque concert, arrive assez tˆot ou ne termine pas trop tard, . . .). De plus,
+chaque groupe peut ´eventuellement avoir des activit´es annexes `a des heures pr´ecises comme
+par exemple des interviews, des shows cases, . . . dans certains lieux (backstage, plateau radio,
+. . .) qui peuvent apparaˆıtre ou non dans la programmation si le public peut y assister.

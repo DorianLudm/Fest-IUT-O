@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ajouterEvenement.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block base %}
+    <div class="container-all">
+        <div class="top">
+            <a class="btn-retour" href="{{ url_for('evenementManagement')}}"><img src="../static/img/bouton-retour.png" alt="bouton retour"></a>
+            <h1>Ajouter un evenement</h1>
+        </div>
+        <div class="container-form">
+            <form role="form" method="POST" action ="{{ url_for('ajouterEvenement') }}">
+                {{ form.hidden_tag() }}
+                <div class="user-box">
+                    <label class="" for="lieu">Lieu</label>
+                    {{ form.lieu(size=50, class_="", id="lieu") }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="groupe">Groupe</label>
+                    {{ form.groupe(size=50, class_="", id="groupe") }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="typeEvent">Type d'evenement</label>
+                    {{ form.typeEvent(size=50, class_="", id="typeEvent") }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="dateDebut">dateDebut</label>
+                    {{ form.dateDebut(size=50, class_="", id="dateDebut") }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="duree">duree</label>
+                    {{ form.duree(size=50, class_="", id="duree", min=1, max=10) }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="descEvenement">descEvenement</label>
+                    {{ form.descEvenement(size=50, class_="", id="descEvenement") }}
+                </div>
+                <div class="user-box">
+                    <label class="" for="gratuit">Gratuit ?</label>
+                    {{ form.gratuit(size=50, class_="", id="gratuit") }}
+                </div>
+                <div class="valid-container">
+                    {{ form.submit(class_="valid-button")  }}
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
