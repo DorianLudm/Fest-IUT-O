@@ -738,3 +738,62 @@ def get_id_event(cnx, nomEvenement):
     except:
         print("Erreur lors de la requête get_id_event")
         return []
+
+# gerer les lieux
+
+def get_all_lieu():
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM LIEU;"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_lieu")
+        return []
+
+def get_all_lieu_with_search(cnx, recherche):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM LIEU WHERE nomLieu LIKE '%"+recherche+"%';"))
+        for row in res:
+            liste.append(row)
+        return liste
+    except:
+        print("Erreur lors de la requête get_all_lieu_with_search")
+        return []
+
+def ajouter_lieu(cnx, nomLieu, adresseLieu, capaciteLieu, dispo):
+    try:
+        cnx.execute(text("INSERT INTO LIEU (nomLieu, adresse, nbPlacesLieu, disponibiliteLieu) VALUES ('"+nomLieu+"', '"+adresseLieu+"', "+str(capaciteLieu)+", "+str(dispo)+");"))
+        cnx.commit()
+        print("Ajout réussi")
+    except:
+        print("Erreur lors de la requête ajouter_lieu")
+
+def supprimer_lieu(cnx, idLieu):
+    try:
+        cnx.execute(text("DELETE FROM CRENEAU WHERE idLieu = "+str(idLieu)+";"))
+        cnx.execute(text("DELETE FROM LIEU WHERE idLieu = "+str(idLieu)+";"))
+        cnx.commit()
+        print("Suppression réussie")
+    except:
+        print("Erreur lors de la requête supprimer_lieu")
+
+def modifier_lieu(cnx, nomLieu, adresseLieu, capaciteLieu, idLieu, dispo):
+    try:
+        cnx.execute(text("UPDATE LIEU SET nomLieu = '"+nomLieu+"', adresse = '"+adresseLieu+"', nbPlacesLieu = "+str(capaciteLieu)+", disponibiliteLieu = "+str(dispo)+" WHERE idLieu = "+str(idLieu)+";"))
+        cnx.commit()
+        print("Modification réussie")
+    except:
+        print("Erreur lors de la requête modifier_lieu")
+
+def get_profil_lieu(idLieu):
+    try:
+        liste = []
+        res = cnx.execute(text("SELECT * FROM LIEU WHERE idLieu = "+str(idLieu)+";"))
+        for row in res:
+            liste.append(row)
+        return liste[0]
+    except:
+        print("Erreur lors de la requête get_profil_lieu")

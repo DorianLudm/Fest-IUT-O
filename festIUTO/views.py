@@ -221,6 +221,26 @@ class AjouterEvenementForm(FlaskForm):
     def get_ajouter_evenement(self):
         return (self.lieu.data, self.groupe.data, self.typeEvent.data, self.dateDebut.data, self.duree.data, self.descEvenement.data, self.gratuit.data)
 
+class ModifierLieuForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    adresse = StringField('adresse', validators=[DataRequired()])
+    dispo = BooleanField('disponibilité', validators=[Optional()])
+    nbPlace = IntegerField('nombre de place', validators=[DataRequired()])
+    submit = SubmitField('Modifier')
+
+    def get_modifier_lieu(self):
+        return (self.nom.data, self.adresse.data, self.dispo.data, self.nbPlace.data)
+
+class AjouterLieuForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    adresse = StringField('adresse', validators=[DataRequired()])
+    dispo = BooleanField('disponibilité', validators=[Optional()])
+    nbPlace = IntegerField('nombre de place', validators=[DataRequired()])
+    submit = SubmitField('Ajouter')
+
+    def get_ajouter_lieu(self):
+        return (self.nom.data, self.adresse.data, self.dispo.data, self.nbPlace.data)
+
 def les_jours_sont_valide(liste_jours):
     if liste_jours.count(True) != 1:
         return False
@@ -620,12 +640,12 @@ def compte():
             formInscription=f2,
             billets = billets,
             yaDesBillets = yaDesBillets,
-            ILundi = datetime.date(2024, 5, 17),
-            IMardi = datetime.date(2024, 5, 18),
-            IMercredi = datetime.date(2024, 5, 19),
-            IJeudi = datetime.date(2024, 5, 20),
-            IVendredi = datetime.date(2024, 5, 21),
-            ISamedi = datetime.date(2024, 5, 22)
+            ILundi = datetime(2024, 5, 17),
+            IMardi = datetime(2024, 5, 18),
+            IMercredi = datetime(2024, 5, 19),
+            IJeudi = datetime(2024, 5, 20),
+            IVendredi = datetime(2024, 5, 21),
+            ISamedi = datetime(2024, 5, 22)
             )
     if modifForm.validate_on_submit():
         modif = modifForm.get_modifier_user()
@@ -1108,3 +1128,65 @@ def ajouterEvenement():
         form=form
     )
 
+@app.route('/supprimer-evenement/<int:id>', methods=("GET",))
+def supprimerEvenement(id):
+    supprimer_evenement(cnx, id)
+    return redirect(url_for('evenementManagement'))
+
+@app.route('/lieu-management', methods=("GET", "POST",))
+def lieuManagement():
+    form = RechercheForm()
+    if form.validate_on_submit():
+        recherche = form.get_recherche()
+        if recherche != None:
+            return render_template(
+                "lieuManagement.html",
+                title="Festiut'O | Admin",
+                lieux=get_all_lieu_with_search(cnx, recherche),
+                form=form
+            )
+    return render_template(
+        "lieuManagement.html",
+        title="Festiut'O | Admin",
+        lieux=get_all_lieu(),
+        form=form
+    )
+
+@app.route('/modifier-lieu/<int:id>', methods=("GET", "POST",))
+def modifierLieu(id):
+    form = ModifierLieuForm()
+    if form.validate_on_submit():
+        lieu = form.get_modifier_lieu()
+        print(lieu)
+        dispo = 0
+        if lieu[2]:
+            dispo = 1
+        modifier_lieu(cnx, lieu[0], lieu[1], lieu[3], id, dispo)
+        return redirect(url_for('modifierLieu', id=id))
+    return render_template(
+        "modifierLieu.html",
+        title="Festiut'O | Admin",
+        lieu=get_profil_lieu(id),
+        form=form
+    )
+
+@app.route('/ajouter-lieu', methods=("GET", "POST",))
+def ajouterLieu():
+    form = AjouterLieuForm()
+    if form.validate_on_submit():
+        lieu = form.get_ajouter_lieu()
+        dispo = 0
+        if lieu[2]:
+            dispo = 1
+        ajouter_lieu(cnx, lieu[0], lieu[1], lieu[3], dispo)
+        return redirect(url_for('lieuManagement'))
+    return render_template(
+        "ajouterLieu.html",
+        title="Festiut'O | Admin",
+        form=form
+    )
+
+@app.route('/supprimer-lieu/<int:id>', methods=("GET",))
+def supprimerLieu(id):
+    supprimer_lieu(cnx, id)
+    return redirect(url_for('lieuManagement'))
